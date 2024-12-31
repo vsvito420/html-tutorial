@@ -648,20 +648,35 @@ h1 {
       {
         title: "Multimedia",
         description: "Audio und Video einbinden",
-        code: `<audio controls>
+        code: `<!-- Audio einbinden -->
+<audio controls>
   <source src="audio.mp3" type="audio/mpeg">
   <source src="audio.ogg" type="audio/ogg">
 </audio>
 
+<!-- Video einbinden -->
 <video controls width="640" height="360">
   <source src="video.mp4" type="video/mp4">
   <source src="video.webm" type="video/webm">
-</video>`,
+</video>
+
+<!-- YouTube Video einbetten -->
+<iframe 
+  width="560" 
+  height="315" 
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+  title="Never Gonna Give You Up"
+  frameborder="0" 
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+  allowfullscreen>
+</iframe>`,
         explanation: `- audio für Audiodateien
 - video für Videodateien
 - controls für Steuerung
 - source für Dateiquellen
-- Mehrere Formate möglich`
+- iframe für YouTube-Videos
+- width/height für Videogröße
+- allowfullscreen für Vollbildmodus`
       },
       // Meta-Informationen
       {

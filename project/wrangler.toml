@@ -1,16 +1,11 @@
 name = "html-tutorial"
-type = "webpack"
-account_id = 15045eabcbd9a4df6f24bd479caeb22a"
-workers_dev = true
+account_id = "15045eabcbd9a4df6f24bd479caeb22a"
 
 [site]
-bucket = "."
-entry-point = "."
-
-[env.production]
-workers_dev = false
-route = "html.skolan.icu"  # User needs to add their custom domain if desired
+bucket = "../project"  # Point to the project directory in root
 
 [build]
-command = "npm run build"
-upload.format = "service-worker"
+command = ""  # No build step needed for static files
+
+[env.production]
+route = "html.tutorial.pages.dev"

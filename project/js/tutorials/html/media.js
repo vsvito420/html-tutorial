@@ -50,6 +50,26 @@ export const media = {
 - track für Untertitel
 - Mehrere Quellformate möglich
 - WebM als modernes Format`
+    },
+    {
+      title: "YouTube Video einbinden",
+      description: "Ein YouTube-Video mit iframe einbetten",
+      code: `<!-- YouTube Video einbetten -->
+<iframe 
+  width="560" 
+  height="315" 
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+  title="Never Gonna Give You Up"
+  frameborder="0" 
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+  allowfullscreen>
+</iframe>`,
+      explanation: `- iframe für YouTube-Einbettung
+- width/height für Videogröße
+- src enthält die YouTube-URL
+- frameborder="0" für nahtlose Integration
+- allow für Berechtigungen
+- allowfullscreen für Vollbildmodus`
     }
   ]
 };
