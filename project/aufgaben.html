@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>CSS Aufgaben - KiberOne</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .task-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .task-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+
+      .task-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .task-number {
+        background: #4a90e2;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .task-title {
+        font-size: 1.2em;
+        margin: 0;
+        color: #333;
+      }
+
+      .task-description {
+        color: #666;
+        margin-bottom: 15px;
+      }
+
+      .task-steps {
+        list-style: none;
+        padding: 0;
+      }
+
+      .task-steps li {
+        margin-bottom: 8px;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      .task-steps li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: #4a90e2;
+      }
+
+      .task-hint {
+        background: #f0f8ff;
+        padding: 10px 15px;
+        border-left: 4px solid #4a90e2;
+        margin-top: 15px;
+        font-size: 0.9em;
+      }
+
+      .difficulty {
+        font-size: 0.8em;
+        padding: 3px 8px;
+        border-radius: 12px;
+        margin-left: auto;
+      }
+
+      .easy {
+        background: #e6ffe6;
+        color: #006600;
+      }
+
+      .medium {
+        background: #fff3e6;
+        color: #cc6600;
+      }
+
+      .hard {
+        background: #ffe6e6;
+        color: #cc0000;
+      }
+
+      .example-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #4a90e2;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+
+      .example-link:hover {
+        color: #357abd;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Startseite</a>
+      <a href="/html.html">HTML Tutorial</a>
+      <a href="/css.html">CSS Tutorial</a>
+      <a href="/aufgaben.html" aria-current="page">Aufgaben</a>
+    </nav>
+
+    <main>
+      <h1>CSS Aufgaben für KiberOne Schüler</h1>
+      
+      <p class="intro">
+        Willkommen zu den CSS-Übungen! Hier findest du spannende Aufgaben, 
+        mit denen du deine CSS-Kenntnisse testen und verbessern kannst. 
+        Versuche, die Aufgaben der Reihe nach zu lösen.
+      </p>
+
+      <ul class="task-list">
+        <li class="task-card">
+          <div class="task-header">
+            <span class="task-number">1</span>
+            <h2 class="task-title">Gestalte deine Visitenkarte</h2>
+            <span class="difficulty easy">Leicht</span>
+          </div>
+          <p class="task-description">
+            Erstelle eine digitale Visitenkarte mit deinem Namen, einem coolen Titel und deinen Interessen.
+          </p>
+          <ul class="task-steps">
+            <li>Erstelle eine HTML-Datei mit einem div für deine Karte</li>
+            <li>Gib der Karte eine Hintergrundfarbe deiner Wahl</li>
+            <li>Zentriere den Text und wähle eine schöne Schriftart</li>
+            <li>Füge Abstände (padding) und abgerundete Ecken hinzu</li>
+            <li>Experimentiere mit verschiedenen Textfarben</li>
+          </ul>
+          <div class="task-hint">
+            <strong>Tipp:</strong> Nutze die Eigenschaften background-color, font-family, 
+            text-align, padding und border-radius.
+            <br><br>
+            <a href="/aufgaben/beispiele/aufgabe1.html" target="_blank" class="example-link">👉 Beispiellösung ansehen</a>
+          </div>
+        </li>
+
+        <li class="task-card">
+          <div class="task-header">
+            <span class="task-number">2</span>
+            <h2 class="task-title">Hover-Effekte für Buttons</h2>
+            <span class="difficulty easy">Leicht</span>
+          </div>
+          <p class="task-description">
+            Erstelle drei coole Buttons, die sich verändern, wenn man mit der Maus drüber fährt.
+          </p>
+          <ul class="task-steps">
+            <li>Erstelle drei Buttons mit verschiedenen Texten</li>
+            <li>Gib jedem Button eine andere Grundfarbe</li>
+            <li>Füge Hover-Effekte hinzu (z.B. Farbe ändern)</li>
+            <li>Lass die Buttons größer werden beim Hover</li>
+            <li>Füge Übergangseffekte (transitions) hinzu</li>
+          </ul>
+          <div class="task-hint">
+            <strong>Tipp:</strong> Verwende :hover und transition für sanfte Animationen.
+            <br><br>
+            <a href="/aufgaben/beispiele/aufgabe2.html" target="_blank" class="example-link">👉 Beispiellösung ansehen</a>
+          </div>
+        </li>
+
+        <li class="task-card">
+          <div class="task-header">
+            <span class="task-number">3</span>
+            <h2 class="task-title">Dein eigenes Profilkarten-Layout</h2>
+            <span class="difficulty medium">Mittel</span>
+          </div>
+          <p class="task-description">
+            Erstelle ein Layout mit drei Profilkarten für deine Lieblings-Videospielcharaktere.
+          </p>
+          <ul class="task-steps">
+            <li>Erstelle einen Container für die Karten mit display: flex</li>
+            <li>Gestalte jede Karte mit Bild, Name und Beschreibung</li>
+            <li>Füge Schatten und Hover-Effekte hinzu</li>
+            <li>Mache das Layout responsive (flexbox-wrap)</li>
+            <li>Füge Abstände zwischen den Karten hinzu</li>
+          </ul>
+          <div class="task-hint">
+            <strong>Tipp:</strong> Flexbox macht das Ausrichten einfach. Nutze gap für die Abstände.
+          </div>
+        </li>
+
+        <li class="task-card">
+          <div class="task-header">
+            <span class="task-number">4</span>
+            <h2 class="task-title">Interaktive Bildergalerie</h2>
+            <span class="difficulty medium">Mittel</span>
+          </div>
+          <p class="task-description">
+            Baue eine Galerie mit Bildern, die beim Hover einen coolen Effekt zeigen.
+          </p>
+          <ul class="task-steps">
+            <li>Erstelle ein Raster mit mindestens 6 Bildern</li>
+            <li>Bilder sollen gleich groß sein</li>
+            <li>Füge Zoom-Effekte beim Hover hinzu</li>
+            <li>Zeige einen Titel über dem Bild beim Hover</li>
+            <li>Mache die Galerie für Handys responsive</li>
+          </ul>
+          <div class="task-hint">
+            <strong>Tipp:</strong> Nutze overflow: hidden für den Container und transform: scale() für Zoom-Effekte.
+          </div>
+        </li>
+
+        <li class="task-card">
+          <div class="task-header">
+            <span class="task-number">5</span>
+            <h2 class="task-title">Gaming-News Website</h2>
+            <span class="difficulty hard">Schwer</span>
+          </div>
+          <p class="task-description">
+            Erstelle eine Seite für Gaming-News mit Header, Navigation und Artikelkarten.
+          </p>
+          <ul class="task-steps">
+            <li>Gestalte einen auffälligen Header mit Logo</li>
+            <li>Erstelle eine horizontale Navigation mit Hover-Effekten</li>
+            <li>Füge Artikelkarten mit Bildern und Text hinzu</li>
+            <li>Mache die Seite komplett responsive</li>
+            <li>Füge eine "Zurück nach oben" Schaltfläche hinzu</li>
+          </ul>
+          <div class="task-hint">
+            <strong>Tipp:</strong> Teile die Aufgabe in kleine Schritte auf. Nutze position: fixed für den "Nach oben" Button.
+          </div>
+        </li>
+
+        <li class="task-card">
+          <div class="task-header">
+            <span class="task-number">6</span>
+            <h2 class="task-title">Dein Gaming-Profil</h2>
+            <span class="difficulty hard">Schwer</span>
+          </div>
+          <p class="task-description">
+            Erstelle ein interaktives Gaming-Profil mit Statistiken und Achievements.
+          </p>
+          <ul class="task-steps">
+            <li>Gestalte ein Profilbanner mit Hintergrundbild</li>
+            <li>Füge einen Profilavatar mit Rahmen hinzu</li>
+            <li>Erstelle eine Statistik-Sektion mit Fortschrittsbalken</li>
+            <li>Füge eine Achievement-Galerie hinzu</li>
+            <li>Mache alles interaktiv mit Hover-Effekten</li>
+          </ul>
+          <div class="task-hint">
+            <strong>Tipp:</strong> Nutze linear-gradient für Fortschrittsbalken und CSS Grid für die Achievement-Galerie.
+          </div>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>

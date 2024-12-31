@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>CSS Tutorial</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script type="module" src="js/tutorial-page.js"></script>
+  </head>
+  <body data-tutorial-type="css">
+    <nav>
+      <a href="/">Startseite</a>
+      <a href="/html.html">HTML Tutorial</a>
+      <a href="/css.html" aria-current="page">CSS Tutorial</a>
+    </nav>
+
+    <h1>CSS Grundlagen</h1>
+
+    <div class="tutorial-content">
+      <h2 id="exampleTitle"></h2>
+      <p id="exampleDescription" class="description"></p>
+
+      <div class="tutorial-navigation">
+        <button id="prevExample" class="nav-button">&larr; Vorheriges</button>
+        <span id="exampleCounter">Beispiel 1 von 5</span>
+        <button id="nextExample" class="nav-button">Nächstes &rarr;</button>
+      </div>
+
+      <div class="split-container">
+        <div class="code-section">
+          <h3>Code</h3>
+          <pre><code class="language-css" id="codeBlock"></code></pre>
+          <div class="explanation" id="explanation"></div>
+        </div>
+
+        <div class="preview-section">
+          <h3>Ergebnis</h3>
+          <div class="preview-box" id="previewBox"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

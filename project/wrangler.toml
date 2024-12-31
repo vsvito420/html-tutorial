@@ -1,0 +1,16 @@
+name = "html-tutorial"
+type = "webpack"
+account_id = 15045eabcbd9a4df6f24bd479caeb22a"
+workers_dev = true
+
+[site]
+bucket = "."
+entry-point = "."
+
+[env.production]
+workers_dev = false
+route = "html.skolan.icu"  # User needs to add their custom domain if desired
+
+[build]
+command = "npm run build"
+upload.format = "service-worker"
