@@ -1,111 +1,154 @@
-# HTML & CSS Tutorial Platform
+# HTML & CSS Lernplattform
 
-An interactive learning platform for HTML and CSS basics, designed for KiberOne students. The platform features interactive tutorials, live code examples, and practical exercises.
+Eine interaktive Lernplattform für HTML- und CSS-Grundlagen, entwickelt für KiberOne-Schüler. Die Plattform bietet interaktive Tutorials, Live-Code-Beispiele und praktische Übungen.
 
-## Features
+## Funktionen
 
-- 📚 Interactive HTML & CSS tutorials
-- 💻 Live code examples with instant preview
-- 🎯 Practical exercises with varying difficulty levels
-- 📱 Fully responsive design
-- 🎨 Syntax highlighting for code examples
-- 🔄 Hot-reload during development
+- 📚 Interaktive HTML & CSS Tutorials
+- 💻 Live-Code-Beispiele mit sofortiger Vorschau
+- 🎯 Praktische Übungen mit verschiedenen Schwierigkeitsgraden
+- 📱 Vollständig responsive Gestaltung
+- 🎨 Syntax-Hervorhebung für Code-Beispiele
+- 🔄 Hot-Reload während der Entwicklung
 
-## Project Structure
+## Projektstruktur
 
 ```
 project/
-├── index.html              # Landing page
-├── html.html              # HTML tutorial page
-├── css.html               # CSS tutorial page
-├── aufgaben.html          # Exercises/tasks page
-├── styles.css             # Global styles
-├── script.js              # Main JavaScript file
-├── js/                    # JavaScript modules
-│   ├── tutorial-page.js   # Tutorial page functionality
+├── index.html              # Startseite
+├── html.html              # HTML-Tutorial-Seite
+├── css.html               # CSS-Tutorial-Seite
+├── aufgaben.html          # Übungsseite
+├── styles.css             # Globale Styles
+├── script.js              # Haupt-JavaScript-Datei
+├── js/                    # JavaScript-Module
+│   ├── tutorial-page.js   # Tutorial-Seiten-Funktionalität
 │   ├── tutorial-content.js
-│   └── tutorials/         # Tutorial content modules
-│       ├── html/          # HTML tutorial examples
-│       └── css/          # CSS tutorial examples
-└── aufgaben/             # Exercise examples and solutions
-    └── beispiele/        # Example solutions
+│   └── tutorials/         # Tutorial-Inhaltsmodule
+│       ├── html/          # HTML-Tutorial-Beispiele
+│       └── css/          # CSS-Tutorial-Beispiele
+└── aufgaben/             # Übungsbeispiele und Lösungen
+    └── beispiele/        # Beispiellösungen
 ```
 
-## Setup
+## Einrichtung
 
-1. Install dependencies:
+1. Abhängigkeiten installieren:
 ```bash
 npm install
 ```
 
-2. Start development server:
+2. Entwicklungsserver starten:
 ```bash
 npm run dev
 ```
 
-The site will be available at `http://localhost:8080` with hot-reload enabled.
+Die Seite ist dann unter `http://localhost:8080` mit aktiviertem Hot-Reload verfügbar.
 
-## Development
+## Entwicklung
 
-- `npm run dev` - Start development server with hot-reload
-- `npm start` - Alias for `npm run dev`
-- `npm run preview` - Start preview server without hot-reload
-- `npm run build` - Build project (static files, no build step required)
+- `npm run dev` - Startet den Entwicklungsserver mit Hot-Reload
+- `npm start` - Alias für `npm run dev`
+- `npm run preview` - Startet den Vorschau-Server ohne Hot-Reload
+- `npm run build` - Baut das Projekt (statische Dateien, kein Build-Schritt erforderlich)
 
 ## Deployment
 
-The project is configured for deployment to Cloudflare Pages:
+Das Projekt ist für das Deployment auf Cloudflare Pages konfiguriert:
 
 ```bash
 npm run deploy
 ```
 
-This will publish the site to Cloudflare Pages using the configured domain in `wrangler.toml`.
+Dies veröffentlicht die Seite auf Cloudflare Pages unter der in `wrangler.toml` konfigurierten Domain.
 
-## Contributing
+## Zum Projekt beitragen
 
-To contribute to this tutorial platform:
+So kannst du zum Projekt beitragen:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Commit your changes (`git commit -m 'Add amazing feature'`)
-5. Push to the branch (`git push origin feature/amazing-feature`)
-6. Open a Pull Request
+### 1. Repository klonen und einrichten
 
-## Project Structure Details
+1. Erstelle einen Fork des Repositories
+2. Klone deinen Fork:
+   ```bash
+   git clone https://github.com/vsvito420/html-tutorial.git
+   cd html-tutorial
+   ```
+3. Installiere die Abhängigkeiten:
+   ```bash
+   npm install
+   ```
 
-### Tutorial Pages
+### 2. Neue Inhalte hinzufügen
 
-- `html.html` and `css.html` serve as the main tutorial pages
-- Each tutorial is broken down into interactive examples
-- Examples include code snippets and live previews
-- Navigation between examples is handled by `tutorial-page.js`
+#### Tutorial-Inhalte erweitern
+- Neue HTML-Beispiele: Erstelle eine neue Datei unter `js/tutorials/html/`
+- Neue CSS-Beispiele: Erstelle eine neue Datei unter `js/tutorials/css/`
+- Folge dem bestehenden Format in den vorhandenen Tutorial-Dateien
 
-### Exercises
+#### Neue Übungen hinzufügen
+1. Erstelle eine neue Übung in `aufgaben.html`
+2. Füge eine Beispiellösung unter `aufgaben/beispiele/` hinzu
+3. Achte auf eine klare Aufgabenbeschreibung und hilfreiche Tipps
 
-- `aufgaben.html` contains practical exercises
-- Exercises are categorized by difficulty (Easy, Medium, Hard)
-- Each exercise includes:
-  - Clear objectives
-  - Step-by-step instructions
-  - Helpful tips
-  - Example solutions (where available)
+### 3. Code-Richtlinien
+
+- Verwende aussagekräftige Variablen- und Funktionsnamen
+- Kommentiere komplexe Logik
+- Halte den Code übersichtlich und gut formatiert
+- Teste deine Änderungen gründlich
+- Stelle sicher, dass die Seite responsive bleibt
+
+### 4. Änderungen einreichen
+
+1. Erstelle einen Feature-Branch:
+   ```bash
+   git checkout -b feature/neue-funktion
+   ```
+2. Committe deine Änderungen:
+   ```bash
+   git add .
+   git commit -m 'Beschreibung der Änderungen'
+   ```
+3. Pushe zu deinem Fork:
+   ```bash
+   git push origin feature/neue-funktion
+   ```
+4. Erstelle einen Pull Request mit einer detaillierten Beschreibung deiner Änderungen
+
+## Projektstruktur im Detail
+
+### Tutorial-Seiten
+
+- `html.html` und `css.html` sind die Haupt-Tutorial-Seiten
+- Jedes Tutorial ist in interaktive Beispiele unterteilt
+- Beispiele enthalten Code-Snippets und Live-Vorschauen
+- Die Navigation zwischen Beispielen wird von `tutorial-page.js` gesteuert
+
+### Übungen
+
+- `aufgaben.html` enthält praktische Übungen
+- Übungen sind nach Schwierigkeit kategorisiert (Leicht, Mittel, Schwer)
+- Jede Übung enthält:
+  - Klare Ziele
+  - Schritt-für-Schritt-Anleitungen
+  - Hilfreiche Tipps
+  - Beispiellösungen (wo verfügbar)
 
 ### Styling
 
-- Responsive design with mobile-first approach
-- Clean and modern UI with consistent styling
-- Syntax highlighting for code examples using Prism.js
-- Flexible layout using CSS Grid and Flexbox
+- Responsives Design mit Mobile-First-Ansatz
+- Klares und modernes UI mit einheitlichem Styling
+- Syntax-Hervorhebung für Code-Beispiele mit Prism.js
+- Flexibles Layout mit CSS Grid und Flexbox
 
-### JavaScript Architecture
+### JavaScript-Architektur
 
-- Modular structure with ES modules
-- Separate concerns for tutorial content and navigation
-- Interactive preview functionality
-- Dynamic content loading
+- Modulare Struktur mit ES-Modulen
+- Trennung von Tutorial-Inhalten und Navigation
+- Interaktive Vorschau-Funktionalität
+- Dynamisches Laden von Inhalten
 
-## License
+## Lizenz
 
-This project is intended for educational purposes. Please check with the project maintainers for usage permissions.
+Dieses Projekt ist für Bildungszwecke gedacht. Bitte kontaktiere die Projektbetreuer für Nutzungsgenehmigungen.
