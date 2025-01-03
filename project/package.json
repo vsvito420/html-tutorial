@@ -4,6 +4,7 @@
     "dev": "servor --reload",
     "build": "echo 'No build step required - static files'",
     "preview": "servor --no-reload",
+    "test": "start http://localhost:8080 && servor --reload",
     "deploy": "wrangler pages publish ."
   },
   "dependencies": {
