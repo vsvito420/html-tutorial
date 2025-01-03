@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML & CSS Zusammenfassung</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        td {
+            color: var(--text-secondary);
+        }
+        tr:nth-child(even) {
+            background: var(--bg-primary);
+        }
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Start</a>
+        <a href="html.html">HTML</a>
+        <a href="css.html">CSS</a>
+        <a href="aufgaben.html">Aufgaben</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="zusammenfassung.html" aria-current="page">Zusammenfassung</a>
+        <button class="theme-toggle" aria-label="Theme wechseln">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-16C7.59 4 4 7.59 4 12s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8z"/>
+            </svg>
+        </button>
+    </nav>
+    
+    <main class="container">
+        <div class="tutorial-content">
+            <div class="tutorial-header">
+                <h1>HTML & CSS Zusammenfassung</h1>
+                <p>Eine übersichtliche Zusammenfassung der wichtigsten Konzepte</p>
+            </div>
+
+    <h2>HTML Grundlagen</h2>
+    
+    <table>
+        <tr>
+            <th>Frage</th>
+            <th>Antwort</th>
+        </tr>
+        <tr>
+            <td>Wie ist die Grundstruktur eines HTML-Dokuments?</td>
+            <td>
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="de"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Titel&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    Inhalt
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Welche Überschriften-Ebenen gibt es und wie werden sie verwendet?</td>
+            <td>
+                - <code>&lt;h1&gt;</code>: Hauptüberschrift (nur einmal pro Seite)<br>
+                - <code>&lt;h2&gt;</code> bis <code>&lt;h6&gt;</code>: Unterüberschriften<br>
+                - Hierarchisch strukturieren<br>
+                - Keine Ebenen überspringen
+            </td>
+        </tr>
+        <tr>
+            <td>Wie erstellt man Formulare in HTML?</td>
+            <td>
+                Grundstruktur:<br>
+                <code>&lt;form action="/submit" method="post"&gt;</code><br>
+                - Label mit Input verbinden: <code>&lt;label for="id"&gt;</code><br>
+                - Eingabefelder: <code>&lt;input type="text|email|password"&gt;</code><br>
+                - Textbereiche: <code>&lt;textarea&gt;</code><br>
+                - Absenden: <code>&lt;button type="submit"&gt;</code>
+            </td>
+        </tr>
+        <tr>
+            <td>Welche HTML5 Input-Typen gibt es?</td>
+            <td>
+                - <code>type="date"</code>: Datumsauswahl<br>
+                - <code>type="time"</code>: Zeitauswahl<br>
+                - <code>type="number"</code>: Zahlen<br>
+                - <code>type="range"</code>: Schieberegler<br>
+                - <code>type="color"</code>: Farbwähler<br>
+                - <code>type="tel"</code>: Telefonnummern<br>
+                - <code>type="email"</code>: E-Mail-Adressen
+            </td>
+        </tr>
+        <tr>
+            <td>Wie strukturiert man Text in HTML?</td>
+            <td>
+                - <code>&lt;p&gt;</code>: Absätze<br>
+                - <code>&lt;br&gt;</code>: Zeilenumbruch<br>
+                - <code>&lt;hr&gt;</code>: Horizontale Linie<br>
+                - <code>&lt;strong&gt;</code>: Wichtiger Text<br>
+                - <code>&lt;em&gt;</code>: Betonter Text
+            </td>
+        </tr>
+    </table>
+
+    <h2>CSS Grundlagen</h2>
+    
+    <table>
+        <tr>
+            <th>Frage</th>
+            <th>Antwort</th>
+        </tr>
+        <tr>
+            <td>Wie bindet man CSS ein?</td>
+            <td>
+                1. Extern: <code>&lt;link rel="stylesheet" href="style.css"&gt;</code><br>
+                2. Intern: <code>&lt;style&gt;...&lt;/style&gt;</code><br>
+                3. Inline: <code>style="..."</code> Attribut
+            </td>
+        </tr>
+        <tr>
+            <td>Was sind die wichtigsten CSS-Selektoren?</td>
+            <td>
+                - Element: <code>p { }</code><br>
+                - Klasse: <code>.klasse { }</code><br>
+                - ID: <code>#id { }</code><br>
+                - Verschachtelt: <code>div p { }</code><br>
+                - Direkte Kinder: <code>div > p { }</code>
+            </td>
+        </tr>
+        <tr>
+            <td>Wie funktioniert das Box-Modell?</td>
+            <td>
+                Von innen nach außen:<br>
+                1. content: Inhalt<br>
+                2. padding: Innenabstand<br>
+                3. border: Rahmen<br>
+                4. margin: Außenabstand<br>
+                <code>box-sizing: border-box;</code> für intuitivere Größenberechnung
+            </td>
+        </tr>
+        <tr>
+            <td>Wie positioniert man Elemente?</td>
+            <td>
+                <code>position:</code><br>
+                - <code>static</code>: Standard<br>
+                - <code>relative</code>: Relativ zur normalen Position<br>
+                - <code>absolute</code>: Relativ zum nächsten positionierten Elternelement<br>
+                - <code>fixed</code>: Relativ zum Viewport<br>
+                - <code>sticky</code>: Scrollt mit bis zu einem Punkt
+            </td>
+        </tr>
+        <tr>
+            <td>Wie erstellt man ein responsives Design?</td>
+            <td>
+                1. Viewport Meta-Tag:<br>
+                <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code><br>
+                2. Media Queries:<br>
+                <code>@media (max-width: 768px) { }</code><br>
+                3. Flexible Grids:<br>
+                <code>display: grid;</code> oder <code>display: flex;</code><br>
+                4. Flexible Bilder:<br>
+                <code>max-width: 100%;</code>
+            </td>
+        </tr>
+    </table>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle Funktionalität
+        const themeToggle = document.querySelector('.theme-toggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        function initTheme() {
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDarkScheme.matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        initTheme();
+    </script>
+</body>
+</html>

@@ -2,10 +2,4 @@ name = "html-tutorial"
 account_id = "15045eabcbd9a4df6f24bd479caeb22a"
 
 [site]
-bucket = "../project"  # Point to the project directory in root
-
-[build]
-command = ""  # No build step needed for static files
-
-[env.production]
-route = "html.tutorial.pages.dev"
+bucket = "./project"  # Point to the current directory
