@@ -12,7 +12,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     <script src="script.js"></script>
     <script type="module" src="js/tutorial-page.js"></script>
+    <script type="module">
+      import { RoadmapUI } from './js/roadmap.js';
+      import { injectStyles } from './js/roadmap-styles.js';
+      import { TutorialTracker } from './js/tutorial-tracker.js';
+
+      // Styles für die Roadmap einfügen
+      injectStyles();
+
+      // Roadmap und Tutorial Tracker initialisieren wenn das DOM geladen ist
+      document.addEventListener('DOMContentLoaded', () => {
+        // Roadmap Container erstellen
+        const container = document.createElement('div');
+        container.className = 'tutorial-roadmap';
+        
+        // Roadmap vor dem Tutorial-Content einfügen
+        const tutorialContent = document.querySelector('.tutorial-content');
+        tutorialContent.parentNode.insertBefore(container, tutorialContent);
+        
+        // Roadmap initialisieren
+        const roadmap = new RoadmapUI(container, 'html');
+        
+        // Tutorial Tracker initialisieren
+        const tracker = new TutorialTracker('html');
+        
+        // Fortschritt aktualisieren wenn ein Tutorial abgeschlossen wird
+        window.addEventListener('tutorial-completed', (event) => {
+          if (event.detail.type === 'html') {
+            roadmap.updateProgress(event.detail.id);
+          }
+        });
+      });
+    </script>
     <style>
+      .tutorial-roadmap {
+        max-width: 1200px;
+        margin: 0 auto 2rem auto;
+        padding: 0 1rem;
+      }
+
       .tutorial-header {
         text-align: center;
         max-width: 800px;

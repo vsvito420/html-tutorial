@@ -13,6 +13,7 @@ export class TutorialNavigator {
 
   initializeElements() {
     this.codeBlock = document.getElementById('codeBlock');
+    this.htmlBlock = document.getElementById('htmlBlock');
     this.previewBox = document.getElementById('previewBox');
     this.explanation = document.getElementById('explanation');
     this.counter = document.getElementById('exampleCounter');
@@ -75,6 +76,10 @@ export class TutorialNavigator {
       document.head.appendChild(styleElement);
     }
     styleElement.textContent = example.code;
+
+    // Update HTML code display
+    this.htmlBlock.textContent = example.html || '';
+    Prism.highlightElement(this.htmlBlock);
 
     // Update preview with HTML
     this.previewBox.innerHTML = example.html || '';

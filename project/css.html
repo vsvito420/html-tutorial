@@ -13,7 +13,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     <script src="script.js"></script>
     <script type="module" src="js/tutorial-page.js"></script>
+    <script type="module">
+      import { RoadmapUI } from './js/roadmap.js';
+      import { injectStyles } from './js/roadmap-styles.js';
+      import { TutorialTracker } from './js/tutorial-tracker.js';
+
+      // Styles für die Roadmap einfügen
+      injectStyles();
+
+      // Roadmap und Tutorial Tracker initialisieren wenn das DOM geladen ist
+      document.addEventListener('DOMContentLoaded', () => {
+        // Roadmap Container erstellen
+        const container = document.createElement('div');
+        container.className = 'tutorial-roadmap';
+        
+        // Roadmap vor dem Tutorial-Content einfügen
+        const tutorialContent = document.querySelector('.tutorial-content');
+        tutorialContent.parentNode.insertBefore(container, tutorialContent);
+        
+        // Roadmap initialisieren
+        const roadmap = new RoadmapUI(container, 'css');
+        
+        // Tutorial Tracker initialisieren
+        const tracker = new TutorialTracker('css');
+        
+        // Fortschritt aktualisieren wenn ein Tutorial abgeschlossen wird
+        window.addEventListener('tutorial-completed', (event) => {
+          if (event.detail.type === 'css') {
+            roadmap.updateProgress(event.detail.id);
+          }
+        });
+      });
+    </script>
     <style>
+      .tutorial-roadmap {
+        max-width: 1200px;
+        margin: 0 auto 2rem auto;
+        padding: 0 1rem;
+      }
+
       .tutorial-header {
         text-align: center;
         max-width: 800px;
@@ -38,9 +76,13 @@
       .preview-section h3 {
         color: #2d3748;
         font-size: 1.2em;
-        margin-bottom: 1rem;
+        margin: 1.5rem 0 1rem;
         padding-bottom: 0.5rem;
         border-bottom: 2px solid #e2e8f0;
+      }
+
+      .code-section h3:first-child {
+        margin-top: 0;
       }
 
       .preview-box {
@@ -101,6 +143,44 @@
           flex-direction: column;
           gap: 0.8rem;
         }
+
+        .split-container {
+          grid-template-columns: 1fr !important;
+        }
+      }
+
+      /* Dreispaltiges Layout */
+      .split-container {
+        display: grid;
+        grid-template-columns: minmax(250px, 1fr) minmax(250px, 1fr) minmax(300px, 1fr);
+        gap: 1.5rem;
+        margin-top: 2rem;
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Code-Sektion über volle Breite bei mittleren Bildschirmen */
+      @media (max-width: 1200px) and (min-width: 769px) {
+        .split-container {
+          grid-template-columns: 1fr 1fr;
+        }
+        .preview-section {
+          grid-column: 1 / -1;
+        }
+      }
+
+      /* Erklärung über volle Breite */
+      #explanation {
+        grid-column: 1 / -1;
+        margin-top: 1.5rem;
+      }
+
+      /* Maximale Breite für den Container */
+      .tutorial-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem;
       }
     </style>
   </head>
@@ -134,15 +214,21 @@
 
         <div class="split-container">
           <div class="code-section">
-            <h3>Code</h3>
+            <h3>CSS Code</h3>
             <pre><code class="language-css" id="codeBlock"></code></pre>
-            <div class="explanation" id="explanation"></div>
+          </div>
+
+          <div class="code-section">
+            <h3>HTML Code</h3>
+            <pre><code class="language-html" id="htmlBlock"></code></pre>
           </div>
 
           <div class="preview-section">
             <h3>Ergebnis</h3>
             <div class="preview-box" id="previewBox"></div>
           </div>
+
+          <div class="explanation" id="explanation"></div>
         </div>
       </div>
     </main>

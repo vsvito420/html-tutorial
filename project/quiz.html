@@ -12,7 +12,69 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
     <script src="script.js"></script>
+    <script type="module">
+      import { QuizProgressUI } from './js/roadmap.js';
+      import { injectStyles } from './js/roadmap-styles.js';
+      import { QuizManager } from './js/quiz-manager.js';
+
+      // Styles für die Roadmap einfügen
+      injectStyles();
+
+      // Quiz Manager und Progress UI initialisieren
+      let quizManager;
+      let quizProgress;
+
+      document.addEventListener('DOMContentLoaded', () => {
+        quizManager = new QuizManager();
+        
+        // Progress Container erstellen
+        const container = document.createElement('div');
+        container.className = 'quiz-progress-container';
+        document.querySelector('.quiz-container').prepend(container);
+        
+        // Initial HTML Quiz Progress anzeigen
+        quizProgress = new QuizProgressUI(container, 'html');
+        
+        // Event Listener für Quiz-Kategorie-Wechsel
+        document.querySelectorAll('.category-card').forEach(card => {
+          card.addEventListener('click', (event) => {
+            const type = event.currentTarget.dataset.type;
+            quizProgress = new QuizProgressUI(container, type);
+          });
+        });
+
+        // Event Listener für Quiz-Abschluss
+        window.addEventListener('quiz-completed', (event) => {
+          quizProgress = new QuizProgressUI(container, event.detail.category);
+        });
+
+        // Globale Funktionen für onclick-Handler
+        window.selectCategory = (category) => {
+          document.querySelectorAll('.category-card').forEach(card => {
+            if (card.dataset.type === category) {
+              card.click();
+            }
+          });
+        };
+
+        window.startQuiz = (category, difficulty) => {
+          quizManager.startQuiz(category, difficulty);
+        };
+
+        window.showCategories = () => {
+          quizManager.showCategories();
+        };
+
+        window.restartQuiz = () => {
+          quizManager.restartQuiz();
+        };
+      });
+    </script>
     <style>
+      .quiz-progress-container {
+        margin-bottom: 30px;
+      }
+
       .option-button {
         display: flex;
         align-items: center;
@@ -60,87 +122,18 @@
 
       .page-container {
         display: grid;
-        grid-template-columns: 1fr 300px;
+        grid-template-columns: 1fr;
         gap: 30px;
         max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
       }
 
-      @media (max-width: 1000px) {
-        .page-container {
-          grid-template-columns: 1fr;
-        }
-      }
-
       .quiz-container {
-        background: white;
+        background: var(--bg-secondary);
         border-radius: 8px;
         padding: 20px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      }
-
-      .roadmap-container {
-        background: white;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      }
-
-      .roadmap-title {
-        color: #4a90e2;
-        margin-top: 0;
-        margin-bottom: 20px;
-        font-size: 1.5em;
-      }
-
-      .roadmap-section {
-        margin-bottom: 30px;
-      }
-
-      .roadmap-section h3 {
-        color: #333;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .roadmap-section h3::before {
-        content: "";
-        display: block;
-        width: 20px;
-        height: 20px;
-        background: #4a90e2;
-        border-radius: 50%;
-      }
-
-      .roadmap-items {
-        margin-left: 25px;
-        padding-left: 20px;
-        border-left: 2px solid #e0e0e0;
-      }
-
-      .roadmap-item {
-        margin-bottom: 15px;
-        position: relative;
-      }
-
-      .roadmap-item::before {
-        content: "";
-        position: absolute;
-        left: -22px;
-        top: 50%;
-        width: 12px;
-        height: 12px;
-        background: white;
-        border: 2px solid #4a90e2;
-        border-radius: 50%;
-        transform: translateY(-50%);
-      }
-
-      .roadmap-item.completed::before {
-        background: #4a90e2;
+        box-shadow: 0 2px 5px var(--shadow-color);
       }
 
       .quiz-categories {
@@ -151,12 +144,13 @@
       }
 
       .category-card {
-        background: white;
+        background: var(--bg-secondary);
         padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 5px var(--shadow-color);
         cursor: pointer;
         transition: transform 0.3s ease;
+        border: 1px solid var(--border-color);
       }
 
       .category-card:hover {
@@ -164,7 +158,7 @@
       }
 
       .category-card h2 {
-        color: #4a90e2;
+        color: var(--accent-color);
         margin-top: 0;
       }
 
@@ -187,25 +181,10 @@
         opacity: 0.9;
       }
 
-      .easy {
-        background: #e6ffe6;
-        color: #006600;
-      }
-
-      .medium {
-        background: #fff3e6;
-        color: #cc6600;
-      }
-
-      .hard {
-        background: #ffe6e6;
-        color: #cc0000;
-      }
-
       .progress-container {
         width: 100%;
         height: 20px;
-        background-color: #f0f0f0;
+        background-color: var(--bg-primary);
         border-radius: 10px;
         margin: 20px 0;
         overflow: hidden;
@@ -215,17 +194,18 @@
       .progress-bar {
         width: 0%;
         height: 100%;
-        background-color: #4a90e2;
+        background-color: var(--accent-color);
         transition: width 0.3s ease;
       }
 
       .question-container {
-        background: white;
+        background: var(--bg-secondary);
         padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 5px var(--shadow-color);
         margin-bottom: 20px;
         display: none;
+        border: 1px solid var(--border-color);
       }
 
       .options-container {
@@ -236,16 +216,17 @@
 
       .option-button {
         padding: 10px 15px;
-        border: 2px solid #4a90e2;
+        border: 2px solid var(--accent-color);
         border-radius: 5px;
-        background: white;
+        background: var(--bg-secondary);
         cursor: pointer;
         transition: all 0.3s ease;
         text-align: left;
+        color: var(--text-primary);
       }
 
       .option-button:hover {
-        background: #f0f8ff;
+        background: var(--bg-primary);
       }
 
       .option-button.correct {
@@ -264,13 +245,13 @@
       }
 
       .result-container h2 {
-        color: #4a90e2;
+        color: var(--accent-color);
         margin-bottom: 20px;
       }
 
       .restart-button {
         padding: 10px 20px;
-        background: #4a90e2;
+        background: var(--accent-color);
         color: white;
         border: none;
         border-radius: 5px;
@@ -279,7 +260,7 @@
       }
 
       .restart-button:hover {
-        background: #357abd;
+        background: var(--accent-hover);
       }
 
       .back-button {
@@ -295,6 +276,16 @@
 
       .back-button:hover {
         background: #5a6268;
+      }
+
+      @media (max-width: 768px) {
+        .page-container {
+          padding: 10px;
+        }
+
+        .quiz-categories {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -312,23 +303,23 @@
         <h1>HTML & CSS Quiz</h1>
         
         <div id="categorySelection" class="quiz-categories">
-          <div class="category-card" onclick="selectCategory('html')">
+          <div class="category-card" data-type="html">
             <h2>HTML Quiz</h2>
             <p>Teste dein Wissen über HTML-Grundlagen, Strukturen und Tags.</p>
             <div class="difficulty-buttons">
-              <button class="difficulty-btn easy" onclick="event.stopPropagation(); startQuiz('html', 'easy')">Leicht</button>
-              <button class="difficulty-btn medium" onclick="event.stopPropagation(); startQuiz('html', 'medium')">Mittel</button>
-              <button class="difficulty-btn hard" onclick="event.stopPropagation(); startQuiz('html', 'hard')">Schwer</button>
+              <button class="difficulty-btn easy" onclick="startQuiz('html', 'easy')">Leicht</button>
+              <button class="difficulty-btn medium" onclick="startQuiz('html', 'medium')">Mittel</button>
+              <button class="difficulty-btn hard" onclick="startQuiz('html', 'hard')">Schwer</button>
             </div>
           </div>
 
-          <div class="category-card" onclick="selectCategory('css')">
+          <div class="category-card" data-type="css">
             <h2>CSS Quiz</h2>
             <p>Teste dein Wissen über CSS-Styling, Selektoren und Layout.</p>
             <div class="difficulty-buttons">
-              <button class="difficulty-btn easy" onclick="event.stopPropagation(); startQuiz('css', 'easy')">Leicht</button>
-              <button class="difficulty-btn medium" onclick="event.stopPropagation(); startQuiz('css', 'medium')">Mittel</button>
-              <button class="difficulty-btn hard" onclick="event.stopPropagation(); startQuiz('css', 'hard')">Schwer</button>
+              <button class="difficulty-btn easy" onclick="startQuiz('css', 'easy')">Leicht</button>
+              <button class="difficulty-btn medium" onclick="startQuiz('css', 'medium')">Mittel</button>
+              <button class="difficulty-btn hard" onclick="startQuiz('css', 'hard')">Schwer</button>
             </div>
           </div>
         </div>
@@ -351,44 +342,11 @@
           <button class="restart-button" onclick="restartQuiz()">Quiz wiederholen</button>
         </div>
       </div>
-
-      <div class="roadmap-container">
-        <h2 class="roadmap-title">Lern-Roadmap</h2>
-        
-        <div class="roadmap-section">
-          <h3>HTML Grundlagen</h3>
-          <div class="roadmap-items">
-            <div class="roadmap-item completed">Grundstruktur einer Webseite</div>
-            <div class="roadmap-item completed">Text und Überschriften</div>
-            <div class="roadmap-item">Listen und Tabellen</div>
-            <div class="roadmap-item">Links und Bilder</div>
-          </div>
-        </div>
-
-        <div class="roadmap-section">
-          <h3>CSS Grundlagen</h3>
-          <div class="roadmap-items">
-            <div class="roadmap-item completed">Selektoren und Farben</div>
-            <div class="roadmap-item">Box-Modell</div>
-            <div class="roadmap-item">Flexbox Layout</div>
-            <div class="roadmap-item">Grid Layout</div>
-          </div>
-        </div>
-
-        <div class="roadmap-section">
-          <h3>Fortgeschrittene Themen</h3>
-          <div class="roadmap-items">
-            <div class="roadmap-item">Responsive Design</div>
-            <div class="roadmap-item">Animationen</div>
-            <div class="roadmap-item">Formulare</div>
-            <div class="roadmap-item">Barrierefreiheit</div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <script>
-      const quizData = {
+      // Quiz Daten
+      window.quizData = {
         html: {
           easy: [
             {
@@ -546,134 +504,6 @@
           ]
         }
       };
-
-      let currentCategory = '';
-      let currentDifficulty = '';
-      let currentQuestions = [];
-      let currentQuestion = 0;
-      let score = 0;
-
-      function showCategories() {
-        document.getElementById('categorySelection').style.display = 'grid';
-        document.querySelector('.progress-container').style.display = 'none';
-        document.querySelector('.question-container').style.display = 'none';
-        document.querySelector('.result-container').style.display = 'none';
-      }
-
-      function startQuiz(category, difficulty) {
-        currentCategory = category;
-        currentDifficulty = difficulty;
-        currentQuestions = quizData[category][difficulty];
-        currentQuestion = 0;
-        score = 0;
-
-        document.getElementById('categorySelection').style.display = 'none';
-        document.querySelector('.progress-container').style.display = 'block';
-        document.querySelector('.question-container').style.display = 'block';
-        document.querySelector('.result-container').style.display = 'none';
-
-        showQuestion();
-      }
-
-      function createOptionContent(option) {
-        if (typeof option === 'string') {
-          return option;
-        }
-        
-        if (option.type === 'code') {
-          const pre = document.createElement('pre');
-          const code = document.createElement('code');
-          code.className = currentCategory === 'html' ? 'language-html' : 'language-css';
-          code.textContent = option.content;
-          pre.appendChild(code);
-          Prism.highlightElement(code);
-          return pre;
-        }
-      }
-
-      function showQuestion() {
-        const question = currentQuestions[currentQuestion];
-        document.getElementById('question').textContent = question.question;
-        
-        const optionsContainer = document.getElementById('options');
-        optionsContainer.innerHTML = '';
-        
-        question.options.forEach((option, index) => {
-          const button = document.createElement('button');
-          button.className = 'option-button';
-          
-          const statusIcon = document.createElement('span');
-          statusIcon.className = 'status-icon';
-          button.appendChild(statusIcon);
-          
-          const content = document.createElement('div');
-          content.className = 'option-content';
-          
-          const optionContent = createOptionContent(option);
-          if (optionContent instanceof Element) {
-            content.appendChild(optionContent);
-          } else {
-            content.textContent = optionContent;
-          }
-          
-          button.appendChild(content);
-          button.onclick = () => checkAnswer(index);
-          optionsContainer.appendChild(button);
-        });
-
-        updateProgressBar();
-      }
-
-      function updateProgressBar() {
-        const progress = (currentQuestion / currentQuestions.length) * 100;
-        document.querySelector('.progress-bar').style.width = `${progress}%`;
-      }
-
-      function checkAnswer(selectedIndex) {
-        const question = currentQuestions[currentQuestion];
-        const buttons = document.querySelectorAll('.option-button');
-        
-        buttons.forEach(button => {
-          button.disabled = true;
-          const statusIcon = button.querySelector('.status-icon');
-          statusIcon.textContent = '✗';
-        });
-        
-        if (selectedIndex === question.correct) {
-          buttons[selectedIndex].classList.add('correct');
-          buttons[selectedIndex].querySelector('.status-icon').textContent = '✓';
-          score++;
-        } else {
-          buttons[selectedIndex].classList.add('incorrect');
-          buttons[question.correct].classList.add('correct');
-          buttons[question.correct].querySelector('.status-icon').textContent = '✓';
-        }
-
-        setTimeout(() => {
-          currentQuestion++;
-          if (currentQuestion < currentQuestions.length) {
-            showQuestion();
-          } else {
-            showResult();
-          }
-        }, 1500);
-      }
-
-      function showResult() {
-        document.querySelector('.question-container').style.display = 'none';
-        document.querySelector('.progress-container').style.display = 'none';
-        const resultContainer = document.getElementById('result');
-        resultContainer.style.display = 'block';
-        document.getElementById('score').textContent = score;
-        document.getElementById('total').textContent = currentQuestions.length;
-      }
-
-      function restartQuiz() {
-        startQuiz(currentCategory, currentDifficulty);
-      }
-
-      // Quiz-Kategorien initial anzeigen
-      showCategories();
     </script>
   </body>
 </html>
