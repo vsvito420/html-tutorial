@@ -294,7 +294,9 @@
                 führe den Schüler mit Hinweisen zur richtigen Lösung. Zeige auch Beispielcode für die Verbesserungen.
                 
                 WICHTIG: Wenn du HTML-Tags in deiner Antwort erwähnst (z.B. div, p, etc.), 
-                verwende IMMER einen Inline-Code-Block mit Backticks, also z.B. \`<div>\` statt einfach <div>.
+                formatiere sie IMMER als HTML-Code mit code-Tags und HTML-Entities. 
+                Beispiel: Verwende \"<code>&lt;div&gt;</code>\" für den div-Tag.
+                Schreibe die Tags NICHT direkt und verwende KEINE Backticks.
                 
                 Antworte im Format:
                 {
@@ -401,13 +403,16 @@
                 conversation.push({ role: 'user', content: code });
                 conversation.push({ role: 'assistant', content: result.feedback });
                 
-                // KI-Antwort zum Chat hinzufügen
+                // KI-Antwort verarbeiten und zum Chat hinzufügen
+                const processedFeedback = result.feedback.replace(/`<([^>]+)>`/g, '<code>&lt;$1&gt;</code>');
+                const processedHint = result.hint ? result.hint.replace(/`<([^>]+)>`/g, '<code>&lt;$1&gt;</code>') : '';
+                
                 const aiMessageDiv = document.createElement('div');
                 aiMessageDiv.className = 'chat-message ai';
                 aiMessageDiv.innerHTML = `
                     <div class="message-content">
-                        <p>${result.feedback}</p>
-                        ${result.hint ? `<p><strong>Tipp:</strong> ${result.hint}</p>` : ''}
+                        <p>${processedFeedback}</p>
+                        ${processedHint ? `<p><strong>Tipp:</strong> ${processedHint}</p>` : ''}
                         ${result.example ? `
                             <p><strong>Hier ist ein Beispiel:</strong></p>
                             <pre><code class="language-html">${result.example}</code></pre>
