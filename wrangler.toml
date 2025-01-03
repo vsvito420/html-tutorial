@@ -1,0 +1,5 @@
+name = "html-tutorial"
+account_id = "15045eabcbd9a4df6f24bd479caeb22a"
+
+[site]
+bucket = "./project"
