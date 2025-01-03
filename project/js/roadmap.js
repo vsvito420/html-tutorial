@@ -94,6 +94,56 @@ class ProgressTracker {
     }
     progress.quiz[type].scores[quizId] = score;
     this.storage.setItem('tutorialProgress', JSON.stringify(progress));
+    
+    // Event für sofortige UI-Aktualisierung auslösen
+    const event = new CustomEvent('quiz-progress-updated', {
+      detail: { type, difficulty, score }
+    });
+    window.dispatchEvent(event);
+  }
+
+  canStartTutorial(type, itemId) {
+    const data = roadmapData[type];
+    let targetItem = null;
+    let section = null;
+
+    // Finde das Item und seine Sektion
+    for (const sec of data.sections) {
+      const item = sec.items.find(i => i.id === itemId);
+      if (item) {
+        targetItem = item;
+        section = sec;
+        break;
+      }
+    }
+
+    if (!targetItem) return false;
+
+    const progress = this.getProgress();
+    
+    // Prüfe ob vorherige Sektionen abgeschlossen sind
+    const sectionIndex = data.sections.indexOf(section);
+    if (sectionIndex > 0) {
+      for (let i = 0; i < sectionIndex; i++) {
+        const prevSection = data.sections[i];
+        const allCompleted = prevSection.items.every(item => 
+          progress[type].completed.includes(item.id)
+        );
+        if (!allCompleted) return false;
+      }
+    }
+
+    // Prüfe ob vorherige Items in der gleichen Sektion abgeschlossen sind
+    const itemIndex = section.items.indexOf(targetItem);
+    if (itemIndex > 0) {
+      for (let i = 0; i < itemIndex; i++) {
+        if (!progress[type].completed.includes(section.items[i].id)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   isCompleted(type, itemId) {
@@ -144,9 +194,18 @@ class RoadmapUI {
 
   renderItem(item, progress) {
     const isCompleted = this.progressTracker.isCompleted(this.type, item.id);
+    const canStart = this.progressTracker.canStartTutorial(this.type, item.id);
+    const classes = [
+      'roadmap-item',
+      isCompleted ? 'completed' : '',
+      !isCompleted && !canStart ? 'locked' : ''
+    ].filter(Boolean).join(' ');
+
     return `
-      <div class="roadmap-item ${isCompleted ? 'completed' : ''}" 
-           data-id="${item.id}">
+      <div class="${classes}" 
+           data-id="${item.id}"
+           title="${!canStart ? 'Vorherige Tutorials müssen zuerst abgeschlossen werden' : ''}"
+           style="${!canStart ? 'cursor: not-allowed; opacity: 0.6;' : ''}">
         ${item.title}
       </div>
     `;
@@ -190,7 +249,7 @@ class QuizProgressUI {
     };
 
     return `
-      <div class="quiz-score ${difficulty}">
+      <div class="quiz-score ${difficulty}" style="--score-width: ${score}%">
         <span class="difficulty-label">${difficultyText[difficulty]}</span>
         <span class="score">${score}%</span>
       </div>

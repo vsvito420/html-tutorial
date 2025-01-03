@@ -1,5 +1,5 @@
 // Quiz Manager für die Verwaltung des Quiz-Zustands und Fortschritts
-import { ProgressTracker } from './roadmap.js';
+import { ProgressTracker, QuizProgressUI } from './roadmap.js';
 
 export class QuizManager {
   constructor() {
@@ -9,6 +9,14 @@ export class QuizManager {
     this.currentQuestions = [];
     this.currentQuestion = 0;
     this.score = 0;
+
+    // Event Listener für Quiz-Fortschritt-Updates
+    window.addEventListener('quiz-progress-updated', (event) => {
+      const progressContainer = document.querySelector('.quiz-progress-container');
+      if (progressContainer) {
+        new QuizProgressUI(progressContainer, event.detail.type);
+      }
+    });
   }
 
   startQuiz(category, difficulty) {
@@ -118,20 +126,17 @@ export class QuizManager {
     document.getElementById('score').textContent = this.score;
     document.getElementById('total').textContent = this.currentQuestions.length;
 
-    // Fortschritt speichern
+    // Fortschritt speichern und UI sofort aktualisieren
     const scorePercentage = Math.round((this.score / this.currentQuestions.length) * 100);
-    this.progressTracker.markQuizComplete(this.currentCategory, this.currentDifficulty, scorePercentage);
-
-    // Quiz Progress UI aktualisieren
-    const event = new CustomEvent('quiz-completed', {
-      detail: {
-        category: this.currentCategory,
-        difficulty: this.currentDifficulty,
-        score: scorePercentage
-      }
-    });
-    window.dispatchEvent(event);
+    
+    // Progress Container aktualisieren
+    const progressContainer = document.querySelector('.quiz-progress-container');
+    if (progressContainer) {
+      this.progressTracker.markQuizComplete(this.currentCategory, this.currentDifficulty, scorePercentage);
+      new QuizProgressUI(progressContainer, this.currentCategory);
+    }
   }
+
 
   showCategories() {
     document.getElementById('categorySelection').style.display = 'grid';

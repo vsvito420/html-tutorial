@@ -107,13 +107,38 @@
 
       .option-button pre {
         margin: 0;
-        padding: 0;
-        background: transparent;
+        padding: 8px 12px;
+        background: var(--code-bg);
+        border-radius: 6px;
+        width: 100%;
       }
 
       .option-button pre code {
         padding: 0;
         background: transparent;
+        color: var(--code-text);
+        font-family: 'Fira Code', monospace;
+      }
+
+      [data-theme="dark"] .option-button pre {
+        background: #1e1e1e;
+      }
+
+      [data-theme="dark"] .option-button pre code {
+        color: #d4d4d4;
+      }
+
+      .option-button.correct pre,
+      .option-button.incorrect pre {
+        background: transparent;
+      }
+
+      .option-button.correct pre code {
+        color: #006600;
+      }
+
+      .option-button.incorrect pre code {
+        color: #cc0000;
       }
 
       .option-content {
@@ -171,14 +196,37 @@
       .difficulty-btn {
         padding: 8px 15px;
         border: none;
-        border-radius: 4px;
+        border-radius: 6px;
         cursor: pointer;
         font-size: 14px;
-        transition: opacity 0.3s;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        color: white;
       }
 
       .difficulty-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .difficulty-btn.easy {
+        background: #28a745;
+      }
+
+      .difficulty-btn.medium {
+        background: #ffa500;
+      }
+
+      .difficulty-btn.hard {
+        background: #dc3545;
+      }
+
+      [data-theme="dark"] .difficulty-btn {
         opacity: 0.9;
+      }
+
+      [data-theme="dark"] .difficulty-btn:hover {
+        opacity: 1;
       }
 
       .progress-container {
@@ -215,28 +263,42 @@
       }
 
       .option-button {
-        padding: 10px 15px;
-        border: 2px solid var(--accent-color);
-        border-radius: 5px;
+        padding: 15px;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
         background: var(--bg-secondary);
         cursor: pointer;
         transition: all 0.3s ease;
         text-align: left;
         color: var(--text-primary);
+        width: 100%;
       }
 
-      .option-button:hover {
-        background: var(--bg-primary);
+      .option-button:hover:not(.correct):not(.incorrect) {
+        border-color: var(--accent-color);
+        transform: translateX(5px);
       }
 
       .option-button.correct {
-        background: #d4edda;
+        background: rgba(40, 167, 69, 0.1);
         border-color: #28a745;
       }
 
       .option-button.incorrect {
-        background: #f8d7da;
+        background: rgba(220, 53, 69, 0.1);
         border-color: #dc3545;
+      }
+
+      [data-theme="dark"] .option-button {
+        border-color: var(--border-color);
+      }
+
+      [data-theme="dark"] .option-button.correct {
+        background: rgba(40, 167, 69, 0.2);
+      }
+
+      [data-theme="dark"] .option-button.incorrect {
+        background: rgba(220, 53, 69, 0.2);
       }
 
       .result-container {
