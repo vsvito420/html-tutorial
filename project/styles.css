@@ -1,6 +1,83 @@
 /* Import der Inter Schriftart */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* CSS Variablen für Theme */
+:root {
+  /* Light Theme (Standard) */
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --border-color: #e2e8f0;
+  --accent-color: #4a90e2;
+  --accent-hover: #357abd;
+  --shadow-color: rgba(0,0,0,0.05);
+  --code-bg: #2d3748;
+  --code-text: #e2e8f0;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --bg-primary: #1a202c;
+  --bg-secondary: #2d3748;
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --border-color: #4a5568;
+  --accent-color: #60a5fa;
+  --accent-hover: #3b82f6;
+  --shadow-color: rgba(0,0,0,0.2);
+  --code-bg: #111827;
+  --code-text: #f9fafb;
+}
+
+/* Zusätzliche Dark Theme Anpassungen */
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .task-card,
+[data-theme="dark"] .quiz-container,
+[data-theme="dark"] .roadmap-container {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .feature-list li::before,
+[data-theme="dark"] .task-steps li::before {
+  color: var(--accent-color);
+}
+
+[data-theme="dark"] .task-number {
+  background: var(--accent-color);
+  color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .difficulty {
+  opacity: 0.9;
+}
+
+[data-theme="dark"] .task-hint,
+[data-theme="dark"] .explanation {
+  background: var(--bg-primary);
+  border-left-color: var(--accent-color);
+}
+
+[data-theme="dark"] .preview-box {
+  border-color: var(--border-color);
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .nav-button {
+  background: var(--accent-color);
+  color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .nav-button:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+[data-theme="dark"] .nav-button:disabled {
+  background: var(--border-color);
+  opacity: 0.7;
+}
+
 /* Reset und Basis-Styles */
 * {
   box-sizing: border-box;
@@ -11,8 +88,8 @@
 body {
   font-family: 'Inter', sans-serif;
   line-height: 1.5;
-  background: #f8f9fa;
-  color: #2d3748;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 /* Container */
@@ -24,9 +101,9 @@ body {
 
 /* Navigation */
 nav {
-  background: white;
+  background: var(--bg-secondary);
   padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px var(--shadow-color);
   margin-bottom: 2rem;
   display: flex;
   gap: 1.5rem;
@@ -36,7 +113,7 @@ nav {
 
 nav a {
   text-decoration: none;
-  color: #4a5568;
+  color: var(--text-secondary);
   font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -44,42 +121,58 @@ nav a {
 }
 
 nav a:hover {
-  background: #f7fafc;
-  color: #4a90e2;
+  background: var(--bg-primary);
+  color: var(--accent-color);
 }
 
 nav a[aria-current="page"] {
-  background: #4a90e2;
-  color: white;
+  background: var(--accent-color);
+  color: var(--bg-secondary);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
 }
 
 /* Hauptinhalt */
 main {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px var(--shadow-color);
   margin: 0 auto;
   max-width: 1200px;
 }
 
 /* Überschriften */
 h1 {
-  color: #2d3748;
+  color: var(--text-primary);
   font-size: 2.5em;
   margin-bottom: 1rem;
   font-weight: 700;
 }
 
 h2 {
-  color: #2d3748;
+  color: var(--text-primary);
   font-size: 1.8em;
   margin: 2rem 0 1rem;
   font-weight: 600;
 }
 
 h3 {
-  color: #4a5568;
+  color: var(--text-secondary);
   font-size: 1.4em;
   margin: 1.5rem 0 1rem;
   font-weight: 600;
@@ -87,20 +180,20 @@ h3 {
 
 /* Text */
 p {
-  color: #4a5568;
+  color: var(--text-secondary);
   margin-bottom: 1rem;
   line-height: 1.6;
 }
 
 /* Links */
 a {
-  color: #4a90e2;
+  color: var(--accent-color);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 a:hover {
-  color: #357abd;
+  color: var(--accent-hover);
 }
 
 /* Listen */
@@ -123,21 +216,21 @@ li {
 }
 
 .feature-card {
-  background: white;
+  background: var(--bg-secondary);
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  border: 1px solid var(--border-color);
   transition: all 0.3s ease;
 }
 
 .feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 15px var(--shadow-color);
 }
 
 .feature-card h2 {
-  color: #4a90e2;
+  color: var(--accent-color);
   margin-bottom: 1rem;
   font-size: 1.5em;
 }
@@ -206,8 +299,8 @@ li {
 
 /* Code-Blöcke */
 pre {
-  background: #2d3748;
-  color: #e2e8f0;
+  background: var(--code-bg);
+  color: var(--code-text);
   padding: 1.5rem;
   border-radius: 8px;
   overflow-x: auto;
@@ -231,26 +324,26 @@ code {
 /* Code und Preview Sektionen */
 .code-section,
 .preview-section {
-  background: white;
+  background: var(--bg-secondary);
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  border: 1px solid var(--border-color);
 }
 
 .preview-box {
-  border: 2px dashed #e2e8f0;
+  border: 2px dashed var(--border-color);
   border-radius: 8px;
   padding: 1.5rem;
   min-height: 100px;
-  background: #f8fafc;
+  background: var(--bg-primary);
 }
 
 .explanation {
   margin-top: 1.5rem;
   padding: 1.2rem;
-  background: #f8fafc;
-  border-left: 4px solid #4a90e2;
+  background: var(--bg-primary);
+  border-left: 4px solid var(--accent-color);
   border-radius: 0 8px 8px 0;
   font-size: 0.95em;
   line-height: 1.6;
@@ -261,7 +354,7 @@ code {
   text-align: center;
   margin-top: 4rem;
   padding: 2rem;
-  background: #f8fafc;
+  background: var(--bg-primary);
   border-radius: 12px;
 }
 
