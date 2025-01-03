@@ -4,8 +4,8 @@
   "description": "Ein Tutorial für HTML, CSS und JavaScript",
   "main": "index.js",
   "scripts": {
-    "build": "echo \"No build step required\"",
-    "deploy": "wrangler deploy"
+    "pages:dev": "wrangler pages dev ./project",
+    "pages:deploy": "wrangler pages deploy ./project"
   },
   "keywords": ["html", "css", "javascript", "tutorial"],
   "author": "",
