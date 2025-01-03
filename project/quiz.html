@@ -5,89 +5,378 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-      .quiz-container {
-        max-width: 800px;
+      body {
+        font-family: 'Inter', sans-serif;
+        background: #f8f9fa;
+      }
+
+      .page-container {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 30px;
+        max-width: 1300px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 30px;
+      }
+
+      @media (max-width: 1100px) {
+        .page-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .quiz-container {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      }
+
+      .quiz-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .quiz-header h1 {
+        color: #2d3748;
+        font-size: 2.5em;
+        margin-bottom: 15px;
+      }
+
+      .quiz-header p {
+        color: #718096;
+        font-size: 1.1em;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .quiz-categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+      }
+
+      .category-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border: 1px solid #e2e8f0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      }
+
+      .category-card h2 {
+        color: #2d3748;
+        font-size: 1.5em;
+        margin: 0 0 15px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .category-card h2::before {
+        content: "";
+        display: block;
+        width: 8px;
+        height: 24px;
+        background: #4a90e2;
+        border-radius: 4px;
+      }
+
+      .category-card p {
+        color: #718096;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .difficulty-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .difficulty-btn {
+        flex: 1;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        min-width: 80px;
+      }
+
+      .difficulty-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .easy {
+        background: #ebfaf0;
+        color: #276749;
+      }
+
+      .easy:hover {
+        background: #c6f6d5;
+      }
+
+      .medium {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .medium:hover {
+        background: #fde68a;
+      }
+
+      .hard {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .hard:hover {
+        background: #fecaca;
       }
 
       .progress-container {
         width: 100%;
-        height: 20px;
-        background-color: #f0f0f0;
-        border-radius: 10px;
-        margin: 20px 0;
+        height: 8px;
+        background-color: #e2e8f0;
+        border-radius: 4px;
+        margin: 30px 0;
         overflow: hidden;
+        display: none;
       }
 
       .progress-bar {
         width: 0%;
         height: 100%;
-        background-color: #4a90e2;
+        background: linear-gradient(90deg, #4a90e2, #357abd);
         transition: width 0.3s ease;
       }
 
       .question-container {
         background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         margin-bottom: 20px;
+        display: none;
+      }
+
+      .question-container h2 {
+        color: #2d3748;
+        font-size: 1.4em;
+        margin-bottom: 25px;
       }
 
       .options-container {
         display: grid;
-        gap: 10px;
-        margin-top: 15px;
+        gap: 15px;
       }
 
       .option-button {
-        padding: 10px 15px;
-        border: 2px solid #4a90e2;
-        border-radius: 5px;
+        padding: 15px 20px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
         background: white;
         cursor: pointer;
         transition: all 0.3s ease;
         text-align: left;
+        font-size: 1.1em;
+        color: #4a5568;
       }
 
       .option-button:hover {
-        background: #f0f8ff;
+        background: #f7fafc;
+        border-color: #4a90e2;
       }
 
       .option-button.correct {
-        background: #d4edda;
-        border-color: #28a745;
+        background: #c6f6d5;
+        border-color: #48bb78;
+        color: #276749;
       }
 
       .option-button.incorrect {
-        background: #f8d7da;
-        border-color: #dc3545;
+        background: #fed7d7;
+        border-color: #f56565;
+        color: #c53030;
       }
 
       .result-container {
         text-align: center;
         display: none;
+        padding: 40px 20px;
       }
 
       .result-container h2 {
-        color: #4a90e2;
+        color: #2d3748;
+        font-size: 2em;
         margin-bottom: 20px;
       }
 
+      .result-container p {
+        color: #718096;
+        font-size: 1.2em;
+        margin-bottom: 30px;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .back-button, .restart-button {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .back-button {
+        background: #edf2f7;
+        color: #4a5568;
+      }
+
+      .back-button:hover {
+        background: #e2e8f0;
+      }
+
       .restart-button {
-        padding: 10px 20px;
         background: #4a90e2;
         color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
       }
 
       .restart-button:hover {
         background: #357abd;
+      }
+
+      .roadmap-container {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      }
+
+      .roadmap-title {
+        color: #2d3748;
+        margin: 0 0 25px 0;
+        font-size: 1.5em;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #e2e8f0;
+      }
+
+      .roadmap-section {
+        margin-bottom: 35px;
+      }
+
+      .roadmap-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .roadmap-section h3 {
+        color: #2d3748;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.2em;
+      }
+
+      .roadmap-section h3::before {
+        content: "";
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: #4a90e2;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .roadmap-items {
+        margin-left: 30px;
+        padding-left: 25px;
+        border-left: 2px solid #e2e8f0;
+      }
+
+      .roadmap-item {
+        margin-bottom: 20px;
+        position: relative;
+        padding: 12px 20px;
+        background: #f8fafc;
+        border-radius: 8px;
+        color: #4a5568;
+        transition: all 0.3s ease;
+      }
+
+      .roadmap-item:hover {
+        background: #f1f5f9;
+        transform: translateX(5px);
+      }
+
+      .roadmap-item::before {
+        content: "";
+        position: absolute;
+        left: -37px;
+        top: 50%;
+        width: 16px;
+        height: 16px;
+        background: white;
+        border: 2px solid #4a90e2;
+        border-radius: 50%;
+        transform: translateY(-50%);
+        transition: all 0.3s ease;
+      }
+
+      .roadmap-item.completed {
+        color: #276749;
+        background: #f0fff4;
+      }
+
+      .roadmap-item.completed::before {
+        background: #4a90e2;
+        border-color: #4a90e2;
+      }
+
+      @media (max-width: 768px) {
+        .page-container {
+          padding: 15px;
+        }
+
+        .quiz-header h1 {
+          font-size: 2em;
+        }
+
+        .category-card {
+          padding: 20px;
+        }
+
+        .difficulty-buttons {
+          flex-direction: column;
+        }
+
+        .difficulty-btn {
+          width: 100%;
+        }
+
+        .option-button {
+          padding: 12px 15px;
+          font-size: 1em;
+        }
       }
     </style>
   </head>
@@ -100,85 +389,281 @@
       <a href="/quiz.html" aria-current="page">Quiz</a>
     </nav>
 
-    <main>
+    <div class="page-container">
       <div class="quiz-container">
-        <h1>HTML & CSS Quiz</h1>
+        <div class="quiz-header">
+          <h1>HTML & CSS Quiz</h1>
+          <p>Teste dein Wissen in verschiedenen Bereichen der Webentwicklung. Wähle eine Kategorie und einen Schwierigkeitsgrad.</p>
+        </div>
+        
+        <div id="categorySelection" class="quiz-categories">
+          <div class="category-card">
+            <h2>HTML Quiz</h2>
+            <p>Teste dein Wissen über HTML-Grundlagen, Strukturen und Tags. Von einfachen Elementen bis zu komplexen Layouts.</p>
+            <div class="difficulty-buttons">
+              <button class="difficulty-btn easy" onclick="startQuiz('html', 'easy')">Leicht</button>
+              <button class="difficulty-btn medium" onclick="startQuiz('html', 'medium')">Mittel</button>
+              <button class="difficulty-btn hard" onclick="startQuiz('html', 'hard')">Schwer</button>
+            </div>
+          </div>
+
+          <div class="category-card">
+            <h2>CSS Quiz</h2>
+            <p>Teste dein Wissen über CSS-Styling, Selektoren und Layout. Von Grundlagen bis zu fortgeschrittenen Techniken.</p>
+            <div class="difficulty-buttons">
+              <button class="difficulty-btn easy" onclick="startQuiz('css', 'easy')">Leicht</button>
+              <button class="difficulty-btn medium" onclick="startQuiz('css', 'medium')">Mittel</button>
+              <button class="difficulty-btn hard" onclick="startQuiz('css', 'hard')">Schwer</button>
+            </div>
+          </div>
+        </div>
+
         <div class="progress-container">
           <div class="progress-bar"></div>
         </div>
+
         <div class="question-container">
           <h2 id="question"></h2>
           <div class="options-container" id="options">
             <!-- Optionen werden durch JavaScript eingefügt -->
           </div>
         </div>
+
         <div class="result-container" id="result">
           <h2>Quiz beendet!</h2>
           <p>Du hast <span id="score">0</span> von <span id="total">0</span> Fragen richtig beantwortet.</p>
-          <button class="restart-button" onclick="restartQuiz()">Quiz neu starten</button>
+          <div class="button-group">
+            <button class="back-button" onclick="showCategories()">Zurück zur Auswahl</button>
+            <button class="restart-button" onclick="restartQuiz()">Quiz wiederholen</button>
+          </div>
         </div>
       </div>
-    </main>
+
+      <div class="roadmap-container">
+        <h2 class="roadmap-title">Lern-Roadmap</h2>
+        
+        <div class="roadmap-section">
+          <h3>HTML Grundlagen</h3>
+          <div class="roadmap-items">
+            <div class="roadmap-item completed">Grundstruktur einer Webseite</div>
+            <div class="roadmap-item completed">Text und Überschriften</div>
+            <div class="roadmap-item">Listen und Tabellen</div>
+            <div class="roadmap-item">Links und Bilder</div>
+          </div>
+        </div>
+
+        <div class="roadmap-section">
+          <h3>CSS Grundlagen</h3>
+          <div class="roadmap-items">
+            <div class="roadmap-item completed">Selektoren und Farben</div>
+            <div class="roadmap-item">Box-Modell</div>
+            <div class="roadmap-item">Flexbox Layout</div>
+            <div class="roadmap-item">Grid Layout</div>
+          </div>
+        </div>
+
+        <div class="roadmap-section">
+          <h3>Fortgeschrittene Themen</h3>
+          <div class="roadmap-items">
+            <div class="roadmap-item">Responsive Design</div>
+            <div class="roadmap-item">Animationen</div>
+            <div class="roadmap-item">Formulare</div>
+            <div class="roadmap-item">Barrierefreiheit</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script>
-      const questions = [
-        {
-          question: "Was ist HTML?",
-          options: [
-            "Eine Programmiersprache",
-            "Eine Auszeichnungssprache",
-            "Ein Texteditor",
-            "Ein Webbrowser"
+      const quizData = {
+        html: {
+          easy: [
+            {
+              question: "Was ist HTML?",
+              options: [
+                "Eine Programmiersprache",
+                "Eine Auszeichnungssprache",
+                "Ein Texteditor",
+                "Ein Webbrowser"
+              ],
+              correct: 1
+            },
+            {
+              question: "Welches HTML-Element wird für die größte Überschrift verwendet?",
+              options: [
+                "<h6>",
+                "<heading>",
+                "<h1>",
+                "<head>"
+              ],
+              correct: 2
+            },
+            {
+              question: "Wie erstellt man einen Link in HTML?",
+              options: [
+                "<link>www.example.com</link>",
+                "<a href='www.example.com'>Link</a>",
+                "<url>www.example.com</url>",
+                "<href>www.example.com</href>"
+              ],
+              correct: 1
+            }
           ],
-          correct: 1
+          medium: [
+            {
+              question: "Welches Attribut wird verwendet, um ein Bild zu beschreiben, wenn es nicht geladen werden kann?",
+              options: [
+                "title",
+                "description",
+                "alt",
+                "text"
+              ],
+              correct: 2
+            },
+            {
+              question: "Welches Element wird für eine nummerierte Liste verwendet?",
+              options: [
+                "<ul>",
+                "<li>",
+                "<ol>",
+                "<dl>"
+              ],
+              correct: 2
+            }
+          ],
+          hard: [
+            {
+              question: "Welches HTML5 Element wird für eine Navigationsleiste verwendet?",
+              options: [
+                "<navigation>",
+                "<navbar>",
+                "<nav>",
+                "<menu>"
+              ],
+              correct: 2
+            },
+            {
+              question: "Wie definiert man den Zeichensatz für eine HTML-Seite?",
+              options: [
+                "<charset>UTF-8</charset>",
+                "<meta charset='UTF-8'>",
+                "<encoding>UTF-8</encoding>",
+                "<format type='UTF-8'>"
+              ],
+              correct: 1
+            }
+          ]
         },
-        {
-          question: "Welches HTML-Element wird für die größte Überschrift verwendet?",
-          options: [
-            "<h6>",
-            "<heading>",
-            "<h1>",
-            "<head>"
+        css: {
+          easy: [
+            {
+              question: "Was bedeutet CSS?",
+              options: [
+                "Computer Style Sheets",
+                "Creative Style System",
+                "Cascading Style Sheets",
+                "Colorful Style Sheets"
+              ],
+              correct: 2
+            },
+            {
+              question: "Welche CSS-Eigenschaft ändert die Textfarbe?",
+              options: [
+                "text-color",
+                "font-color",
+                "color",
+                "text-style"
+              ],
+              correct: 2
+            },
+            {
+              question: "Wie bindet man eine externe CSS-Datei ein?",
+              options: [
+                "<style src='style.css'>",
+                "<link href='style.css' rel='stylesheet'>",
+                "<css>style.css</css>",
+                "<script src='style.css'>"
+              ],
+              correct: 1
+            }
           ],
-          correct: 2
-        },
-        {
-          question: "Was bedeutet CSS?",
-          options: [
-            "Computer Style Sheets",
-            "Creative Style System",
-            "Cascading Style Sheets",
-            "Colorful Style Sheets"
+          medium: [
+            {
+              question: "Welche Eigenschaft wird für flexible Box-Layouts verwendet?",
+              options: [
+                "flexbox",
+                "display: flex",
+                "box-flex",
+                "flex-display"
+              ],
+              correct: 1
+            },
+            {
+              question: "Was bewirkt 'margin: 10px 20px'?",
+              options: [
+                "10px oben/unten, 20px links/rechts",
+                "10px links/rechts, 20px oben/unten",
+                "10px oben, 20px andere Seiten",
+                "20px oben, 10px andere Seiten"
+              ],
+              correct: 0
+            }
           ],
-          correct: 2
-        },
-        {
-          question: "Wie bindet man eine externe CSS-Datei ein?",
-          options: [
-            "<style src='style.css'>",
-            "<link href='style.css' rel='stylesheet'>",
-            "<css>style.css</css>",
-            "<script src='style.css'>"
-          ],
-          correct: 1
-        },
-        {
-          question: "Welche CSS-Eigenschaft ändert die Textfarbe?",
-          options: [
-            "text-color",
-            "font-color",
-            "color",
-            "text-style"
-          ],
-          correct: 2
+          hard: [
+            {
+              question: "Welcher Selektor hat die höchste Spezifität?",
+              options: [
+                ".class",
+                "#id",
+                "element",
+                "element.class"
+              ],
+              correct: 1
+            },
+            {
+              question: "Was bedeutet 'position: absolute'?",
+              options: [
+                "Element ist relativ zum Viewport positioniert",
+                "Element ist relativ zum nächsten positionierten Elternelement positioniert",
+                "Element behält seine normale Position im Dokumentfluss",
+                "Element schwebt über anderen Elementen"
+              ],
+              correct: 1
+            }
+          ]
         }
-      ];
+      };
 
+      let currentCategory = '';
+      let currentDifficulty = '';
+      let currentQuestions = [];
       let currentQuestion = 0;
       let score = 0;
 
+      function showCategories() {
+        document.getElementById('categorySelection').style.display = 'grid';
+        document.querySelector('.progress-container').style.display = 'none';
+        document.querySelector('.question-container').style.display = 'none';
+        document.querySelector('.result-container').style.display = 'none';
+      }
+
+      function startQuiz(category, difficulty) {
+        currentCategory = category;
+        currentDifficulty = difficulty;
+        currentQuestions = quizData[category][difficulty];
+        currentQuestion = 0;
+        score = 0;
+
+        document.getElementById('categorySelection').style.display = 'none';
+        document.querySelector('.progress-container').style.display = 'block';
+        document.querySelector('.question-container').style.display = 'block';
+        document.querySelector('.result-container').style.display = 'none';
+
+        showQuestion();
+      }
+
       function showQuestion() {
-        const question = questions[currentQuestion];
+        const question = currentQuestions[currentQuestion];
         document.getElementById('question').textContent = question.question;
         
         const optionsContainer = document.getElementById('options');
@@ -196,12 +681,12 @@
       }
 
       function updateProgressBar() {
-        const progress = (currentQuestion / questions.length) * 100;
+        const progress = (currentQuestion / currentQuestions.length) * 100;
         document.querySelector('.progress-bar').style.width = `${progress}%`;
       }
 
       function checkAnswer(selectedIndex) {
-        const question = questions[currentQuestion];
+        const question = currentQuestions[currentQuestion];
         const buttons = document.querySelectorAll('.option-button');
         
         buttons.forEach(button => button.disabled = true);
@@ -216,7 +701,7 @@
 
         setTimeout(() => {
           currentQuestion++;
-          if (currentQuestion < questions.length) {
+          if (currentQuestion < currentQuestions.length) {
             showQuestion();
           } else {
             showResult();
@@ -226,22 +711,19 @@
 
       function showResult() {
         document.querySelector('.question-container').style.display = 'none';
+        document.querySelector('.progress-container').style.display = 'none';
         const resultContainer = document.getElementById('result');
         resultContainer.style.display = 'block';
         document.getElementById('score').textContent = score;
-        document.getElementById('total').textContent = questions.length;
+        document.getElementById('total').textContent = currentQuestions.length;
       }
 
       function restartQuiz() {
-        currentQuestion = 0;
-        score = 0;
-        document.querySelector('.question-container').style.display = 'block';
-        document.getElementById('result').style.display = 'none';
-        showQuestion();
+        startQuiz(currentCategory, currentDifficulty);
       }
 
-      // Quiz starten
-      showQuestion();
+      // Quiz-Kategorien initial anzeigen
+      showCategories();
     </script>
   </body>
 </html>
