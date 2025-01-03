@@ -5,59 +5,85 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+      .intro {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 3rem auto;
+      }
+
+      .intro p {
+        font-size: 1.1em;
+        color: #4a5568;
+      }
+
       .task-list {
-        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
         padding: 0;
+        list-style: none;
       }
 
       .task-card {
         background: white;
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+      }
+
+      .task-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
       }
 
       .task-header {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 15px;
+        gap: 15px;
+        margin-bottom: 20px;
       }
 
       .task-number {
         background: #4a90e2;
         color: white;
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
+        flex-shrink: 0;
       }
 
       .task-title {
-        font-size: 1.2em;
+        font-size: 1.3em;
         margin: 0;
-        color: #333;
+        color: #2d3748;
+        flex-grow: 1;
       }
 
       .task-description {
-        color: #666;
-        margin-bottom: 15px;
+        color: #4a5568;
+        margin-bottom: 20px;
+        line-height: 1.6;
       }
 
       .task-steps {
         list-style: none;
         padding: 0;
+        margin-bottom: 20px;
       }
 
       .task-steps li {
-        margin-bottom: 8px;
-        padding-left: 20px;
+        margin-bottom: 12px;
+        padding-left: 25px;
         position: relative;
+        color: #4a5568;
       }
 
       .task-steps li::before {
@@ -68,18 +94,20 @@
       }
 
       .task-hint {
-        background: #f0f8ff;
-        padding: 10px 15px;
+        background: #f8fafc;
+        padding: 15px 20px;
         border-left: 4px solid #4a90e2;
-        margin-top: 15px;
-        font-size: 0.9em;
+        border-radius: 0 8px 8px 0;
+        margin-top: 20px;
+        font-size: 0.95em;
+        color: #4a5568;
       }
 
       .difficulty {
         font-size: 0.8em;
-        padding: 3px 8px;
+        padding: 5px 12px;
         border-radius: 12px;
-        margin-left: auto;
+        font-weight: 500;
       }
 
       .easy {
@@ -98,16 +126,34 @@
       }
 
       .example-link {
-        display: inline-block;
-        margin-top: 10px;
+        display: inline-flex;
+        align-items: center;
+        margin-top: 15px;
         color: #4a90e2;
         text-decoration: none;
-        font-weight: bold;
-        transition: color 0.3s;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        gap: 8px;
       }
 
       .example-link:hover {
         color: #357abd;
+        transform: translateX(5px);
+      }
+
+      .example-link::before {
+        content: "👉";
+      }
+
+      @media (max-width: 768px) {
+        .task-list {
+          grid-template-columns: 1fr;
+          padding: 0 15px;
+        }
+
+        .intro {
+          padding: 0 15px;
+        }
       }
     </style>
   </head>
@@ -121,13 +167,14 @@
     </nav>
 
     <main>
-      <h1>CSS Aufgaben für KiberOne Schüler</h1>
-      
-      <p class="intro">
-        Willkommen zu den CSS-Übungen! Hier findest du spannende Aufgaben, 
-        mit denen du deine CSS-Kenntnisse testen und verbessern kannst. 
-        Versuche, die Aufgaben der Reihe nach zu lösen.
-      </p>
+      <div class="intro">
+        <h1>CSS Aufgaben für KiberOne Schüler</h1>
+        <p>
+          Willkommen zu den CSS-Übungen! Hier findest du spannende Aufgaben, 
+          mit denen du deine CSS-Kenntnisse testen und verbessern kannst. 
+          Versuche, die Aufgaben der Reihe nach zu lösen.
+        </p>
+      </div>
 
       <ul class="task-list">
         <!-- Neue einfachere Aufgaben zuerst -->
@@ -193,7 +240,6 @@
           </div>
         </li>
 
-        <!-- Bestehende Aufgaben in neuer Reihenfolge -->
         <li class="task-card">
           <div class="task-header">
             <span class="task-number">4</span>
@@ -213,8 +259,7 @@
           <div class="task-hint">
             <strong>Tipp:</strong> Nutze die Eigenschaften background-color, font-family, 
             text-align, padding und border-radius.
-            <br><br>
-            <a href="/aufgaben/beispiele/aufgabe1.html" target="_blank" class="example-link">👉 Beispiellösung ansehen</a>
+            <a href="/aufgaben/beispiele/aufgabe1.html" target="_blank" class="example-link">Beispiellösung ansehen</a>
           </div>
         </li>
 
@@ -236,8 +281,7 @@
           </ul>
           <div class="task-hint">
             <strong>Tipp:</strong> Verwende :hover und transition für sanfte Animationen.
-            <br><br>
-            <a href="/aufgaben/beispiele/aufgabe2.html" target="_blank" class="example-link">👉 Beispiellösung ansehen</a>
+            <a href="/aufgaben/beispiele/aufgabe2.html" target="_blank" class="example-link">Beispiellösung ansehen</a>
           </div>
         </li>
 

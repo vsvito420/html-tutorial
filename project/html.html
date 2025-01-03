@@ -5,10 +5,102 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     <script type="module" src="js/tutorial-page.js"></script>
+    <style>
+      .tutorial-header {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 3rem auto;
+      }
+
+      .tutorial-header p {
+        font-size: 1.1em;
+        color: #4a5568;
+      }
+
+      .code-section,
+      .preview-section {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border: 1px solid #e2e8f0;
+      }
+
+      .code-section h3,
+      .preview-section h3 {
+        color: #2d3748;
+        font-size: 1.2em;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e2e8f0;
+      }
+
+      .preview-box {
+        background: #f8fafc;
+        border: 2px dashed #e2e8f0;
+        border-radius: 8px;
+        padding: 1.5rem;
+        min-height: 100px;
+      }
+
+      .explanation {
+        margin-top: 1.5rem;
+        padding: 1.2rem;
+        background: #f8fafc;
+        border-left: 4px solid #4a90e2;
+        border-radius: 0 8px 8px 0;
+        font-size: 0.95em;
+        line-height: 1.6;
+      }
+
+      .nav-button {
+        padding: 0.8rem 1.5rem;
+        background: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .nav-button:hover:not(:disabled) {
+        background: #357abd;
+        transform: translateY(-2px);
+      }
+
+      .nav-button:disabled {
+        background: #cbd5e0;
+        cursor: not-allowed;
+      }
+
+      #exampleCounter {
+        color: #718096;
+        font-size: 0.9em;
+        font-weight: 500;
+      }
+
+      @media (max-width: 768px) {
+        .tutorial-header {
+          padding: 0 1rem;
+        }
+
+        .nav-button {
+          width: 100%;
+        }
+
+        .tutorial-navigation {
+          flex-direction: column;
+          gap: 0.8rem;
+        }
+      }
+    </style>
   </head>
   <body data-tutorial-type="html">
     <nav>
@@ -19,30 +111,38 @@
       <a href="/quiz.html">Quiz</a>
     </nav>
 
-    <h1>HTML Grundlagen</h1>
-
-    <div class="tutorial-content">
-      <h2 id="exampleTitle"></h2>
-      <p id="exampleDescription" class="description"></p>
-
-      <div class="tutorial-navigation">
-        <button id="prevExample" class="nav-button">&larr; Vorheriges</button>
-        <span id="exampleCounter">Beispiel 1 von 5</span>
-        <button id="nextExample" class="nav-button">Nächstes &rarr;</button>
+    <main>
+      <div class="tutorial-header">
+        <h1>HTML Grundlagen</h1>
+        <p>
+          Lerne die Grundlagen von HTML kennen und verstehe, wie du die Struktur 
+          deiner Webseiten aufbaust. Folge den Beispielen und experimentiere mit dem Code.
+        </p>
       </div>
 
-      <div class="split-container">
-        <div class="code-section">
-          <h3>Code</h3>
-          <pre><code class="language-html" id="codeBlock"></code></pre>
-          <div class="explanation" id="explanation"></div>
+      <div class="tutorial-content">
+        <h2 id="exampleTitle"></h2>
+        <p id="exampleDescription" class="description"></p>
+
+        <div class="tutorial-navigation">
+          <button id="prevExample" class="nav-button">&larr; Vorheriges</button>
+          <span id="exampleCounter">Beispiel 1 von 5</span>
+          <button id="nextExample" class="nav-button">Nächstes &rarr;</button>
         </div>
 
-        <div class="preview-section">
-          <h3>Ergebnis</h3>
-          <div class="preview-box" id="previewBox"></div>
+        <div class="split-container">
+          <div class="code-section">
+            <h3>Code</h3>
+            <pre><code class="language-html" id="codeBlock"></code></pre>
+            <div class="explanation" id="explanation"></div>
+          </div>
+
+          <div class="preview-section">
+            <h3>Ergebnis</h3>
+            <div class="preview-box" id="previewBox"></div>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   </body>
 </html>
