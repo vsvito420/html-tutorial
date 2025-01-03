@@ -171,7 +171,24 @@
           <button id="prevExample" class="nav-button">&larr; Vorheriges</button>
           <span id="exampleCounter">Beispiel 1 von 5</span>
           <button id="nextExample" class="nav-button">Nächstes &rarr;</button>
+          <button id="markCompleted" class="nav-button complete-button" style="margin-left: auto; background-color: #28a745;">Als erledigt markieren ✓</button>
         </div>
+
+        <style>
+          .complete-button:hover:not(:disabled) {
+            background-color: #218838 !important;
+          }
+          
+          .complete-button:disabled {
+            background-color: #6c757d !important;
+          }
+          
+          .tutorial-navigation {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+          }
+        </style>
 
         <div class="split-container">
           <div class="code-section">

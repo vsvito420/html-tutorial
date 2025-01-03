@@ -8,17 +8,48 @@ export class TutorialTracker {
     this.setupEventListeners();
   }
 
+  updateCompleteButtonStatus() {
+    const completeButton = document.getElementById('markCompleted');
+    if (!completeButton) return;
+
+    const currentExample = this.getCurrentExample();
+    if (currentExample) {
+      const isCompleted = this.progressTracker.isCompleted(this.type, currentExample);
+      completeButton.disabled = isCompleted;
+      completeButton.textContent = isCompleted ? 'Erledigt ✓' : 'Als erledigt markieren ✓';
+    }
+  }
+
   setupEventListeners() {
-    // Wenn der "Nächstes" Button geklickt wird, prüfen ob das Tutorial abgeschlossen wurde
-    const nextButton = document.getElementById('nextExample');
-    if (nextButton) {
-      nextButton.addEventListener('click', () => {
+    const completeButton = document.getElementById('markCompleted');
+    if (completeButton) {
+      completeButton.addEventListener('click', () => {
         const currentExample = this.getCurrentExample();
         if (currentExample) {
           this.checkTutorialProgress(currentExample);
+          this.updateCompleteButtonStatus();
         }
       });
     }
+
+    // Event Listener für Tutorial-Wechsel
+    const nextButton = document.getElementById('nextExample');
+    if (nextButton) {
+      nextButton.addEventListener('click', () => {
+        this.updateCompleteButtonStatus();
+      });
+    }
+
+    // Auch für den "Vorheriges" Button
+    const prevButton = document.getElementById('prevExample');
+    if (prevButton) {
+      prevButton.addEventListener('click', () => {
+        this.updateCompleteButtonStatus();
+      });
+    }
+
+    // Initial Button-Status setzen
+    this.updateCompleteButtonStatus();
   }
 
   getCurrentExample() {
