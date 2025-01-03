@@ -349,6 +349,83 @@
           grid-template-columns: 1fr;
         }
       }
+
+      /* AI Quiz spezifische Styles */
+      .text-answer-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+      }
+
+      .answer-textarea {
+        width: 100%;
+        min-height: 150px;
+        padding: 15px;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 1em;
+        resize: vertical;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+      }
+
+      .answer-textarea:focus {
+        outline: none;
+        border-color: var(--accent-color);
+      }
+
+      .submit-answer-btn {
+        padding: 12px 24px;
+        background: var(--accent-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .submit-answer-btn:hover:not(:disabled) {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+      }
+
+      .submit-answer-btn:disabled {
+        background: var(--border-color);
+        cursor: not-allowed;
+      }
+
+      .answer-feedback {
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+        font-size: 0.95em;
+        line-height: 1.6;
+      }
+
+      .answer-feedback.correct {
+        background: rgba(40, 167, 69, 0.1);
+        border: 1px solid #28a745;
+        color: #006600;
+      }
+
+      .answer-feedback.incorrect {
+        background: rgba(220, 53, 69, 0.1);
+        border: 1px solid #dc3545;
+        color: #cc0000;
+      }
+
+      [data-theme="dark"] .answer-feedback.correct {
+        background: rgba(40, 167, 69, 0.2);
+        color: #50c878;
+      }
+
+      [data-theme="dark"] .answer-feedback.incorrect {
+        background: rgba(220, 53, 69, 0.2);
+        color: #ff6b6b;
+      }
     </style>
   </head>
   <body>
@@ -387,6 +464,16 @@
               <button class="difficulty-btn hard" onclick="startQuiz('css', 'hard')">Schwer</button>
             </div>
           </div>
+
+          <div class="category-card" data-type="ai">
+            <h2>AI-TEST</h2>
+            <p>Teste dein Wissen mit KI-gestützter Bewertung durch Mistral AI.</p>
+            <div class="difficulty-buttons">
+              <button class="difficulty-btn easy" onclick="startQuiz('ai', 'easy')">Leicht</button>
+              <button class="difficulty-btn medium" onclick="startQuiz('ai', 'medium')">Mittel</button>
+              <button class="difficulty-btn hard" onclick="startQuiz('ai', 'hard')">Schwer</button>
+            </div>
+          </div>
         </div>
 
         <div class="progress-container">
@@ -411,6 +498,53 @@
 
     <script>
       // Quiz Daten
+      // Mistral API Integration
+      const MISTRAL_API_KEY = 'vKpRUjh7wv9hfRmOY2WlkqbrimQ2v9WU';
+      
+      async function evaluateAnswer(question, userAnswer) {
+        const prompt = `
+          Als Experte für Webentwicklung, bewerte bitte die folgende Antwort:
+          
+          Frage: ${question}
+          Antwort: ${userAnswer}
+          
+          Ist die Antwort korrekt? Falls nicht, erkläre warum. Antworte im Format:
+          {
+            "correct": true/false,
+            "explanation": "Deine Erklärung hier"
+          }
+        `;
+        
+        try {
+          const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${MISTRAL_API_KEY}`
+            },
+            body: JSON.stringify({
+              model: "mistral-tiny",
+              messages: [
+                {
+                  role: "user",
+                  content: prompt
+                }
+              ],
+              response_format: { type: "json_object" }
+            })
+          });
+          
+          const data = await response.json();
+          return JSON.parse(data.choices[0].message.content);
+        } catch (error) {
+          console.error('Fehler bei der API-Anfrage:', error);
+          return {
+            correct: false,
+            explanation: 'Es gab einen Fehler bei der Bewertung. Bitte versuche es erneut.'
+          };
+        }
+      }
+
       window.quizData = {
         html: {
           easy: [
@@ -565,6 +699,44 @@
                 "Element schwebt über anderen Elementen"
               ],
               correct: 1
+            }
+          ]
+        },
+        ai: {
+          easy: [
+            {
+              question: "Erkläre den Unterschied zwischen HTML und CSS.",
+              type: "text",
+              evaluate: true
+            },
+            {
+              question: "Was ist Responsive Design und warum ist es wichtig?",
+              type: "text",
+              evaluate: true
+            }
+          ],
+          medium: [
+            {
+              question: "Erkläre das CSS Box Model und seine Komponenten.",
+              type: "text",
+              evaluate: true
+            },
+            {
+              question: "Was sind CSS Flexbox und Grid? Wann verwendet man welches?",
+              type: "text",
+              evaluate: true
+            }
+          ],
+          hard: [
+            {
+              question: "Erkläre das Konzept von CSS Specificity und wie es die Stilanwendung beeinflusst.",
+              type: "text",
+              evaluate: true
+            },
+            {
+              question: "Was sind Web Components und wie können sie die Entwicklung verbessern?",
+              type: "text",
+              evaluate: true
             }
           ]
         }
