@@ -1,13 +1,13 @@
 // HTML tutorial examples data
 export const htmlExamples = [
   {
-    title: 'Überschriften',
+    title: 'Text & Überschriften',
     code: `<h1>Hauptüberschrift</h1>
 <h2>Unterüberschrift</h2>
 <h3>Kleinere Überschrift</h3>`,
   },
   {
-    title: 'Textformatierung',
+    title: 'Text & Überschriften',
     code: `<p>Ein normaler Paragraph.</p>
 <p><strong>Fetter Text</strong></p>
 <p><em>Kursiver Text</em></p>`,
@@ -35,7 +35,7 @@ export const htmlExamples = [
 </ol>`,
   },
   {
-    title: 'Bilder und Medien',
+    title: 'Bilder',
     code: `<img src="https://via.placeholder.com/150" 
      alt="Platzhalterbild">
 

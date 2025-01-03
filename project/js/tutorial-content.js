@@ -4,7 +4,7 @@ export const tutorials = {
     title: "CSS Grundlagen",
     examples: [
       {
-        title: "Erste Schritte mit CSS",
+        title: "Selektoren",
         description: "Die grundlegendsten CSS-Eigenschaften für Text",
         code: `/* Textfarbe ändern */
 p {
@@ -32,7 +32,7 @@ h1 {
   * .centered wählt Elemente mit class="centered"`
       },
       {
-        title: "Farben in CSS",
+        title: "Farben & Text",
         description: "Verschiedene Möglichkeiten, Farben in CSS zu definieren",
         code: `/* Beispiel 1: Grundfarben */
 .color-box-1 {
@@ -92,7 +92,7 @@ h1 {
    - Kombinationen für moderne Designs`
       },
       {
-        title: "Box-Modell verstehen",
+        title: "Box-Modell",
         description: "Das CSS Box-Modell mit praktischen Beispielen",
         code: `/* Äußere Box */
 .outer-box {
@@ -178,7 +178,7 @@ h1 {
    - margin: auto für horizontale Zentrierung`
       },
       {
-        title: "Text-Styling",
+        title: "Layout",
         description: "Umfassende Textformatierung",
         code: `.text-styles {
   /* Schriftart */
