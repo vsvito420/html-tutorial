@@ -128,6 +128,51 @@
         </tr>
     </table>
 
+    <h2>HTML Fortgeschrittene Konzepte</h2>
+    
+    <table>
+        <tr>
+            <th>Frage</th>
+            <th>Antwort</th>
+        </tr>
+        <tr>
+            <td>Was sind semantische HTML-Elemente?</td>
+            <td>
+                Elemente mit bedeutungsvoller Struktur:<br>
+                - <code>&lt;header&gt;</code>: Kopfbereich<br>
+                - <code>&lt;nav&gt;</code>: Navigation<br>
+                - <code>&lt;main&gt;</code>: Hauptinhalt<br>
+                - <code>&lt;article&gt;</code>: Eigenständiger Inhalt<br>
+                - <code>&lt;section&gt;</code>: Thematischer Abschnitt<br>
+                - <code>&lt;aside&gt;</code>: Seitenleiste<br>
+                - <code>&lt;footer&gt;</code>: Fußbereich
+            </td>
+        </tr>
+        <tr>
+            <td>Wie erstellt man Tabellen?</td>
+            <td>
+                Struktur:<br>
+                <code>&lt;table&gt;</code><br>
+                - <code>&lt;thead&gt;</code>: Tabellenkopf<br>
+                - <code>&lt;tbody&gt;</code>: Tabelleninhalt<br>
+                - <code>&lt;tr&gt;</code>: Tabellenzeile<br>
+                - <code>&lt;th&gt;</code>: Kopfzelle<br>
+                - <code>&lt;td&gt;</code>: Datenzelle
+            </td>
+        </tr>
+        <tr>
+            <td>Wie bindet man Medien ein?</td>
+            <td>
+                Bilder: <code>&lt;img src="bild.jpg" alt="Beschreibung"&gt;</code><br>
+                Video: <code>&lt;video src="video.mp4" controls&gt;&lt;/video&gt;</code><br>
+                Audio: <code>&lt;audio src="audio.mp3" controls&gt;&lt;/audio&gt;</code><br>
+                Mit Fallback:<br>
+                <code>&lt;picture&gt;</code> für responsive Bilder<br>
+                <code>&lt;source&gt;</code> für alternative Formate
+            </td>
+        </tr>
+    </table>
+
     <h2>CSS Grundlagen</h2>
     
     <table>
@@ -186,6 +231,62 @@
                 <code>display: grid;</code> oder <code>display: flex;</code><br>
                 4. Flexible Bilder:<br>
                 <code>max-width: 100%;</code>
+            </td>
+        </tr>
+    </table>
+
+    <h2>CSS Fortgeschrittene Konzepte</h2>
+    
+    <table>
+        <tr>
+            <th>Frage</th>
+            <th>Antwort</th>
+        </tr>
+        <tr>
+            <td>Was ist Flexbox und wie verwendet man es?</td>
+            <td>
+                Flexbox ist ein Layout-Modell für eindimensionale Layouts:<br>
+                - Container: <code>display: flex;</code><br>
+                - Hauptachse: <code>flex-direction: row|column;</code><br>
+                - Ausrichtung: <code>justify-content: center|space-between;</code><br>
+                - Kreuzachse: <code>align-items: center|stretch;</code><br>
+                - Flex Items: <code>flex: grow shrink basis;</code>
+            </td>
+        </tr>
+        <tr>
+            <td>Was ist CSS Grid und wie verwendet man es?</td>
+            <td>
+                Grid ist ein Layout-Modell für zweidimensionale Layouts:<br>
+                - Container: <code>display: grid;</code><br>
+                - Spalten: <code>grid-template-columns: 1fr 2fr;</code><br>
+                - Zeilen: <code>grid-template-rows: auto;</code><br>
+                - Abstände: <code>gap: 20px;</code><br>
+                - Platzierung: <code>grid-area: 1 / 1 / 2 / 3;</code>
+            </td>
+        </tr>
+        <tr>
+            <td>Was sind CSS-Animationen?</td>
+            <td>
+                Keyframe-Animationen:<br>
+                <pre><code>@keyframes name {
+  from { property: value; }
+  to { property: value; }
+}</code></pre>
+                Anwendung:<br>
+                <code>animation: name duration timing-function;</code><br>
+                Transitions:<br>
+                <code>transition: property duration timing-function;</code>
+            </td>
+        </tr>
+        <tr>
+            <td>Was sind CSS-Variablen?</td>
+            <td>
+                Definition im :root Scope:<br>
+                <code>:root { --main-color: #333; }</code><br>
+                Verwendung:<br>
+                <code>color: var(--main-color);</code><br>
+                Fallback:<br>
+                <code>color: var(--main-color, black);</code>
             </td>
         </tr>
     </table>
