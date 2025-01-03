@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>HTML AI Test - KiberOne</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <style>
+        /* Bestehende Styles bleiben unverändert */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 15px;
+            max-width: 80%;
+        }
+
+        .chat-message.user {
+            margin-left: auto;
+            flex-direction: row-reverse;
+        }
+
+        .chat-message.ai {
+            margin-right: auto;
+        }
+
+        .message-content {
+            padding: 15px;
+            border-radius: 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .user .message-content {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .user .message-content pre {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .ai .message-content {
+            background: var(--bg-primary);
+        }
+
+        .code-editor {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .editor-section {
+            flex: 1;
+        }
+
+        .code-input {
+            width: 100%;
+            min-height: 300px;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            background: var(--code-bg);
+            color: var(--code-text);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            resize: vertical;
+        }
+
+        .preview-section {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            background: white;
+        }
+
+        .task-description {
+            background: var(--bg-primary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .preview-btn,
+        .submit-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .preview-btn {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .submit-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .preview-btn:hover,
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Verbesserte Task Selector Styles */
+        .task-selector {
+            margin-bottom: 20px;
+        }
+
+        .task-selector label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .task-selector select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1em;
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">
+            <img src="../logo.png" alt="Logo" height="40">
+        </a>
+        <a href="/">Startseite</a>
+        <a href="/html.html">HTML Tutorial</a>
+        <a href="/css.html">CSS Tutorial</a>
+        <a href="/aufgaben.html">Aufgaben</a>
+        <a href="/quiz.html">Quiz</a>
+        <a href="/ai-test.html" aria-current="page">AI Test</a>
+    </nav>
+
+    <main>
+        <div class="container">
+            <h1>HTML AI Test</h1>
+            <p>Übe HTML mit KI-Unterstützung. Die KI hilft dir Schritt für Schritt, deinen Code zu verbessern.</p>
+
+            <div class="task-selector">
+                <label for="taskSelect">Wähle eine Übungsaufgabe:</label>
+                <select id="taskSelect" aria-label="Übungsaufgabe auswählen">
+                    <option value="">Bitte wähle eine Aufgabe...</option>
+                    <option value="basic">Einfache HTML-Seite</option>
+                    <option value="form">Kontaktformular</option>
+                    <option value="nav">Navigationsleiste</option>
+                    <option value="gallery">Bildergalerie</option>
+                    <option value="semantic">Semantisches Layout</option>
+                </select>
+            </div>
+
+            <div class="task-description" id="taskDescription"></div>
+            <div class="chat-container" id="chatContainer"></div>
+            
+            <div class="code-editor">
+                <div class="editor-section">
+                    <h3>HTML Code</h3>
+                    <textarea id="codeInput" class="code-input" placeholder="Schreibe deinen HTML-Code hier..." spellcheck="false" aria-label="HTML Code Editor"></textarea>
+                    <div class="controls">
+                        <button id="submitBtn" class="submit-btn">Code einreichen</button>
+                    </div>
+                </div>
+                <div class="preview-section">
+                    <h3>Vorschau</h3>
+                    <div id="codePreview" aria-live="polite"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // JavaScript-Code bleibt unverändert
+        const tasks = {
+            basic: {
+                title: "Einfache HTML-Seite",
+                description: "Erstelle eine HTML-Seite mit:\n- Einer Überschrift 'Meine erste Webseite'\n- Einem Absatz mit dem Text 'Willkommen auf meiner Webseite!'"
+            },
+            form: {
+                title: "Kontaktformular",
+                description: "Erstelle ein Formular mit:\n- Eingabefeldern für Name und Email\n- Einer Textarea für die Nachricht\n- Einem Submit-Button"
+            },
+            nav: {
+                title: "Navigationsleiste",
+                description: "Erstelle eine Navigationsleiste mit:\n- Mindestens 3 Links\n- Verwende das nav-Element\n- Strukturiere die Links als Liste"
+            },
+            gallery: {
+                title: "Bildergalerie",
+                description: "Baue eine Bildergalerie mit:\n- Grid oder Flexbox Layout\n- Mindestens 4 Bildern\n- Responsivem Design"
+            },
+            semantic: {
+                title: "Semantisches Layout",
+                description: "Erstelle ein Layout mit:\n- Header, Nav, Main, Aside und Footer\n- Sinnvoller Verschachtelung\n- Semantisch korrekter Struktur"
+            }
+        };
+
+        async function evaluateCode(task, code, conversation = []) {
+            const prompt = `
+                Als HTML-Tutor, bewerte bitte den folgenden Code für diese Aufgabe:
+                
+                Aufgabe: ${task}
+                Code:
+                ${code}
+                
+                Bisheriger Chatverlauf:
+                ${conversation.map(msg => `${msg.role}: ${msg.content}`).join('\n')}
+                
+                Gib konstruktives Feedback und Verbesserungsvorschläge. Wenn der Code noch nicht perfekt ist,
+                führe den Schüler mit Hinweisen zur richtigen Lösung. Antworte im Format:
+                {
+                    "completed": true/false,
+                    "feedback": "Dein detailliertes Feedback hier",
+                    "hint": "Ein hilfreicher Tipp (nur wenn noch nicht completed)"
+                }
+            `;
+            
+            try {
+                const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer zh7CfBXRcIXgoOdBobNIhv5zctjJCGez'
+                    },
+                    body: JSON.stringify({
+                        model: "mistral-tiny",
+                        messages: [
+                            {
+                                role: "user",
+                                content: prompt
+                            }
+                        ],
+                        response_format: { type: "json_object" }
+                    })
+                });
+                
+                const data = await response.json();
+                return JSON.parse(data.choices[0].message.content);
+            } catch (error) {
+                console.error('Fehler bei der API-Anfrage:', error);
+                return {
+                    completed: false,
+                    feedback: 'Es gab einen Fehler bei der Bewertung. Bitte versuche es erneut.',
+                    hint: 'Versuche es später noch einmal.'
+                };
+            }
+        }
+
+        // Event Listener
+        document.addEventListener('DOMContentLoaded', () => {
+            const taskSelect = document.getElementById('taskSelect');
+            const taskDescription = document.getElementById('taskDescription');
+            const codeInput = document.getElementById('codeInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const previewBox = document.getElementById('codePreview');
+            const chatContainer = document.getElementById('chatContainer');
+            
+            let conversation = [];
+
+            // Live Preview
+            codeInput.addEventListener('input', () => {
+                previewBox.innerHTML = codeInput.value;
+                Prism.highlightElement(codeInput);
+            });
+
+            taskSelect.addEventListener('change', (e) => {
+                const task = tasks[e.target.value];
+                if (task) {
+                    taskDescription.innerHTML = `
+                        <h3>${task.title}</h3>
+                        <p>${task.description.replace(/\n/g, '<br>')}</p>
+                    `;
+                    chatContainer.innerHTML = '';
+                    conversation = [];
+                    
+                    // Füge erste KI-Nachricht hinzu
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'chat-message ai';
+                    messageDiv.innerHTML = `
+                        <div class="message-content">
+                            <p>Ich bin bereit, dir bei der Aufgabe "${task.title}" zu helfen! Schreibe deinen Code in den Editor und ich gebe dir Feedback dazu.</p>
+                        </div>
+                    `;
+                    chatContainer.appendChild(messageDiv);
+                }
+            });
+
+            submitBtn.addEventListener('click', async () => {
+                const code = codeInput.value;
+                const task = tasks[taskSelect.value];
+                
+                if (!task) {
+                    alert('Bitte wähle zuerst eine Aufgabe aus.');
+                    return;
+                }
+                
+                // Benutzer-Code zum Chat hinzufügen
+                const userMessageDiv = document.createElement('div');
+                userMessageDiv.className = 'chat-message user';
+                userMessageDiv.innerHTML = `
+                    <div class="message-content">
+                        <p>Hier ist mein Code:</p>
+                        <pre><code class="language-html">${code}</code></pre>
+                    </div>
+                `;
+                chatContainer.appendChild(userMessageDiv);
+                
+                // Code an Mistral API senden
+                const result = await evaluateCode(task.description, code, conversation);
+                
+                // Konversation aktualisieren
+                conversation.push({ role: 'user', content: code });
+                conversation.push({ role: 'assistant', content: result.feedback });
+                
+                // KI-Antwort zum Chat hinzufügen
+                const aiMessageDiv = document.createElement('div');
+                aiMessageDiv.className = 'chat-message ai';
+                aiMessageDiv.innerHTML = `
+                    <div class="message-content">
+                        <p>${result.feedback}</p>
+                        ${result.hint ? `<p><strong>Tipp:</strong> ${result.hint}</p>` : ''}
+                        ${result.completed ? '<p><strong>🎉 Super! Du hast die Aufgabe erfolgreich gelöst!</strong></p>' : ''}
+                    </div>
+                `;
+                chatContainer.appendChild(aiMessageDiv);
+                
+                // Zum Ende scrollen
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                // Code-Highlighting aktualisieren
+                Prism.highlightAll();
+            });
+        });
+    </script>
+    <footer>
+        <a href="https://github.com/vsvito420" target="_blank" rel="noopener">GitHub: vsvito420</a>
+    </footer>
+</body>
+</html>
