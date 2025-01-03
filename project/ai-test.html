@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="script.js"></script>
     <style>
-        /* Bestehende Styles bleiben unverändert */
         .chat-container {
             display: flex;
             flex-direction: column;
@@ -45,11 +45,13 @@
             border-radius: 12px;
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
+            color: var(--text-primary);
         }
 
         .user .message-content {
             background: var(--accent-color);
             color: white;
+            border-color: var(--accent-color);
         }
 
         .user .message-content pre {
@@ -61,7 +63,15 @@
         }
 
         .ai .message-content {
-            background: var(--bg-primary);
+            background: var(--bg-secondary);
+        }
+
+        .ai .message-content pre {
+            background: var(--code-bg);
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            overflow-x: auto;
         }
 
         .code-editor {
@@ -94,7 +104,7 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 15px;
-            background: white;
+            background: var(--bg-secondary);
         }
 
         .task-description {
@@ -103,6 +113,7 @@
             border-radius: 8px;
             margin-bottom: 20px;
             border-left: 4px solid var(--accent-color);
+            color: var(--text-primary);
         }
 
         .controls {
@@ -111,9 +122,10 @@
             margin-top: 15px;
         }
 
-        .preview-btn,
         .submit-btn {
             padding: 10px 20px;
+            background: var(--accent-color);
+            color: white;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -121,27 +133,11 @@
             transition: all 0.3s ease;
         }
 
-        .preview-btn {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .submit-btn {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .preview-btn:hover,
         .submit-btn:hover {
+            background: var(--accent-hover);
             transform: translateY(-2px);
         }
 
-        .submit-btn:hover {
-            background: var(--accent-hover);
-        }
-
-        /* Verbesserte Task Selector Styles */
         .task-selector {
             margin-bottom: 20px;
         }
@@ -163,6 +159,37 @@
             width: 100%;
             max-width: 400px;
         }
+
+        /* Dark Mode Anpassungen */
+        [data-theme="dark"] .preview-section {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .code-input {
+            background: var(--code-bg);
+            color: var(--code-text);
+        }
+
+        [data-theme="dark"] .message-content code {
+            color: var(--code-text);
+        }
+
+        .tutorial-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+        }
+
+        .tutorial-header p {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .code-editor {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
@@ -176,12 +203,17 @@
         <a href="/aufgaben.html">Aufgaben</a>
         <a href="/quiz.html">Quiz</a>
         <a href="/ai-test.html" aria-current="page">AI Test</a>
+        <button class="theme-toggle" aria-label="Theme wechseln">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"></svg>
+        </button>
     </nav>
 
     <main>
         <div class="container">
-            <h1>HTML AI Test</h1>
-            <p>Übe HTML mit KI-Unterstützung. Die KI hilft dir Schritt für Schritt, deinen Code zu verbessern.</p>
+            <div class="tutorial-header">
+                <h1>HTML AI Test</h1>
+                <p>Übe HTML mit KI-Unterstützung. Die KI hilft dir Schritt für Schritt, deinen Code zu verbessern und zeigt dir Beispiele.</p>
+            </div>
 
             <div class="task-selector">
                 <label for="taskSelect">Wähle eine Übungsaufgabe:</label>
@@ -215,7 +247,6 @@
     </main>
 
     <script>
-        // JavaScript-Code bleibt unverändert
         const tasks = {
             basic: {
                 title: "Einfache HTML-Seite",
@@ -251,11 +282,14 @@
                 ${conversation.map(msg => `${msg.role}: ${msg.content}`).join('\n')}
                 
                 Gib konstruktives Feedback und Verbesserungsvorschläge. Wenn der Code noch nicht perfekt ist,
-                führe den Schüler mit Hinweisen zur richtigen Lösung. Antworte im Format:
+                führe den Schüler mit Hinweisen zur richtigen Lösung. Zeige auch Beispielcode für die Verbesserungen.
+                
+                Antworte im Format:
                 {
                     "completed": true/false,
                     "feedback": "Dein detailliertes Feedback hier",
-                    "hint": "Ein hilfreicher Tipp (nur wenn noch nicht completed)"
+                    "hint": "Ein hilfreicher Tipp (nur wenn noch nicht completed)",
+                    "example": "Beispielcode hier (optional)"
                 }
             `;
             
@@ -290,7 +324,6 @@
             }
         }
 
-        // Event Listener
         document.addEventListener('DOMContentLoaded', () => {
             const taskSelect = document.getElementById('taskSelect');
             const taskDescription = document.getElementById('taskDescription');
@@ -322,7 +355,7 @@
                     messageDiv.className = 'chat-message ai';
                     messageDiv.innerHTML = `
                         <div class="message-content">
-                            <p>Ich bin bereit, dir bei der Aufgabe "${task.title}" zu helfen! Schreibe deinen Code in den Editor und ich gebe dir Feedback dazu.</p>
+                            <p>Ich bin bereit, dir bei der Aufgabe "${task.title}" zu helfen! Schreibe deinen Code in den Editor und ich gebe dir Feedback und Beispiele dazu.</p>
                         </div>
                     `;
                     chatContainer.appendChild(messageDiv);
@@ -363,6 +396,10 @@
                     <div class="message-content">
                         <p>${result.feedback}</p>
                         ${result.hint ? `<p><strong>Tipp:</strong> ${result.hint}</p>` : ''}
+                        ${result.example ? `
+                            <p><strong>Hier ist ein Beispiel:</strong></p>
+                            <pre><code class="language-html">${result.example}</code></pre>
+                        ` : ''}
                         ${result.completed ? '<p><strong>🎉 Super! Du hast die Aufgabe erfolgreich gelöst!</strong></p>' : ''}
                     </div>
                 `;
