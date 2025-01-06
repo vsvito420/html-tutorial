@@ -12,13 +12,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     <script src="script.js"></script>
     <style>
+        /* Alle vorherigen Styles bleiben unverändert */
         .chat-container {
             display: flex;
             flex-direction: column;
             gap: 20px;
             height: 400px;
             overflow-y: auto;
-            padding: 20px;
+            padding: 15px;
             background: var(--bg-secondary);
             border-radius: 8px;
             border: 1px solid var(--border-color);
@@ -138,26 +139,125 @@
             transform: translateY(-2px);
         }
 
-        .task-selector {
-            margin-bottom: 20px;
+        .tasks-carousel {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 0 40px;
         }
 
-        .task-selector label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-            font-weight: 500;
+        .tasks-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            padding: 15px 0;
         }
 
-        .task-selector select {
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
+        .tasks-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .task-card {
+            flex: 0 0 300px;
+            padding: 12px;
             background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .task-card.active {
+            border-color: var(--accent-color);
+            opacity: 1;
+            transform: scale(1);
+            background: var(--bg-primary);
+        }
+
+        .task-card:hover {
+            border-color: var(--accent-color);
+            opacity: 0.9;
+        }
+
+        .task-card h3 {
+            margin: 0 0 6px 0;
             color: var(--text-primary);
-            font-size: 1em;
-            width: 100%;
-            max-width: 400px;
+        }
+
+        .task-card .task-list {
+            margin: 0;
+            padding-left: 15px;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            list-style-type: disc;
+        }
+
+        .task-card .task-list li {
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .carousel-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-button.prev {
+            left: 0;
+        }
+
+        .carousel-button.next {
+            right: 0;
+        }
+
+        .carousel-fade {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .carousel-fade.left {
+            left: 40px;
+            background: linear-gradient(to right, var(--bg-primary), transparent);
+        }
+
+        .carousel-fade.right {
+            right: 40px;
+            background: linear-gradient(to left, var(--bg-primary), transparent);
+        }
+
+        [data-theme="dark"] .carousel-fade.left {
+            background: linear-gradient(to right, var(--bg-primary), transparent);
+        }
+
+        [data-theme="dark"] .carousel-fade.right {
+            background: linear-gradient(to left, var(--bg-primary), transparent);
         }
 
         /* Dark Mode Anpassungen */
@@ -173,6 +273,51 @@
 
         [data-theme="dark"] .message-content code {
             color: var(--code-text);
+        }
+
+        [data-theme="dark"] .task-selector select {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .task-selector select option {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] #codePreview {
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .chat-container {
+            background: var(--bg-primary);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .ai .message-content {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .user .message-content {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        [data-theme="dark"] .user .message-content pre {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] .submit-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        [data-theme="dark"] .submit-btn:hover {
+            background: var(--accent-hover);
         }
 
         .message-content code:not(pre code) {
@@ -212,9 +357,6 @@
         <a href="/aufgaben.html">Aufgaben</a>
         <a href="/quiz.html">Quiz</a>
         <a href="/ai-test.html" aria-current="page">AI Test</a>
-        <button class="theme-toggle" aria-label="Theme wechseln">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"></svg>
-        </button>
     </nav>
 
     <main>
@@ -224,19 +366,13 @@
                 <p>Übe HTML mit KI-Unterstützung. Die KI hilft dir Schritt für Schritt, deinen Code zu verbessern und zeigt dir Beispiele.</p>
             </div>
 
-            <div class="task-selector">
-                <label for="taskSelect">Wähle eine Übungsaufgabe:</label>
-                <select id="taskSelect" aria-label="Übungsaufgabe auswählen">
-                    <option value="">Bitte wähle eine Aufgabe...</option>
-                    <option value="basic">Einfache HTML-Seite</option>
-                    <option value="form">Kontaktformular</option>
-                    <option value="nav">Navigationsleiste</option>
-                    <option value="gallery">Bildergalerie</option>
-                    <option value="semantic">Semantisches Layout</option>
-                </select>
+            <div class="tasks-carousel">
+                <button class="carousel-button prev" aria-label="Vorherige Aufgabe">&larr;</button>
+                <button class="carousel-button next" aria-label="Nächste Aufgabe">&rarr;</button>
+                <div class="carousel-fade left"></div>
+                <div class="carousel-fade right"></div>
+                <div class="tasks-container" id="tasksContainer"></div>
             </div>
-
-            <div class="task-description" id="taskDescription"></div>
             <div class="chat-container" id="chatContainer"></div>
             
             <div class="code-editor">
@@ -293,10 +429,20 @@
                 Gib konstruktives Feedback und Verbesserungsvorschläge. Wenn der Code noch nicht perfekt ist,
                 führe den Schüler mit Hinweisen zur richtigen Lösung. Zeige auch Beispielcode für die Verbesserungen.
                 
-                WICHTIG: Wenn du HTML-Tags in deiner Antwort erwähnst (z.B. div, p, etc.), 
-                formatiere sie IMMER als HTML-Code mit code-Tags und HTML-Entities. 
-                Beispiel: Verwende \"<code>&lt;div&gt;</code>\" für den div-Tag.
-                Schreibe die Tags NICHT direkt und verwende KEINE Backticks.
+                WICHTIG: Wenn du Code in deiner Antwort verwendest:
+                
+                1. Für einzelne Tags oder kurze Code-Snippets:
+                   Verwende einzelne Backticks: \`<div>\`, \`color: red;\`
+                
+                2. Für mehrzeilige Code-Beispiele:
+                   Verwende dreifache Backticks:
+                   \`\`\`
+                   <div class="container">
+                     <p>Beispieltext</p>
+                   </div>
+                   \`\`\`
+                
+                3. Formatiere NIEMALS HTML-Tags direkt ohne Backticks oder Code-Block.
                 
                 Antworte im Format:
                 {
@@ -339,14 +485,117 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const taskSelect = document.getElementById('taskSelect');
-            const taskDescription = document.getElementById('taskDescription');
+            const tasksContainer = document.getElementById('tasksContainer');
             const codeInput = document.getElementById('codeInput');
             const submitBtn = document.getElementById('submitBtn');
             const previewBox = document.getElementById('codePreview');
             const chatContainer = document.getElementById('chatContainer');
+            const prevBtn = document.querySelector('.carousel-button.prev');
+            const nextBtn = document.querySelector('.carousel-button.next');
             
+            let currentTaskKey = null;
             let conversation = [];
+            let currentIndex = 0;
+
+            // Tasks initialisieren
+            function initTasks() {
+                Object.entries(tasks).forEach(([key, task]) => {
+                    const card = document.createElement('div');
+                    card.className = 'task-card';
+                    card.dataset.taskKey = key;
+                    // Aufgabenbeschreibung als Liste formatieren
+                    const listItems = task.description.split('\n').map(item => {
+                        // Entferne "- " am Anfang jeder Zeile, falls vorhanden
+                        const cleanItem = item.replace(/^- /, '');
+                        return `<li>${cleanItem}</li>`;
+                    }).join('');
+
+                    card.innerHTML = `
+                        <h3>${task.title}</h3>
+                        <ul class="task-list">${listItems}</ul>
+                    `;
+                    card.addEventListener('click', () => selectTask(key));
+                    tasksContainer.appendChild(card);
+                });
+                
+                // Erste Aufgabe auswählen
+                selectTask(Object.keys(tasks)[0]);
+            }
+
+            // Aufgabe auswählen
+            function selectTask(taskKey, shouldScroll = true) {
+                const task = tasks[taskKey];
+                if (!task) return;
+
+                // Aktive Karte aktualisieren
+                document.querySelectorAll('.task-card').forEach(card => {
+                    card.classList.toggle('active', card.dataset.taskKey === taskKey);
+                });
+
+                if (shouldScroll) {
+                    const taskKeys = Object.keys(tasks);
+                    const newIndex = taskKeys.indexOf(taskKey);
+                    const direction = newIndex > currentIndex ? 'right' : 'left';
+                    shiftCards(direction);
+                    currentIndex = newIndex;
+                }
+
+                currentTaskKey = taskKey;
+                chatContainer.innerHTML = '';
+                conversation = [];
+                
+                // Erste KI-Nachricht
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'chat-message ai';
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <p>Ich bin bereit, dir bei der Aufgabe "${task.title}" zu helfen! Schreibe deinen Code in den Editor und ich gebe dir Feedback und Beispiele dazu.</p>
+                    </div>
+                `;
+                chatContainer.appendChild(messageDiv);
+            }
+
+            // Navigation mit Grid-Shift
+            function shiftCards(direction) {
+                const cardWidth = 300; // Breite einer Karte
+                const gap = 15; // Gap zwischen Karten
+                const shiftAmount = cardWidth + gap; // Gesamtbreite für Verschiebung
+                
+                const currentScroll = tasksContainer.scrollLeft;
+                const targetScroll = currentScroll + (direction === 'right' ? shiftAmount : -shiftAmount);
+                
+                // Stelle sicher, dass wir nicht über die Grenzen scrollen
+                const maxScroll = tasksContainer.scrollWidth - tasksContainer.offsetWidth;
+                const finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+                
+                tasksContainer.scrollTo({
+                    left: finalScroll,
+                    behavior: 'smooth'
+                });
+            }
+
+            // Navigation
+            prevBtn.addEventListener('click', () => {
+                const taskKeys = Object.keys(tasks);
+                const currentIndex = taskKeys.indexOf(currentTaskKey);
+                if (currentIndex > 0) {
+                    selectTask(taskKeys[currentIndex - 1]);
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                const taskKeys = Object.keys(tasks);
+                const currentIndex = taskKeys.indexOf(currentTaskKey);
+                if (currentIndex < taskKeys.length - 1) {
+                    selectTask(taskKeys[currentIndex + 1]);
+                }
+            });
+
+            // Tastatur-Navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') prevBtn.click();
+                if (e.key === 'ArrowRight') nextBtn.click();
+            });
 
             // Live Preview
             codeInput.addEventListener('input', () => {
@@ -354,31 +603,12 @@
                 Prism.highlightElement(codeInput);
             });
 
-            taskSelect.addEventListener('change', (e) => {
-                const task = tasks[e.target.value];
-                if (task) {
-                    taskDescription.innerHTML = `
-                        <h3>${task.title}</h3>
-                        <p>${task.description.replace(/\n/g, '<br>')}</p>
-                    `;
-                    chatContainer.innerHTML = '';
-                    conversation = [];
-                    
-                    // Füge erste KI-Nachricht hinzu
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = 'chat-message ai';
-                    messageDiv.innerHTML = `
-                        <div class="message-content">
-                            <p>Ich bin bereit, dir bei der Aufgabe "${task.title}" zu helfen! Schreibe deinen Code in den Editor und ich gebe dir Feedback und Beispiele dazu.</p>
-                        </div>
-                    `;
-                    chatContainer.appendChild(messageDiv);
-                }
-            });
+            // Tasks initialisieren
+            initTasks();
 
             submitBtn.addEventListener('click', async () => {
                 const code = codeInput.value;
-                const task = tasks[taskSelect.value];
+                const task = tasks[currentTaskKey];
                 
                 if (!task) {
                     alert('Bitte wähle zuerst eine Aufgabe aus.');
@@ -404,8 +634,31 @@
                 conversation.push({ role: 'assistant', content: result.feedback });
                 
                 // KI-Antwort verarbeiten und zum Chat hinzufügen
-                const processedFeedback = result.feedback.replace(/`<([^>]+)>`/g, '<code>&lt;$1&gt;</code>');
-                const processedHint = result.hint ? result.hint.replace(/`<([^>]+)>`/g, '<code>&lt;$1&gt;</code>') : '';
+                // Verarbeite Code-Blöcke in Feedback und Hint
+                const processCode = (text) => {
+                    if (!text) return '';
+                    
+                    // Ersetze Inline-Code
+                    text = text.replace(/`([^`]+)`/g, (_, code) => {
+                        // Wenn es HTML-Tags enthält, escape sie
+                        if (code.includes('<') || code.includes('>')) {
+                            code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        }
+                        return `<code>${code}</code>`;
+                    });
+                    
+                    // Ersetze Code-Blöcke
+                    text = text.replace(/```([^`]+)```/g, (_, code) => {
+                        // Escape HTML in Code-Blöcken
+                        code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        return `<pre><code class="language-html">${code}</code></pre>`;
+                    });
+                    
+                    return text;
+                };
+
+                const processedFeedback = processCode(result.feedback);
+                const processedHint = processCode(result.hint);
                 
                 const aiMessageDiv = document.createElement('div');
                 aiMessageDiv.className = 'chat-message ai';
