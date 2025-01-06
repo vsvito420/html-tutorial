@@ -5,12 +5,19 @@
   "main": "index.js",
   "scripts": {
     "pages:dev": "wrangler pages dev ./project",
-    "pages:deploy": "wrangler pages deploy ./project"
+    "pages:deploy": "wrangler pages deploy ./project",
+    "dev": "live-server ./project --host=localhost --port=3000 --entry-file=index.html --mount=/:/project"
   },
-  "keywords": ["html", "css", "javascript", "tutorial"],
+  "keywords": [
+    "html",
+    "css",
+    "javascript",
+    "tutorial"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "live-server": "^1.2.2",
     "wrangler": "^3.0.0"
   }
 }
