@@ -187,6 +187,9 @@
             transition: all 0.2s ease;
             border-left: 4px solid transparent;
             border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
         }
 
         .task-card:hover {
@@ -197,6 +200,16 @@
         .task-card.active {
             background: var(--bg-primary);
             border-left-color: var(--accent-color);
+        }
+
+        .task-card .task-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .task-card .task-content {
+            flex-grow: 1;
         }
 
         .task-card h3 {
@@ -215,7 +228,7 @@
             display: block;
             margin: 10px 0 0 0;
             padding-left: 20px;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             font-size: 0.9em;
             list-style-type: none;
         }
@@ -223,6 +236,7 @@
         .task-card.active .task-list li {
             position: relative;
             padding: 4px 0;
+            color: var(--text-primary);
         }
 
         .task-card.active .task-list li::before {
@@ -232,8 +246,15 @@
             color: var(--accent-color);
         }
 
-        [data-theme="dark"] .task-card .task-list {
-            color: #ffffff;
+        [data-theme="dark"] .task-card:hover,
+        [data-theme="dark"] .task-card.active {
+            background: var(--bg-primary);
+        }
+
+        [data-theme="dark"] .task-card h3,
+        [data-theme="dark"] .task-card .task-list,
+        [data-theme="dark"] .task-card .task-list li {
+            color: var(--text-primary);
         }
 
         @media (max-width: 768px) {
@@ -537,9 +558,21 @@
                         return `<li>${cleanItem}</li>`;
                     }).join('');
 
+                    // Bestimme den Aufgabentyp und wähle das entsprechende Logo
+                    const isHtmlTask = key.startsWith('html') || ['lists', 'links', 'images', 'forms', 'tables', 'semantic'].includes(key);
+                    const isCssTask = key.startsWith('css');
+                    const logoUrl = isHtmlTask 
+                        ? 'https://www.w3.org/html/logo/downloads/HTML5_Logo.svg'
+                        : isCssTask 
+                            ? 'https://github.com/CSS-Next/logo.css/raw/main/css.svg'
+                            : '';
+
                     card.innerHTML = `
-                        <h3>${task.title}</h3>
-                        <ul class="task-list">${listItems}</ul>
+                        ${logoUrl ? `<img src="${logoUrl}" alt="" class="task-icon">` : ''}
+                        <div class="task-content">
+                            <h3>${task.title}</h3>
+                            <ul class="task-list">${listItems}</ul>
+                        </div>
                     `;
                     card.addEventListener('click', () => selectTask(key));
                     tasksContainer.appendChild(card);
