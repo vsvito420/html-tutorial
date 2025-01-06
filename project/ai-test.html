@@ -8,8 +8,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closetag.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/fold/xml-fold.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/xml-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/html-hint.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/show-hint.min.css">
     <script src="script.js"></script>
     <style>
         /* Alle vorherigen Styles bleiben unverändert */
@@ -86,18 +98,17 @@
             flex: 1;
         }
 
-        .code-input {
-            width: 100%;
-            min-height: 300px;
-            padding: 15px;
+        .CodeMirror {
+            height: 300px;
+            border-radius: 8px;
             font-family: 'Fira Code', monospace;
             font-size: 14px;
             line-height: 1.5;
-            background: var(--code-bg);
-            color: var(--code-text);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            resize: vertical;
+        }
+
+        [data-theme="dark"] .CodeMirror {
+            border-color: var(--border-color);
         }
 
         .preview-section {
@@ -428,6 +439,11 @@
                 
                 Gib konstruktives Feedback und Verbesserungsvorschläge. Wenn der Code noch nicht perfekt ist,
                 führe den Schüler mit Hinweisen zur richtigen Lösung. Zeige auch Beispielcode für die Verbesserungen.
+                Beachte auch die Features von Markdown, um den Text zu formatieren, da dies im chat genutzt wird.
+                Sei vorsichtig das du zb keine --- in die nächste zeile schreibst da dies ja zu einer überschrift führen würde.
+                Bitte hebe die dinge hervor mit fetten text anstatt strichen.
+                Benutze wenige Worte da nicht so viel platz auf dem Bildschirm ist. 
+                
                 
                 WICHTIG: Wenn du Code in deiner Antwort verwendest:
                 
@@ -597,17 +613,81 @@
                 if (e.key === 'ArrowRight') nextBtn.click();
             });
 
+            // HTML Auto-Complete Hilfsfunktionen
+            function completeAfter(cm, pred) {
+                let cur = cm.getCursor();
+                if (!pred || pred()) setTimeout(() => {
+                    if (!cm.state.completionActive)
+                        cm.showHint({completeSingle: false});
+                }, 100);
+                return CodeMirror.Pass;
+            }
+
+            function completeIfAfterLt(cm) {
+                return completeAfter(cm, function() {
+                    let cur = cm.getCursor();
+                    return cm.getRange(CodeMirror.Pos(cur.line, cur.ch - 1), cur) == "<";
+                });
+            }
+
+            function completeIfInTag(cm) {
+                return completeAfter(cm, function() {
+                    let tok = cm.getTokenAt(cm.getCursor());
+                    if (tok.type == "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length == 1)) return false;
+                    let inner = CodeMirror.innerMode(cm.getMode(), tok.state).state;
+                    return inner.tagName;
+                });
+            }
+
+            // CodeMirror initialisieren
+            const editor = CodeMirror.fromTextArea(codeInput, {
+                mode: 'xml',
+                theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'monokai' : 'default',
+                lineNumbers: true,
+                autoCloseTags: true,
+                matchBrackets: true,
+                autoCloseBrackets: true,
+                lineWrapping: true,
+                tabSize: 2,
+                indentUnit: 2,
+                viewportMargin: Infinity,
+                extraKeys: {
+                    "'<'": completeAfter,
+                    "'/'": completeIfAfterLt,
+                    "' '": completeIfInTag,
+                    "'='": completeIfInTag,
+                    "Ctrl-Space": "autocomplete"
+                },
+                hintOptions: {
+                    schemaInfo: CodeMirror.htmlSchema
+                }
+            });
+
+            // Theme wechseln wenn sich das Seiten-Theme ändert
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'data-theme') {
+                        const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'monokai' : 'default';
+                        editor.setOption('theme', theme);
+                    }
+                });
+            });
+
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ['data-theme']
+            });
+
             // Live Preview
-            codeInput.addEventListener('input', () => {
-                previewBox.innerHTML = codeInput.value;
-                Prism.highlightElement(codeInput);
+            editor.on('change', () => {
+                previewBox.innerHTML = editor.getValue();
             });
 
             // Tasks initialisieren
             initTasks();
 
             submitBtn.addEventListener('click', async () => {
-                const code = codeInput.value;
+                const code = editor.getValue();
                 const task = tasks[currentTaskKey];
                 
                 if (!task) {
