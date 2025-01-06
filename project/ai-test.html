@@ -150,125 +150,102 @@
             transform: translateY(-2px);
         }
 
-        .tasks-carousel {
-            position: relative;
-            margin-bottom: 30px;
-            padding: 0 40px;
+        /* Sidebar Layout */
+        .page-container {
+            display: flex;
+            gap: 20px;
+            margin: -20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 20px 0;
+            flex-shrink: 0;
+            overflow-y: auto;
+            border-radius: 12px;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            min-width: 0;
         }
 
         .tasks-container {
             display: flex;
-            gap: 15px;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            padding: 15px 0;
-        }
-
-        .tasks-container::-webkit-scrollbar {
-            display: none;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0 10px;
         }
 
         .task-card {
-            flex: 0 0 300px;
-            padding: 12px;
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
+            padding: 12px 15px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            opacity: 0.7;
-            transform: scale(0.95);
-        }
-
-        .task-card.active {
-            border-color: var(--accent-color);
-            opacity: 1;
-            transform: scale(1);
-            background: var(--bg-primary);
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+            border-radius: 8px;
         }
 
         .task-card:hover {
-            border-color: var(--accent-color);
-            opacity: 0.9;
+            background: var(--bg-primary);
+            border-left-color: var(--accent-color);
+        }
+
+        .task-card.active {
+            background: var(--bg-primary);
+            border-left-color: var(--accent-color);
         }
 
         .task-card h3 {
-            margin: 0 0 6px 0;
+            margin: 0;
+            font-size: 1.1em;
             color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
         .task-card .task-list {
-            margin: 0;
-            padding-left: 15px;
+            display: none;
+        }
+
+        .task-card.active .task-list {
+            display: block;
+            margin: 10px 0 0 0;
+            padding-left: 20px;
             color: var(--text-secondary);
             font-size: 0.9em;
-            list-style-type: disc;
+            list-style-type: none;
         }
 
-        .task-card .task-list li {
-            margin-bottom: 2px;
-            line-height: 1.2;
+        .task-card.active .task-list li {
+            position: relative;
+            padding: 4px 0;
         }
 
-        .carousel-button {
+        .task-card.active .task-list li::before {
+            content: "•";
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 50%;
-            background: var(--accent-color);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            transition: all 0.3s ease;
-            z-index: 2;
+            left: -15px;
+            color: var(--accent-color);
         }
 
-        .carousel-button:hover {
-            background: var(--accent-hover);
-            transform: translateY(-50%) scale(1.1);
+        [data-theme="dark"] .task-card .task-list {
+            color: #ffffff;
         }
 
-        .carousel-button.prev {
-            left: 0;
-        }
+        @media (max-width: 768px) {
+            .page-container {
+                flex-direction: column;
+            }
 
-        .carousel-button.next {
-            right: 0;
-        }
-
-        .carousel-fade {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 40px;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .carousel-fade.left {
-            left: 40px;
-            background: linear-gradient(to right, var(--bg-primary), transparent);
-        }
-
-        .carousel-fade.right {
-            right: 40px;
-            background: linear-gradient(to left, var(--bg-primary), transparent);
-        }
-
-        [data-theme="dark"] .carousel-fade.left {
-            background: linear-gradient(to right, var(--bg-primary), transparent);
-        }
-
-        [data-theme="dark"] .carousel-fade.right {
-            background: linear-gradient(to left, var(--bg-primary), transparent);
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
         }
 
         /* Dark Mode Anpassungen */
@@ -373,17 +350,15 @@
     <main>
         <div class="container">
             <div class="tutorial-header">
-                <h1>HTML AI Test</h1>
-                <p>Übe HTML mit KI-Unterstützung. Die KI hilft dir Schritt für Schritt, deinen Code zu verbessern und zeigt dir Beispiele.</p>
+                <h1>AI Test</h1>
+                <p>Übe HTML (und css) mit KI-Unterstützung. <br> Die KI hilft dir Schritt für Schritt, deinen Code zu verbessern und zeigt dir Beispiele.</p>
             </div>
 
-            <div class="tasks-carousel">
-                <button class="carousel-button prev" aria-label="Vorherige Aufgabe">&larr;</button>
-                <button class="carousel-button next" aria-label="Nächste Aufgabe">&rarr;</button>
-                <div class="carousel-fade left"></div>
-                <div class="carousel-fade right"></div>
-                <div class="tasks-container" id="tasksContainer"></div>
-            </div>
+            <div class="page-container">
+                <aside class="sidebar">
+                    <div class="tasks-container" id="tasksContainer"></div>
+                </aside>
+                <div class="main-content">
             <div class="chat-container" id="chatContainer"></div>
             
             <div class="code-editor">
@@ -404,25 +379,65 @@
 
     <script>
         const tasks = {
-            basic: {
-                title: "Einfache HTML-Seite",
-                description: "Erstelle eine HTML-Seite mit:\n- Einer Überschrift 'Meine erste Webseite'\n- Einem Absatz mit dem Text 'Willkommen auf meiner Webseite!'"
+            // HTML Grundlagen
+            htmlBasic: {
+                title: "HTML Grundstruktur",
+                description: "Erstelle eine HTML-Grundstruktur mit:\n- DOCTYPE und html Element\n- head mit Titel und Charset\n- body mit Überschrift\n- Einem Absatz mit Text"
             },
-            form: {
-                title: "Kontaktformular",
-                description: "Erstelle ein Formular mit:\n- Eingabefeldern für Name und Email\n- Einer Textarea für die Nachricht\n- Einem Submit-Button"
+            textFormatting: {
+                title: "Textformatierung",
+                description: "Formatiere Text mit HTML-Elementen:\n- Verschiedene Überschriften (h1-h3)\n- Absätze mit p-Element\n- Hervorgehobener Text (strong/em)\n- Zeilenumbrüche (br)"
             },
-            nav: {
-                title: "Navigationsleiste",
-                description: "Erstelle eine Navigationsleiste mit:\n- Mindestens 3 Links\n- Verwende das nav-Element\n- Strukturiere die Links als Liste"
+            lists: {
+                title: "Listen erstellen",
+                description: "Erstelle verschiedene Listen:\n- Ungeordnete Liste (ul)\n- Geordnete Liste (ol)\n- Verschachtelte Listen\n- Beschreibungsliste (dl)"
             },
-            gallery: {
-                title: "Bildergalerie",
-                description: "Baue eine Bildergalerie mit:\n- Grid oder Flexbox Layout\n- Mindestens 4 Bildern\n- Responsivem Design"
+            links: {
+                title: "Links und Navigation",
+                description: "Arbeite mit verschiedenen Links:\n- Externe Links mit target\n- Interne Links zu Abschnitten\n- E-Mail und Telefon Links\n- Download Links"
+            },
+            images: {
+                title: "Bilder einbinden",
+                description: "Binde Bilder richtig ein:\n- Bild mit alt-Text\n- Bildunterschrift mit figure\n- Responsive Bilder\n- Bilder als Links"
+            },
+            // HTML Fortgeschritten
+            forms: {
+                title: "Formulare erstellen",
+                description: "Erstelle ein komplettes Formular:\n- Verschiedene Input-Typen\n- Labels und Gruppierung\n- Validierung mit required\n- Submit Button"
+            },
+            tables: {
+                title: "Tabellen gestalten",
+                description: "Erstelle strukturierte Tabellen:\n- Kopfzeilen und Spalten\n- Zellen verbinden\n- Tabellenbeschriftung\n- Responsive Tabelle"
             },
             semantic: {
-                title: "Semantisches Layout",
-                description: "Erstelle ein Layout mit:\n- Header, Nav, Main, Aside und Footer\n- Sinnvoller Verschachtelung\n- Semantisch korrekter Struktur"
+                title: "Semantische Struktur",
+                description: "Nutze semantische Elemente:\n- Header und Footer\n- Navigation und Main\n- Article und Section\n- Aside für Zusatzinfos"
+            },
+            // CSS Grundlagen
+            cssText: {
+                title: "Text Styling",
+                description: "Gestalte Text mit CSS:\n- Schriftarten und -größen\n- Textfarben und -ausrichtung\n- Zeilenabstände\n- Textdekoration"
+            },
+            cssBox: {
+                title: "Box Model",
+                description: "Arbeite mit dem Box Model:\n- Breite und Höhe\n- Padding und Margin\n- Border und Outline\n- Box-sizing"
+            },
+            cssColors: {
+                title: "Farben und Hintergründe",
+                description: "Gestalte mit Farben:\n- Textfarben\n- Hintergrundfarben\n- Farbverläufe\n- Transparenz"
+            },
+            // CSS Fortgeschritten
+            cssLayout: {
+                title: "Layout Techniken",
+                description: "Erstelle komplexe Layouts:\n- Flexbox Container\n- Grid Layout\n- Positionierung\n- Float und Clear"
+            },
+            cssEffects: {
+                title: "Effekte und Animation",
+                description: "Füge Effekte hinzu:\n- Hover Effekte\n- Transitions\n- Transformationen\n- Animationen"
+            },
+            cssResponsive: {
+                title: "Responsive Design",
+                description: "Mache deine Seite responsive:\n- Media Queries\n- Flexible Grids\n- Responsive Bilder\n- Mobile First"
             }
         };
 
@@ -506,12 +521,8 @@
             const submitBtn = document.getElementById('submitBtn');
             const previewBox = document.getElementById('codePreview');
             const chatContainer = document.getElementById('chatContainer');
-            const prevBtn = document.querySelector('.carousel-button.prev');
-            const nextBtn = document.querySelector('.carousel-button.next');
-            
             let currentTaskKey = null;
             let conversation = [];
-            let currentIndex = 0;
 
             // Tasks initialisieren
             function initTasks() {
@@ -548,13 +559,6 @@
                     card.classList.toggle('active', card.dataset.taskKey === taskKey);
                 });
 
-                if (shouldScroll) {
-                    const taskKeys = Object.keys(tasks);
-                    const newIndex = taskKeys.indexOf(taskKey);
-                    const direction = newIndex > currentIndex ? 'right' : 'left';
-                    shiftCards(direction);
-                    currentIndex = newIndex;
-                }
 
                 currentTaskKey = taskKey;
                 chatContainer.innerHTML = '';
@@ -571,47 +575,6 @@
                 chatContainer.appendChild(messageDiv);
             }
 
-            // Navigation mit Grid-Shift
-            function shiftCards(direction) {
-                const cardWidth = 300; // Breite einer Karte
-                const gap = 15; // Gap zwischen Karten
-                const shiftAmount = cardWidth + gap; // Gesamtbreite für Verschiebung
-                
-                const currentScroll = tasksContainer.scrollLeft;
-                const targetScroll = currentScroll + (direction === 'right' ? shiftAmount : -shiftAmount);
-                
-                // Stelle sicher, dass wir nicht über die Grenzen scrollen
-                const maxScroll = tasksContainer.scrollWidth - tasksContainer.offsetWidth;
-                const finalScroll = Math.max(0, Math.min(targetScroll, maxScroll));
-                
-                tasksContainer.scrollTo({
-                    left: finalScroll,
-                    behavior: 'smooth'
-                });
-            }
-
-            // Navigation
-            prevBtn.addEventListener('click', () => {
-                const taskKeys = Object.keys(tasks);
-                const currentIndex = taskKeys.indexOf(currentTaskKey);
-                if (currentIndex > 0) {
-                    selectTask(taskKeys[currentIndex - 1]);
-                }
-            });
-
-            nextBtn.addEventListener('click', () => {
-                const taskKeys = Object.keys(tasks);
-                const currentIndex = taskKeys.indexOf(currentTaskKey);
-                if (currentIndex < taskKeys.length - 1) {
-                    selectTask(taskKeys[currentIndex + 1]);
-                }
-            });
-
-            // Tastatur-Navigation
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft') prevBtn.click();
-                if (e.key === 'ArrowRight') nextBtn.click();
-            });
 
             // HTML Auto-Complete Hilfsfunktionen
             function completeAfter(cm, pred) {
