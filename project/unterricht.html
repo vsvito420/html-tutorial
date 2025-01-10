@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     <script src="script.js"></script>
     <style>
+      /* Vorhandene Styles bleiben... */
       .visually-hidden {
         position: absolute;
         width: 1px;
@@ -100,17 +101,46 @@
         color: var(--code-text);
       }
 
+      /* Neue Styles für die Schwierigkeitsgrade */
       .exercise {
-        background: var(--bg-primary);
-        border-left: 4px solid var(--accent-color);
-        padding: 15px 20px;
         margin: 20px 0;
-        border-radius: 0 8px 8px 0;
+        padding: 20px;
+        border-radius: 12px;
+        background: var(--bg-primary);
+      }
+
+      .exercise.easy {
+        border-left: 4px solid #4CAF50;
+        background: rgba(76, 175, 80, 0.1);
+      }
+
+      .exercise.medium {
+        border-left: 4px solid #FFC107;
+        background: rgba(255, 193, 7, 0.1);
+      }
+
+      .exercise.hard {
+        border-left: 4px solid #f44336;
+        background: rgba(244, 67, 54, 0.1);
       }
 
       .exercise h4 {
-        color: var(--accent-color);
-        margin: 0 0 10px 0;
+        margin: 0 0 15px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .easy h4 {
+        color: #4CAF50;
+      }
+
+      .medium h4 {
+        color: #FFC107;
+      }
+
+      .hard h4 {
+        color: #f44336;
       }
 
       .exercise ul {
@@ -146,6 +176,9 @@
       .resources h3 {
         color: var(--accent-color);
         margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
       .resources ul {
@@ -185,6 +218,9 @@
       .homework h3 {
         color: var(--accent-color);
         margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
       .homework ol {
@@ -228,25 +264,25 @@
 
     <main>
       <div class="intro">
-        <h1>Unterricht bei KiberOne</h1>
+        <h1>📚 Unterricht bei KiberOne</h1>
         <p>
           Hier findest du die Unterrichtsinhalte und Notizen zu den einzelnen Stunden.
           Wähle einen Unterricht aus dem Dropdown-Menü.
         </p>
         <label for="lessonSelect" class="visually-hidden">Wähle einen Unterricht</label>
         <select class="lesson-dropdown" id="lessonSelect" onchange="showLesson(this.value)" aria-label="Wähle einen Unterricht">
-          <option value="u1">Unterricht 1 - Einführung in HTML & CSS</option>
-          <option value="u2">Unterricht 2 - Listen und Links</option>
-          <option value="u3">Unterricht 3 - Bilder und Layout</option>
+          <option value="u1">📖 Unterricht 1 - Einführung in HTML & CSS</option>
+          <option value="u2">🔗 Unterricht 2 - Listen und Links</option>
+          <option value="u3">🎨 Unterricht 3 - Bilder und Layout</option>
         </select>
       </div>
 
       <div class="lesson-content" id="u1">
         <div class="lesson-section">
-          <h2>1. Einführung in die Webentwicklung</h2>
+          <h2>🚀 1. Einführung in die Webentwicklung</h2>
           <p>In diesem ersten Unterricht lernen wir die Grundlagen der Webentwicklung kennen. Wir werden verstehen, wie Webseiten aufgebaut sind und wie wir sie mit HTML und CSS erstellen können.</p>
           
-          <h3>Was ist HTML?</h3>
+          <h3>💻 Was ist HTML?</h3>
           <p>HTML (HyperText Markup Language) ist die Grundstruktur jeder Webseite. Es ist wie das Skelett eines Körpers - es gibt allem seine grundlegende Form und Struktur.</p>
           
           <div class="code-example">
@@ -263,10 +299,10 @@
           </div>
 
           <div class="note">
-            <strong>Wichtig:</strong> Jedes HTML-Element wird durch Tags definiert, die in spitzen Klammern stehen. Die meisten Elemente haben einen öffnenden und einen schließenden Tag.
+            <strong>💡 Wichtig:</strong> Jedes HTML-Element wird durch Tags definiert, die in spitzen Klammern stehen. Die meisten Elemente haben einen öffnenden und einen schließenden Tag.
           </div>
 
-          <h3>Was ist CSS?</h3>
+          <h3>🎨 Was ist CSS?</h3>
           <p>CSS (Cascading Style Sheets) ist für das Aussehen der Webseite zuständig. Es ist wie die Kleidung und das Make-up für unser HTML-Skelett.</p>
 
           <div class="code-example">
@@ -286,8 +322,8 @@ p {
 }</code></pre>
           </div>
 
-          <div class="exercise">
-            <h4>Praktische Übung: Erste HTML-Seite</h4>
+          <div class="exercise easy">
+            <h4>🌟 Einfache Übung: Erste HTML-Seite</h4>
             <p>Lasst uns gemeinsam eine einfache HTML-Seite erstellen:</p>
             <ul>
               <li>Öffne Visual Studio Code</li>
@@ -297,12 +333,36 @@ p {
               <li>Speichere die Datei und öffne sie im Browser</li>
             </ul>
           </div>
+
+          <div class="exercise medium">
+            <h4>🏆 Mittlere Übung: Meta-Tags und Dokumentenstruktur</h4>
+            <p>Erweitere deine HTML-Seite um wichtige Meta-Informationen:</p>
+            <ul>
+              <li>Füge einen aussagekräftigen Titel hinzu</li>
+              <li>Setze den Viewport für mobile Geräte</li>
+              <li>Definiere die Zeichenkodierung</li>
+              <li>Füge eine Seitenbeschreibung hinzu</li>
+              <li>Teste die Seite in verschiedenen Browsern</li>
+            </ul>
+          </div>
+
+          <div class="exercise hard">
+            <h4>💎 Schwere Übung: Mehrsprachige Seite</h4>
+            <p>Erstelle eine mehrsprachige HTML-Struktur:</p>
+            <ul>
+              <li>Nutze das lang-Attribut für verschiedene Sprachen</li>
+              <li>Implementiere hreflang für Sprachversionen</li>
+              <li>Füge Sprachumschalter hinzu</li>
+              <li>Stelle sicher, dass Sonderzeichen korrekt angezeigt werden</li>
+              <li>Teste die Barrierefreiheit der Sprachumschaltung</li>
+            </ul>
+          </div>
         </div>
 
         <div class="lesson-section">
-          <h2>2. Grundlegende HTML-Elemente</h2>
+          <h2>📝 2. Grundlegende HTML-Elemente</h2>
           
-          <h3>Überschriften</h3>
+          <h3>📌 Überschriften</h3>
           <p>HTML bietet sechs Ebenen von Überschriften, von h1 (wichtigste) bis h6 (unwichtigste).</p>
           
           <div class="code-example">
@@ -311,7 +371,7 @@ p {
 &lt;h3&gt;Noch kleinere Überschrift&lt;/h3&gt;</code></pre>
           </div>
 
-          <h3>Absätze und Textformatierung</h3>
+          <h3>📄 Absätze und Textformatierung</h3>
           <p>Text wird in HTML hauptsächlich mit dem p-Element (Paragraph) strukturiert.</p>
           
           <div class="code-example">
@@ -320,8 +380,8 @@ p {
    &lt;em&gt;betonter Text&lt;/em&gt;.&lt;/p&gt;</code></pre>
           </div>
 
-          <div class="exercise">
-            <h4>Praktische Übung: Text formatieren</h4>
+          <div class="exercise easy">
+            <h4>🌟 Einfache Übung: Text formatieren</h4>
             <p>Erstelle eine Seite über dein Hobby:</p>
             <ul>
               <li>Verwende eine h1-Überschrift für den Titel</li>
@@ -330,12 +390,34 @@ p {
               <li>Betone bestimmte Phrasen mit em</li>
             </ul>
           </div>
+
+          <div class="exercise medium">
+            <h4>🏆 Mittlere Übung: Erweiterte Textformatierung</h4>
+            <p>Erstelle einen Blog-Artikel:</p>
+            <ul>
+              <li>Nutze verschiedene Überschriftenebenen (h1-h3)</li>
+              <li>Füge Zitate mit blockquote ein</li>
+              <li>Erstelle Fußnoten mit sup und Referenzen</li>
+              <li>Formatiere Code-Beispiele mit pre und code</li>
+            </ul>
+          </div>
+
+          <div class="exercise hard">
+            <h4>💎 Schwere Übung: Dynamische Textanpassung</h4>
+            <p>Erstelle einen interaktiven Text-Editor:</p>
+            <ul>
+              <li>Implementiere verschiedene Textformatierungen</li>
+              <li>Füge Schriftgrößenanpassung hinzu</li>
+              <li>Erstelle eine Vorschau der Formatierung</li>
+              <li>Mache die Formatierung responsiv</li>
+            </ul>
+          </div>
         </div>
 
         <div class="lesson-section">
-          <h2>3. Erste Schritte mit CSS</h2>
+          <h2>🎨 3. Erste Schritte mit CSS</h2>
           
-          <h3>CSS einbinden</h3>
+          <h3>🔗 CSS einbinden</h3>
           <p>CSS kann auf drei Arten eingebunden werden:</p>
           
           <div class="code-example">
@@ -351,7 +433,7 @@ p {
 &lt;p style="color: blue;"&gt;Blauer Text&lt;/p&gt;</code></pre>
           </div>
 
-          <h3>Grundlegende CSS-Eigenschaften</h3>
+          <h3>🎯 Grundlegende CSS-Eigenschaften</h3>
           <div class="code-example">
             <pre><code class="language-css">/* Textfarbe und Schriftart */
 p {
@@ -368,8 +450,8 @@ div {
 }</code></pre>
           </div>
 
-          <div class="exercise">
-            <h4>Praktische Übung: Styling hinzufügen</h4>
+          <div class="exercise easy">
+            <h4>🌟 Einfache Übung: Styling hinzufügen</h4>
             <p>Gestalte deine Hobby-Seite:</p>
             <ul>
               <li>Erstelle eine style.css Datei</li>
@@ -378,10 +460,32 @@ div {
               <li>Füge Abstände zwischen den Absätzen hinzu</li>
             </ul>
           </div>
+
+          <div class="exercise medium">
+            <h4>🏆 Mittlere Übung: Animierte Elemente</h4>
+            <p>Füge Bewegung zu deiner Seite hinzu:</p>
+            <ul>
+              <li>Erstelle einen Hover-Effekt für Links</li>
+              <li>Animiere die Farbänderung von Buttons</li>
+              <li>Füge eine Einblendanimation für Bilder hinzu</li>
+              <li>Implementiere einen Scroll-Effekt</li>
+            </ul>
+          </div>
+
+          <div class="exercise hard">
+            <h4>💎 Schwere Übung: Responsives Layout</h4>
+            <p>Erstelle ein komplexes responsives Design:</p>
+            <ul>
+              <li>Implementiere ein Grid-Layout</li>
+              <li>Nutze Flexbox für die Navigation</li>
+              <li>Erstelle ein Hamburger-Menü für mobile Geräte</li>
+              <li>Optimiere die Performance der Animationen</li>
+            </ul>
+          </div>
         </div>
 
         <div class="homework">
-          <h3>Hausaufgaben</h3>
+          <h3>📚 Hausaufgaben</h3>
           <ol>
             <li>Erstelle eine persönliche Webseite über dich selbst:
               <ul>
@@ -402,7 +506,7 @@ div {
         </div>
 
         <div class="resources">
-          <h3>Zusätzliche Ressourcen</h3>
+          <h3>🔍 Zusätzliche Ressourcen</h3>
           <ul>
             <li><a href="https://www.w3schools.com/html/default.asp" target="_blank" rel="noopener">W3Schools HTML Tutorial</a></li>
             <li><a href="https://www.w3schools.com/css/default.asp" target="_blank" rel="noopener">W3Schools CSS Tutorial</a></li>
@@ -413,14 +517,14 @@ div {
 
       <div class="lesson-content" id="u2" style="display: none;">
         <div class="lesson-section">
-          <h2>Unterricht 2 wird vorbereitet...</h2>
+          <h2>🔜 Unterricht 2 wird vorbereitet...</h2>
           <p>Der Inhalt für Unterricht 2 wird bald verfügbar sein.</p>
         </div>
       </div>
 
       <div class="lesson-content" id="u3" style="display: none;">
         <div class="lesson-section">
-          <h2>Unterricht 3 wird vorbereitet...</h2>
+          <h2>🔜 Unterricht 3 wird vorbereitet...</h2>
           <p>Der Inhalt für Unterricht 3 wird bald verfügbar sein.</p>
         </div>
       </div>
@@ -435,6 +539,9 @@ div {
         
         // Gewählte Lektion anzeigen
         document.getElementById(lessonId).style.display = 'block';
+        
+        // Zum Anfang der Lektion scrollen
+        window.scrollTo(0, 0);
       }
 
       // Initial die erste Lektion anzeigen
