@@ -6,7 +6,8 @@
   "scripts": {
     "pages:dev": "wrangler pages dev ./project",
     "pages:deploy": "wrangler pages deploy ./project",
-    "dev": "live-server ./project --host=localhost --port=3000 --entry-file=index.html --mount=/:/project"
+    "dev": "live-server ./project --host=localhost --port=3000 --entry-file=index.html --mount=/:/project",
+    "start": "npm run dev --port=3000"
   },
   "keywords": [
     "html",
