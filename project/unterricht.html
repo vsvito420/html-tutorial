@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     <script src="script.js"></script>
     <style>
       .visually-hidden {
@@ -31,93 +35,8 @@
         color: var(--text-secondary);
       }
 
-      .lesson-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
-        padding: 0;
-        list-style: none;
-      }
-
-      .lesson-card {
-        background: var(--bg-secondary);
-        border-radius: 12px;
-        padding: 25px;
-        box-shadow: 0 4px 6px var(--shadow-color);
-        border: 1px solid var(--border-color);
-        transition: all 0.3s ease;
-      }
-
-      .lesson-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-      }
-
-      .lesson-header {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
-      }
-
-      .lesson-number {
-        background: var(--accent-color);
-        color: var(--bg-secondary);
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        flex-shrink: 0;
-      }
-
-      .lesson-title {
-        font-size: 1.3em;
-        margin: 0;
-        color: var(--text-primary);
-        flex-grow: 1;
-      }
-
-      .lesson-description {
-        color: var(--text-secondary);
-        margin-bottom: 20px;
-        line-height: 1.6;
-      }
-
-      .lesson-content {
-        list-style: none;
-        padding: 0;
-        margin-bottom: 20px;
-      }
-
-      .lesson-content li {
-        margin-bottom: 12px;
-        padding-left: 25px;
-        position: relative;
-        color: var(--text-secondary);
-      }
-
-      .lesson-content li::before {
-        content: "→";
-        position: absolute;
-        left: 0;
-        color: var(--accent-color);
-      }
-
-      .lesson-notes {
-        background: var(--bg-primary);
-        padding: 15px 20px;
-        border-left: 4px solid var(--accent-color);
-        border-radius: 0 8px 8px 0;
-        margin-top: 20px;
-        font-size: 0.95em;
-        color: var(--text-secondary);
-      }
-
       .lesson-dropdown {
-        margin-bottom: 2rem;
+        margin: 2rem auto;
         width: 100%;
         max-width: 300px;
         padding: 10px;
@@ -127,6 +46,7 @@
         color: var(--text-primary);
         font-size: 1.1em;
         cursor: pointer;
+        display: block;
       }
 
       .lesson-dropdown:focus {
@@ -140,14 +60,149 @@
         padding: 10px;
       }
 
+      .lesson-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .lesson-section {
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px var(--shadow-color);
+        border: 1px solid var(--border-color);
+      }
+
+      .lesson-section h2 {
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .lesson-section h3 {
+        color: var(--text-primary);
+        margin: 1.5rem 0 1rem;
+      }
+
+      .code-example {
+        background: var(--code-bg);
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+        overflow-x: auto;
+      }
+
+      .code-example code {
+        font-family: 'Fira Code', monospace;
+        color: var(--code-text);
+      }
+
+      .exercise {
+        background: var(--bg-primary);
+        border-left: 4px solid var(--accent-color);
+        padding: 15px 20px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .exercise h4 {
+        color: var(--accent-color);
+        margin: 0 0 10px 0;
+      }
+
+      .exercise ul {
+        margin: 10px 0;
+        padding-left: 20px;
+      }
+
+      .exercise li {
+        margin-bottom: 8px;
+        color: var(--text-secondary);
+      }
+
+      .note {
+        background: rgba(255, 193, 7, 0.1);
+        border-left: 4px solid #ffc107;
+        padding: 15px 20px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .note strong {
+        color: #ffc107;
+      }
+
+      .resources {
+        margin-top: 30px;
+        padding: 20px;
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+      }
+
+      .resources h3 {
+        color: var(--accent-color);
+        margin-bottom: 15px;
+      }
+
+      .resources ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .resources li {
+        margin-bottom: 10px;
+      }
+
+      .resources a {
+        color: var(--accent-color);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .resources a:hover {
+        text-decoration: underline;
+      }
+
+      .resources a::before {
+        content: "→";
+        color: var(--accent-color);
+      }
+
+      .homework {
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 30px;
+        border: 1px solid var(--border-color);
+      }
+
+      .homework h3 {
+        color: var(--accent-color);
+        margin-bottom: 15px;
+      }
+
+      .homework ol {
+        padding-left: 20px;
+      }
+
+      .homework li {
+        margin-bottom: 10px;
+        color: var(--text-secondary);
+      }
+
       @media (max-width: 768px) {
-        .lesson-list {
-          grid-template-columns: 1fr;
-          padding: 0 15px;
+        .lesson-content {
+          padding: 10px;
         }
 
-        .intro {
-          padding: 0 15px;
+        .lesson-section {
+          padding: 15px;
         }
 
         .lesson-dropdown {
@@ -180,81 +235,202 @@
         </p>
         <label for="lessonSelect" class="visually-hidden">Wähle einen Unterricht</label>
         <select class="lesson-dropdown" id="lessonSelect" onchange="showLesson(this.value)" aria-label="Wähle einen Unterricht">
-          <option value="u1">Unterricht 1 (Aktuell)</option>
-          <option value="u2">Unterricht 2</option>
-          <option value="u3">Unterricht 3</option>
+          <option value="u1">Unterricht 1 - Einführung in HTML & CSS</option>
+          <option value="u2">Unterricht 2 - Listen und Links</option>
+          <option value="u3">Unterricht 3 - Bilder und Layout</option>
         </select>
       </div>
 
-      <ul class="lesson-list">
-        <li class="lesson-card" id="u1">
-          <div class="lesson-header">
-            <span class="lesson-number">1</span>
-            <h2 class="lesson-title">Einführung in HTML & CSS</h2>
+      <div class="lesson-content" id="u1">
+        <div class="lesson-section">
+          <h2>1. Einführung in die Webentwicklung</h2>
+          <p>In diesem ersten Unterricht lernen wir die Grundlagen der Webentwicklung kennen. Wir werden verstehen, wie Webseiten aufgebaut sind und wie wir sie mit HTML und CSS erstellen können.</p>
+          
+          <h3>Was ist HTML?</h3>
+          <p>HTML (HyperText Markup Language) ist die Grundstruktur jeder Webseite. Es ist wie das Skelett eines Körpers - es gibt allem seine grundlegende Form und Struktur.</p>
+          
+          <div class="code-example">
+            <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="de"&gt;
+  &lt;head&gt;
+    &lt;title&gt;Meine erste Webseite&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Willkommen!&lt;/h1&gt;
+    &lt;p&gt;Dies ist mein erster HTML-Code.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
           </div>
-          <p class="lesson-description">
-            In dieser Stunde lernen wir die Grundlagen von HTML und CSS kennen.
-          </p>
-          <ul class="lesson-content">
-            <li>Was ist HTML? - Die Struktur einer Webseite</li>
-            <li>Was ist CSS? - Das Design einer Webseite</li>
-            <li>Erste HTML-Tags: h1, p, div</li>
-            <li>Erste CSS-Eigenschaften: color, background-color</li>
-            <li>Praktische Übungen am Computer</li>
-          </ul>
-          <div class="lesson-notes">
-            <strong>Hausaufgabe:</strong> Erstelle eine einfache Webseite mit einer Überschrift und einem Absatz. 
-            Gestalte sie mit verschiedenen Farben.
-          </div>
-        </li>
 
-        <li class="lesson-card" id="u2" style="display: none;">
-          <div class="lesson-header">
-            <span class="lesson-number">2</span>
-            <h2 class="lesson-title">Listen und Links</h2>
+          <div class="note">
+            <strong>Wichtig:</strong> Jedes HTML-Element wird durch Tags definiert, die in spitzen Klammern stehen. Die meisten Elemente haben einen öffnenden und einen schließenden Tag.
           </div>
-          <p class="lesson-description">
-            Heute lernen wir, wie man Listen erstellt und Links einfügt.
-          </p>
-          <ul class="lesson-content">
-            <li>Ungeordnete Listen (ul) und geordnete Listen (ol)</li>
-            <li>Listenpunkte (li) gestalten</li>
-            <li>Links erstellen mit dem a-Tag</li>
-            <li>Links zu anderen Seiten und innerhalb der Seite</li>
-            <li>CSS für Listen und Links</li>
-          </ul>
-          <div class="lesson-notes">
-            <strong>Hausaufgabe:</strong> Erstelle eine Liste deiner Hobbys und verlinke zu passenden Websites.
-          </div>
-        </li>
 
-        <li class="lesson-card" id="u3" style="display: none;">
-          <div class="lesson-header">
-            <span class="lesson-number">3</span>
-            <h2 class="lesson-title">Bilder und Layout</h2>
+          <h3>Was ist CSS?</h3>
+          <p>CSS (Cascading Style Sheets) ist für das Aussehen der Webseite zuständig. Es ist wie die Kleidung und das Make-up für unser HTML-Skelett.</p>
+
+          <div class="code-example">
+            <pre><code class="language-css">body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: blue;
+  text-align: center;
+}
+
+p {
+  color: #333333;
+  line-height: 1.6;
+}</code></pre>
           </div>
-          <p class="lesson-description">
-            In dieser Stunde geht es um das Einbinden von Bildern und grundlegendes Layout.
-          </p>
-          <ul class="lesson-content">
-            <li>Bilder einbinden mit dem img-Tag</li>
-            <li>Alt-Text und Bildgrößen</li>
-            <li>Grundlegendes CSS-Layout</li>
-            <li>Flexbox für einfache Layouts</li>
-            <li>Responsive Design Grundlagen</li>
+
+          <div class="exercise">
+            <h4>Praktische Übung: Erste HTML-Seite</h4>
+            <p>Lasst uns gemeinsam eine einfache HTML-Seite erstellen:</p>
+            <ul>
+              <li>Öffne Visual Studio Code</li>
+              <li>Erstelle eine neue Datei namens "index.html"</li>
+              <li>Füge die HTML-Grundstruktur ein</li>
+              <li>Erstelle eine Überschrift und einen Absatz</li>
+              <li>Speichere die Datei und öffne sie im Browser</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lesson-section">
+          <h2>2. Grundlegende HTML-Elemente</h2>
+          
+          <h3>Überschriften</h3>
+          <p>HTML bietet sechs Ebenen von Überschriften, von h1 (wichtigste) bis h6 (unwichtigste).</p>
+          
+          <div class="code-example">
+            <pre><code class="language-html">&lt;h1&gt;Hauptüberschrift&lt;/h1&gt;
+&lt;h2&gt;Unterüberschrift&lt;/h2&gt;
+&lt;h3&gt;Noch kleinere Überschrift&lt;/h3&gt;</code></pre>
+          </div>
+
+          <h3>Absätze und Textformatierung</h3>
+          <p>Text wird in HTML hauptsächlich mit dem p-Element (Paragraph) strukturiert.</p>
+          
+          <div class="code-example">
+            <pre><code class="language-html">&lt;p&gt;Dies ist ein normaler Absatz.&lt;/p&gt;
+&lt;p&gt;Hier ist &lt;strong&gt;wichtiger Text&lt;/strong&gt; und 
+   &lt;em&gt;betonter Text&lt;/em&gt;.&lt;/p&gt;</code></pre>
+          </div>
+
+          <div class="exercise">
+            <h4>Praktische Übung: Text formatieren</h4>
+            <p>Erstelle eine Seite über dein Hobby:</p>
+            <ul>
+              <li>Verwende eine h1-Überschrift für den Titel</li>
+              <li>Füge mehrere Absätze mit p-Tags hinzu</li>
+              <li>Markiere wichtige Wörter mit strong</li>
+              <li>Betone bestimmte Phrasen mit em</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lesson-section">
+          <h2>3. Erste Schritte mit CSS</h2>
+          
+          <h3>CSS einbinden</h3>
+          <p>CSS kann auf drei Arten eingebunden werden:</p>
+          
+          <div class="code-example">
+            <pre><code class="language-html">&lt;!-- 1. Extern (bevorzugt) --&gt;
+&lt;link rel="stylesheet" href="style.css"&gt;
+
+&lt;!-- 2. Intern --&gt;
+&lt;style&gt;
+  p { color: blue; }
+&lt;/style&gt;
+
+&lt;!-- 3. Inline (vermeiden) --&gt;
+&lt;p style="color: blue;"&gt;Blauer Text&lt;/p&gt;</code></pre>
+          </div>
+
+          <h3>Grundlegende CSS-Eigenschaften</h3>
+          <div class="code-example">
+            <pre><code class="language-css">/* Textfarbe und Schriftart */
+p {
+  color: #333333;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Hintergrund und Abstände */
+div {
+  background-color: #f0f0f0;
+  padding: 20px;
+  margin: 10px;
+}</code></pre>
+          </div>
+
+          <div class="exercise">
+            <h4>Praktische Übung: Styling hinzufügen</h4>
+            <p>Gestalte deine Hobby-Seite:</p>
+            <ul>
+              <li>Erstelle eine style.css Datei</li>
+              <li>Ändere die Schriftart der Überschrift</li>
+              <li>Gib dem Text eine andere Farbe</li>
+              <li>Füge Abstände zwischen den Absätzen hinzu</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="homework">
+          <h3>Hausaufgaben</h3>
+          <ol>
+            <li>Erstelle eine persönliche Webseite über dich selbst:
+              <ul>
+                <li>Mindestens eine Hauptüberschrift (h1)</li>
+                <li>2-3 Absätze Text über dich</li>
+                <li>Verwende strong und em für Texthervorhebungen</li>
+                <li>Gestalte die Seite mit CSS (Farben, Schriftarten)</li>
+              </ul>
+            </li>
+            <li>Experimentiere mit verschiedenen CSS-Eigenschaften:
+              <ul>
+                <li>Ändere Textfarben</li>
+                <li>Probiere verschiedene Schriftarten aus</li>
+                <li>Füge Hintergrundfarben hinzu</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+
+        <div class="resources">
+          <h3>Zusätzliche Ressourcen</h3>
+          <ul>
+            <li><a href="https://www.w3schools.com/html/default.asp" target="_blank" rel="noopener">W3Schools HTML Tutorial</a></li>
+            <li><a href="https://www.w3schools.com/css/default.asp" target="_blank" rel="noopener">W3Schools CSS Tutorial</a></li>
+            <li><a href="https://developer.mozilla.org/de/docs/Learn/HTML/Introduction_to_HTML" target="_blank" rel="noopener">MDN Web Docs - HTML Einführung</a></li>
           </ul>
-          <div class="lesson-notes">
-            <strong>Hausaufgabe:</strong> Gestalte eine Bildergalerie mit mindestens 3 Bildern und einem responsiven Layout.
-          </div>
-        </li>
-      </ul>
+        </div>
+      </div>
+
+      <div class="lesson-content" id="u2" style="display: none;">
+        <div class="lesson-section">
+          <h2>Unterricht 2 wird vorbereitet...</h2>
+          <p>Der Inhalt für Unterricht 2 wird bald verfügbar sein.</p>
+        </div>
+      </div>
+
+      <div class="lesson-content" id="u3" style="display: none;">
+        <div class="lesson-section">
+          <h2>Unterricht 3 wird vorbereitet...</h2>
+          <p>Der Inhalt für Unterricht 3 wird bald verfügbar sein.</p>
+        </div>
+      </div>
     </main>
 
     <script>
       function showLesson(lessonId) {
         // Alle Lektionen ausblenden
-        document.querySelectorAll('.lesson-card').forEach(card => {
-          card.style.display = 'none';
+        document.querySelectorAll('.lesson-content').forEach(content => {
+          content.style.display = 'none';
         });
         
         // Gewählte Lektion anzeigen
@@ -264,6 +440,8 @@
       // Initial die erste Lektion anzeigen
       document.addEventListener('DOMContentLoaded', () => {
         showLesson('u1');
+        // Code-Highlighting initialisieren
+        Prism.highlightAll();
       });
     </script>
 
