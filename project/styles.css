@@ -32,16 +32,16 @@
 
 /* Dark Theme */
 [data-theme="dark"] {
-  --bg-primary: rgba(95, 79, 165, 0.8);
-  --bg-secondary: rgba(19, 14, 37, 0.7);
-  --text-primary: #f7fafc;
-  --text-secondary: #ffffff;
-  --border-color: rgba(28, 197, 42, 0.3);
-  --accent-color: #60a5fa;
-  --accent-hover: #3b82f6;
+  --bg-primary: rgba(165, 150, 79, 0.8);
+  --bg-secondary: rgba(37, 32, 14, 0.7);
+  --text-primary: #ffffff;
+  --text-secondary: #ffd700;
+  --border-color: rgba(197, 168, 28, 0.3);
+  --accent-color: #ffd700;
+  --accent-hover: #ffb700;
   --shadow-color: rgba(0,0,0,0.25);
-  --code-bg: #0d1016;
-  --code-text: #f9fafb;
+  --code-bg: #16130d;
+  --code-text: #fbfaf9;
   /* Glassmorphism Dark */
   --glass-bg: rgba(0, 0, 0, 0.2);
   --glass-border: rgba(255, 255, 255, 0.1);
@@ -59,8 +59,10 @@
 [data-theme="dark"] .feature-card,
 [data-theme="dark"] .task-card,
 [data-theme="dark"] .quiz-container,
-[data-theme="dark"] .roadmap-container {
-  background: var(--glass-bg);
+[data-theme="dark"] .roadmap-container,
+[data-theme="dark"] .code-section,
+[data-theme="dark"] .preview-section {
+  background: rgba(0, 0, 0, 0.4);
   border-color: var(--glass-border);
 }
 
@@ -86,7 +88,7 @@
 
 [data-theme="dark"] .preview-box {
   border-color: var(--glass-border);
-  background: var(--glass-bg);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 [data-theme="dark"] .nav-button {
