@@ -25,21 +25,68 @@ function updateThemeIcon(theme) {
   }
 }
 
-// Initialize theme and add toggle button to navigation
+// Initialize theme and add controls to navigation
 document.addEventListener('DOMContentLoaded', () => {
   const currentTheme = initTheme();
   
-  // Create and add theme toggle button
+  // Create theme controls container
   const nav = document.querySelector('nav');
   if (nav) {
+    const themeControls = document.createElement('div');
+    themeControls.className = 'theme-controls';
+    
+    // Create and add theme toggle button
     const themeToggle = document.createElement('button');
     themeToggle.className = 'theme-toggle';
     themeToggle.setAttribute('aria-label', 'Theme wechseln');
     themeToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"></svg>`;
     themeToggle.onclick = toggleTheme;
-    nav.appendChild(themeToggle);
+    
+    // Create brightness control
+    const brightnessControl = document.createElement('div');
+    brightnessControl.className = 'brightness-control';
+    brightnessControl.style.display = document.documentElement.getAttribute('data-theme') === 'dark' ? 'flex' : 'none';
+    
+    const brightnessSlider = document.createElement('input');
+    brightnessSlider.type = 'range';
+    brightnessSlider.className = 'brightness-slider';
+    brightnessSlider.min = '0.5';
+    brightnessSlider.max = '1.5';
+    brightnessSlider.step = '0.1';
+    brightnessSlider.value = '1';
+    
+    brightnessSlider.addEventListener('input', (e) => {
+      document.documentElement.style.setProperty('--brightness', e.target.value);
+    });
+    
+    // Add brightness icon
+    const brightnessIcon = document.createElement('span');
+    brightnessIcon.innerHTML = '🌓';
+    brightnessIcon.style.fontSize = '16px';
+    
+    // Assemble controls
+    brightnessControl.appendChild(brightnessIcon);
+    brightnessControl.appendChild(brightnessSlider);
+    themeControls.appendChild(themeToggle);
+    themeControls.appendChild(brightnessControl);
+    nav.appendChild(themeControls);
     
     // Set initial icon
     updateThemeIcon(currentTheme);
+    
+    // Update brightness control visibility when theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'data-theme') {
+          brightnessControl.style.display = 
+            document.documentElement.getAttribute('data-theme') === 'dark' ? 'flex' : 'none';
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
   }
 });

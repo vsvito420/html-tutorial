@@ -3,6 +3,8 @@
 
 /* CSS Variablen für Theme */
 :root {
+  /* Brightness Control */
+  --brightness: 1;
   /* Light Theme (Standard) */
   --bg-primary: rgba(187, 226, 150, 0.8);
   --bg-secondary: rgba(223, 204, 204, 0.7);
@@ -32,8 +34,8 @@
 
 /* Dark Theme */
 [data-theme="dark"] {
-  --bg-primary: rgba(165, 150, 79, 0.8);
-  --bg-secondary: rgba(37, 32, 14, 0.7);
+  --bg-primary: rgba(165, 150, 79, calc(0.8 * var(--brightness)));
+  --bg-secondary: rgba(37, 32, 14, calc(0.7 * var(--brightness)));
   --text-primary: #ffffff;
   --text-secondary: #ffd700;
   --border-color: rgba(197, 168, 28, 0.3);
@@ -298,14 +300,69 @@ nav a[aria-current="page"] {
   color: var(--bg-secondary);
 }
 
-/* Theme Toggle Button */
+/* Theme Toggle Button und Brightness Control */
+.theme-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
 .theme-toggle {
   background: none;
   border: none;
   padding: 0.5rem;
   cursor: pointer;
   color: var(--text-secondary);
-  margin-left: auto;
+}
+
+.brightness-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brightness-slider {
+  -webkit-appearance: none;
+  width: 100px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--glass-bg);
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.brightness-slider:hover {
+  opacity: 1;
+}
+
+.brightness-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.brightness-slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.brightness-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.brightness-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
 }
 
 .theme-toggle svg {
