@@ -62,7 +62,7 @@
 [data-theme="dark"] .roadmap-container,
 [data-theme="dark"] .code-section,
 [data-theme="dark"] .preview-section {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.7);
   border-color: var(--glass-border);
 }
 
@@ -88,7 +88,7 @@
 
 [data-theme="dark"] .preview-box {
   border-color: var(--glass-border);
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 [data-theme="dark"] .nav-button {
