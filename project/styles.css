@@ -4,41 +4,48 @@
 /* CSS Variablen für Theme */
 :root {
   /* Light Theme (Standard) */
-  --bg-primary: #bbe296;
-  --bg-secondary: #dfcccc;
+  --bg-primary: rgba(187, 226, 150, 0.8);
+  --bg-secondary: rgba(223, 204, 204, 0.7);
   --text-primary: #1a202c;
   --text-secondary: #000000;
-  --border-color: #e2e8f0;
+  --border-color: rgba(226, 232, 240, 0.3);
   --accent-color: #db9c13;
   --accent-hover: #357abd;
-  --shadow-color: rgba(0,0,0,0.05);
+  --shadow-color: rgba(0,0,0,0.1);
   --code-bg: #2d3748;
   --code-text: #e2e8f0;
   --text-shadow-light: 1px 1px 2px rgba(0, 0, 0, 0.5);
   --text-shadow-dark: 1px 1px 2px rgba(255, 255, 255, 0.5);
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --glass-blur: blur(10px);
   /* Difficulty Colors */
-  --easy-bg: #e6ffe6;
+  --easy-bg: rgba(230, 255, 230, 0.7);
   --easy-text: #006600;
-  --medium-bg: #fff3e6;
+  --medium-bg: rgba(255, 243, 230, 0.7);
   --medium-text: #cc6600;
-  --hard-bg: #ffe6e6;
+  --hard-bg: rgba(255, 230, 230, 0.7);
   --hard-text: #cc0000;
 }
 
 /* Dark Theme */
 [data-theme="dark"] {
-  --bg-primary: #5f4fa5;
-  --bg-secondary: #130e25;
+  --bg-primary: rgba(95, 79, 165, 0.8);
+  --bg-secondary: rgba(19, 14, 37, 0.7);
   --text-primary: #f7fafc;
   --text-secondary: #ffffff;
-  --border-color: #1cc52a;
+  --border-color: rgba(28, 197, 42, 0.3);
   --accent-color: #60a5fa;
   --accent-hover: #3b82f6;
-  --shadow-color: rgba(0,0,0,0.15);
+  --shadow-color: rgba(0,0,0,0.25);
   --code-bg: #0d1016;
   --code-text: #f9fafb;
-  --text-shadow-light: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  --text-shadow-dark: 1px 1px 2px rgba(255, 255, 255, 0.5);
+  /* Glassmorphism Dark */
+  --glass-bg: rgba(0, 0, 0, 0.2);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   /* Difficulty Colors */
   --easy-bg: rgba(40, 167, 69, 0.2);
   --easy-text: #50c878;
@@ -53,8 +60,8 @@
 [data-theme="dark"] .task-card,
 [data-theme="dark"] .quiz-container,
 [data-theme="dark"] .roadmap-container {
-  background: var(--bg-secondary);
-  border-color: var(--border-color);
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
 }
 
 [data-theme="dark"] .feature-list li::before,
@@ -73,13 +80,13 @@
 
 [data-theme="dark"] .task-hint,
 [data-theme="dark"] .explanation {
-  background: var(--bg-primary);
+  background: var(--glass-bg);
   border-left-color: var(--accent-color);
 }
 
 [data-theme="dark"] .preview-box {
-  border-color: var(--border-color);
-  background: var(--bg-primary);
+  border-color: var(--glass-border);
+  background: var(--glass-bg);
 }
 
 [data-theme="dark"] .nav-button {
@@ -92,7 +99,7 @@
 }
 
 [data-theme="dark"] .nav-button:disabled {
-  background: var(--border-color);
+  background: var(--glass-bg);
   opacity: 0.7;
 }
 
@@ -106,8 +113,73 @@
 body {
   font-family: 'Inter', sans-serif;
   line-height: 1.5;
-  background: var(--bg-primary);
+  background: linear-gradient(135deg, var(--bg-primary), var(--accent-color));
   color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* Listen-Styles */
+ul, ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+
+/* Verschachtelte Listen */
+li > ul,
+li > ol {
+  margin: 0.5rem 0 0.5rem 1.5rem;
+}
+
+/* Hausaufgaben-Listen */
+.homework ol {
+  counter-reset: homework;
+  list-style: none;
+  padding-left: 0;
+}
+
+.homework ol > li {
+  counter-increment: homework;
+  margin-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  position: relative;
+}
+
+.homework ol > li::before {
+  content: counter(homework) ".";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.homework ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+.homework ul > li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.homework ul > li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+}
+
+.homework ul ul {
+  margin-top: 0.5rem;
+}
+
+.homework ul ul > li::before {
+  content: "◦";
 }
 
 /* Text shadows für helle/dunkle Schriften */
@@ -169,14 +241,18 @@ body {
 
 /* Navigation */
 nav {
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
   padding: 1rem 2rem;
-  box-shadow: 0 2px 4px var(--shadow-color);
+  box-shadow: var(--glass-shadow);
   margin-bottom: 2rem;
   display: flex;
   gap: 1.5rem;
   align-items: center;
   flex-wrap: wrap;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
 }
 
 nav .logo {
@@ -209,8 +285,10 @@ nav a {
 }
 
 nav a:hover {
-  background: var(--bg-primary);
+  background: var(--glass-bg);
   color: var(--accent-color);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
 nav a[aria-current="page"] {
@@ -236,63 +314,15 @@ nav a[aria-current="page"] {
 
 /* Hauptinhalt */
 main {
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 4px 6px var(--shadow-color);
+  box-shadow: var(--glass-shadow);
   margin: 0 auto;
   max-width: 1200px;
-}
-
-/* Überschriften */
-h1 {
-  color: var(--text-primary);
-  font-size: 2.5em;
-  margin-bottom: 1rem;
-  font-weight: 700;
-}
-
-h2 {
-  color: var(--text-primary);
-  font-size: 1.8em;
-  margin: 2rem 0 1rem;
-  font-weight: 600;
-}
-
-h3 {
-  color: var(--text-secondary);
-  font-size: 1.4em;
-  margin: 1.5rem 0 1rem;
-  font-weight: 600;
-}
-
-/* Text */
-p {
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
-/* Links */
-a {
-  color: var(--accent-color);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: var(--accent-hover);
-}
-
-/* Listen */
-ul, ol {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
-
-li {
-  margin-bottom: 0.5rem;
-  color: var(--text-secondary);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
 }
 
 /* Feature Cards */
@@ -304,161 +334,104 @@ li {
 }
 
 .feature-card {
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 6px var(--shadow-color);
-  border: 1px solid var(--border-color);
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border);
   transition: all 0.3s ease;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
 .feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px var(--shadow-color);
+  box-shadow: var(--glass-shadow);
+  border-color: var(--accent-color);
 }
 
-.feature-card h2 {
-  color: var(--accent-color);
-  margin-bottom: 1rem;
-  font-size: 1.5em;
+/* Task Cards */
+.task-card {
+  background: var(--glass-bg);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
-.feature-list {
-  list-style: none;
-  padding: 0;
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--glass-shadow);
+  border-color: var(--accent-color);
 }
 
-.feature-list li {
-  margin-bottom: 0.8rem;
-  padding-left: 1.5rem;
-  position: relative;
+/* Code und Preview Sektionen */
+.code-section,
+.preview-section {
+  background: var(--glass-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
-.feature-list li::before {
-  content: "→";
-  position: absolute;
-  left: 0;
-  color: var(--accent-color);
+.preview-box {
+  border: 2px dashed var(--glass-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  min-height: 100px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
 /* Buttons */
 .button {
   display: inline-block;
   padding: 0.8rem 1.5rem;
-  background: var(--accent-color);
-  color: var(--bg-secondary);
+  background: var(--glass-bg);
+  color: var(--text-primary);
   border-radius: 8px;
   font-weight: 500;
   transition: all 0.3s ease;
-  border: none;
+  border: 1px solid var(--glass-border);
   cursor: pointer;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
 .button:hover {
-  background: var(--accent-hover);
+  background: var(--accent-color);
+  color: var(--bg-secondary);
   transform: translateY(-2px);
 }
 
-.button-group {
-  display: flex;
-  gap: 1rem;
+/* Footer mit Glassmorphism */
+footer {
+  background: var(--glass-bg);
+  padding: 1rem;
+  text-align: center;
   margin-top: 2rem;
+  border-top: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
-/* Tutorial-spezifische Styles */
-.tutorial-header {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 3rem auto;
+footer a {
+  color: var(--accent-color);
+  text-decoration: none;
 }
 
-.tutorial-content {
-  max-width: 900px;
-  margin: 0 auto;
+footer a:hover {
+  text-decoration: underline;
 }
 
-.tutorial-navigation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin: 2rem 0;
-}
-
-/* Code-Blöcke */
-pre {
-  background: var(--code-bg);
-  color: var(--code-text);
-  padding: 1.5rem;
-  border-radius: 8px;
-  overflow-x: auto;
-  margin: 1.5rem 0;
-  font-family: 'Fira Code', monospace;
-}
-
-code {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.9em;
-}
-
-/* Split Container */
-.split-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-/* Code und Preview Sektionen */
-.code-section,
-.preview-section {
-  background: var(--bg-secondary);
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px var(--shadow-color);
-  border: 1px solid var(--border-color);
-}
-
-.preview-box {
-  border: 2px dashed var(--border-color);
-  border-radius: 8px;
-  padding: 1.5rem;
-  min-height: 100px;
-  background: var(--bg-primary);
-}
-
-.explanation {
-  margin-top: 1.5rem;
-  padding: 1.2rem;
-  background: var(--bg-primary);
-  border-left: 4px solid var(--accent-color);
-  border-radius: 0 8px 8px 0;
-  font-size: 0.95em;
-  line-height: 1.6;
-}
-
-/* Getting Started Sektion */
-.getting-started {
-  text-align: center;
-  margin-top: 4rem;
-  padding: 2rem;
-  background: var(--bg-primary);
-  border-radius: 12px;
-}
-
-/* Intro Sektion */
-.intro {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 3rem auto;
-}
-
-.intro p {
-  font-size: 1.1em;
-  color: var(--text-secondary);
-}
-
-/* Responsive Design */
+/* Responsive Design Anpassungen */
 @media (max-width: 768px) {
   .container {
     padding: 15px;
@@ -493,150 +466,4 @@ code {
     grid-template-columns: 1fr;
     padding: 0 15px;
   }
-}
-
-/* Aufgaben-spezifische Styles */
-.task-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  padding: 0;
-  list-style: none;
-}
-
-.task-card {
-  background: var(--bg-secondary);
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 4px 6px var(--shadow-color);
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-}
-
-.task-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px var(--shadow-color);
-}
-
-.task-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.task-number {
-  background: var(--accent-color);
-  color: var(--bg-secondary);
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  flex-shrink: 0;
-}
-
-.task-title {
-  font-size: 1.3em;
-  margin: 0;
-  color: var(--text-primary);
-  flex-grow: 1;
-}
-
-.task-description {
-  color: var(--text-secondary);
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-.task-steps {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 20px;
-}
-
-.task-steps li {
-  margin-bottom: 12px;
-  padding-left: 25px;
-  position: relative;
-  color: var(--text-secondary);
-}
-
-.task-steps li::before {
-  content: "→";
-  position: absolute;
-  left: 0;
-  color: var(--accent-color);
-}
-
-.task-hint {
-  background: var(--bg-primary);
-  padding: 15px 20px;
-  border-left: 4px solid var(--accent-color);
-  border-radius: 0 8px 8px 0;
-  margin-top: 20px;
-  font-size: 0.95em;
-  color: var(--text-secondary);
-}
-
-.difficulty {
-  font-size: 0.8em;
-  padding: 5px 12px;
-  border-radius: 12px;
-  font-weight: 500;
-}
-
-.easy {
-  background: var(--easy-bg);
-  color: var(--easy-text);
-}
-
-.medium {
-  background: var(--medium-bg);
-  color: var(--medium-text);
-}
-
-.hard {
-  background: var(--hard-bg);
-  color: var(--hard-text);
-}
-
-.example-link {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 15px;
-  color: var(--accent-color);
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  gap: 8px;
-}
-
-.example-link:hover {
-  color: var(--accent-hover);
-  transform: translateX(5px);
-}
-
-.example-link::before {
-  content: "👉";
-}
-
-/* Footer */
-footer {
-  background: var(--bg-secondary);
-  padding: 1rem;
-  text-align: center;
-  margin-top: 2rem;
-  border-top: 1px solid var(--border-color);
-}
-
-footer a {
-  color: var(--accent-color);
-  text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
 }
