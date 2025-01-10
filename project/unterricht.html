@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>Unterricht - KiberOne</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="script.js"></script>
+    <style>
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .intro {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 3rem auto;
+      }
+
+      .intro p {
+        font-size: 1.1em;
+        color: var(--text-secondary);
+      }
+
+      .lesson-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .lesson-card {
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 6px var(--shadow-color);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+      }
+
+      .lesson-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      }
+
+      .lesson-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .lesson-number {
+        background: var(--accent-color);
+        color: var(--bg-secondary);
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      .lesson-title {
+        font-size: 1.3em;
+        margin: 0;
+        color: var(--text-primary);
+        flex-grow: 1;
+      }
+
+      .lesson-description {
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .lesson-content {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
+      }
+
+      .lesson-content li {
+        margin-bottom: 12px;
+        padding-left: 25px;
+        position: relative;
+        color: var(--text-secondary);
+      }
+
+      .lesson-content li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent-color);
+      }
+
+      .lesson-notes {
+        background: var(--bg-primary);
+        padding: 15px 20px;
+        border-left: 4px solid var(--accent-color);
+        border-radius: 0 8px 8px 0;
+        margin-top: 20px;
+        font-size: 0.95em;
+        color: var(--text-secondary);
+      }
+
+      .lesson-dropdown {
+        margin-bottom: 2rem;
+        width: 100%;
+        max-width: 300px;
+        padding: 10px;
+        border-radius: 8px;
+        border: 2px solid var(--border-color);
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        font-size: 1.1em;
+        cursor: pointer;
+      }
+
+      .lesson-dropdown:focus {
+        outline: none;
+        border-color: var(--accent-color);
+      }
+
+      .lesson-dropdown option {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        padding: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .lesson-list {
+          grid-template-columns: 1fr;
+          padding: 0 15px;
+        }
+
+        .intro {
+          padding: 0 15px;
+        }
+
+        .lesson-dropdown {
+          width: 100%;
+          max-width: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">
+        <img src="../logo.png" alt="Logo" height="40">
+      </a>
+      <a href="/">Startseite</a>
+      <a href="/html.html">HTML Tutorial</a>
+      <a href="/css.html">CSS Tutorial</a>
+      <a href="/aufgaben.html">Aufgaben</a>
+      <a href="/quiz.html">Quiz</a>
+      <a href="/ai-test.html">AI Test</a>
+      <a href="/unterricht.html" aria-current="page">Unterricht</a>
+    </nav>
+
+    <main>
+      <div class="intro">
+        <h1>Unterricht bei KiberOne</h1>
+        <p>
+          Hier findest du die Unterrichtsinhalte und Notizen zu den einzelnen Stunden.
+          Wähle einen Unterricht aus dem Dropdown-Menü.
+        </p>
+        <label for="lessonSelect" class="visually-hidden">Wähle einen Unterricht</label>
+        <select class="lesson-dropdown" id="lessonSelect" onchange="showLesson(this.value)" aria-label="Wähle einen Unterricht">
+          <option value="u1">Unterricht 1 (Aktuell)</option>
+          <option value="u2">Unterricht 2</option>
+          <option value="u3">Unterricht 3</option>
+        </select>
+      </div>
+
+      <ul class="lesson-list">
+        <li class="lesson-card" id="u1">
+          <div class="lesson-header">
+            <span class="lesson-number">1</span>
+            <h2 class="lesson-title">Einführung in HTML & CSS</h2>
+          </div>
+          <p class="lesson-description">
+            In dieser Stunde lernen wir die Grundlagen von HTML und CSS kennen.
+          </p>
+          <ul class="lesson-content">
+            <li>Was ist HTML? - Die Struktur einer Webseite</li>
+            <li>Was ist CSS? - Das Design einer Webseite</li>
+            <li>Erste HTML-Tags: h1, p, div</li>
+            <li>Erste CSS-Eigenschaften: color, background-color</li>
+            <li>Praktische Übungen am Computer</li>
+          </ul>
+          <div class="lesson-notes">
+            <strong>Hausaufgabe:</strong> Erstelle eine einfache Webseite mit einer Überschrift und einem Absatz. 
+            Gestalte sie mit verschiedenen Farben.
+          </div>
+        </li>
+
+        <li class="lesson-card" id="u2" style="display: none;">
+          <div class="lesson-header">
+            <span class="lesson-number">2</span>
+            <h2 class="lesson-title">Listen und Links</h2>
+          </div>
+          <p class="lesson-description">
+            Heute lernen wir, wie man Listen erstellt und Links einfügt.
+          </p>
+          <ul class="lesson-content">
+            <li>Ungeordnete Listen (ul) und geordnete Listen (ol)</li>
+            <li>Listenpunkte (li) gestalten</li>
+            <li>Links erstellen mit dem a-Tag</li>
+            <li>Links zu anderen Seiten und innerhalb der Seite</li>
+            <li>CSS für Listen und Links</li>
+          </ul>
+          <div class="lesson-notes">
+            <strong>Hausaufgabe:</strong> Erstelle eine Liste deiner Hobbys und verlinke zu passenden Websites.
+          </div>
+        </li>
+
+        <li class="lesson-card" id="u3" style="display: none;">
+          <div class="lesson-header">
+            <span class="lesson-number">3</span>
+            <h2 class="lesson-title">Bilder und Layout</h2>
+          </div>
+          <p class="lesson-description">
+            In dieser Stunde geht es um das Einbinden von Bildern und grundlegendes Layout.
+          </p>
+          <ul class="lesson-content">
+            <li>Bilder einbinden mit dem img-Tag</li>
+            <li>Alt-Text und Bildgrößen</li>
+            <li>Grundlegendes CSS-Layout</li>
+            <li>Flexbox für einfache Layouts</li>
+            <li>Responsive Design Grundlagen</li>
+          </ul>
+          <div class="lesson-notes">
+            <strong>Hausaufgabe:</strong> Gestalte eine Bildergalerie mit mindestens 3 Bildern und einem responsiven Layout.
+          </div>
+        </li>
+      </ul>
+    </main>
+
+    <script>
+      function showLesson(lessonId) {
+        // Alle Lektionen ausblenden
+        document.querySelectorAll('.lesson-card').forEach(card => {
+          card.style.display = 'none';
+        });
+        
+        // Gewählte Lektion anzeigen
+        document.getElementById(lessonId).style.display = 'block';
+      }
+
+      // Initial die erste Lektion anzeigen
+      document.addEventListener('DOMContentLoaded', () => {
+        showLesson('u1');
+      });
+    </script>
+
+    <footer>
+      <a href="https://github.com/vsvito420" target="_blank" rel="noopener">GitHub: vsvito420</a>
+    </footer>
+  </body>
+</html>

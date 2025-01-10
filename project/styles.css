@@ -14,6 +14,13 @@
   --shadow-color: rgba(0,0,0,0.05);
   --code-bg: #2d3748;
   --code-text: #e2e8f0;
+  /* Difficulty Colors */
+  --easy-bg: #e6ffe6;
+  --easy-text: #006600;
+  --medium-bg: #fff3e6;
+  --medium-text: #cc6600;
+  --hard-bg: #ffe6e6;
+  --hard-text: #cc0000;
 }
 
 /* Dark Theme */
@@ -28,6 +35,13 @@
   --shadow-color: rgba(0,0,0,0.15);
   --code-bg: #0d1016;
   --code-text: #f9fafb;
+  /* Difficulty Colors */
+  --easy-bg: rgba(40, 167, 69, 0.2);
+  --easy-text: #50c878;
+  --medium-bg: rgba(255, 165, 0, 0.2);
+  --medium-text: #ffa500;
+  --hard-bg: rgba(220, 53, 69, 0.2);
+  --hard-text: #ff6b6b;
 }
 
 /* Zusätzliche Dark Theme Anpassungen */
@@ -224,7 +238,7 @@ ul, ol {
 
 li {
   margin-bottom: 0.5rem;
-  color: #d693b2;
+  color: var(--text-secondary);
 }
 
 /* Feature Cards */
@@ -270,15 +284,15 @@ li {
   content: "→";
   position: absolute;
   left: 0;
-  color: #4a90e2;
+  color: var(--accent-color);
 }
 
 /* Buttons */
 .button {
   display: inline-block;
   padding: 0.8rem 1.5rem;
-  background: #4a90e2;
-  color: white;
+  background: var(--accent-color);
+  color: var(--bg-secondary);
   border-radius: 8px;
   font-weight: 500;
   transition: all 0.3s ease;
@@ -287,7 +301,7 @@ li {
 }
 
 .button:hover {
-  background: #357abd;
+  background: var(--accent-hover);
   transform: translateY(-2px);
 }
 
@@ -387,7 +401,7 @@ code {
 
 .intro p {
   font-size: 1.1em;
-  color: #4a5568;
+  color: var(--text-secondary);
 }
 
 /* Responsive Design */
@@ -437,17 +451,17 @@ code {
 }
 
 .task-card {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 12px;
   padding: 25px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  border: 1px solid var(--border-color);
   transition: all 0.3s ease;
 }
 
 .task-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 15px var(--shadow-color);
 }
 
 .task-header {
@@ -458,8 +472,8 @@ code {
 }
 
 .task-number {
-  background: #4a90e2;
-  color: white;
+  background: var(--accent-color);
+  color: var(--bg-secondary);
   width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -473,12 +487,12 @@ code {
 .task-title {
   font-size: 1.3em;
   margin: 0;
-  color: #2d3748;
+  color: var(--text-primary);
   flex-grow: 1;
 }
 
 .task-description {
-  color: #4a5568;
+  color: var(--text-secondary);
   margin-bottom: 20px;
   line-height: 1.6;
 }
@@ -493,24 +507,24 @@ code {
   margin-bottom: 12px;
   padding-left: 25px;
   position: relative;
-  color: #4a5568;
+  color: var(--text-secondary);
 }
 
 .task-steps li::before {
   content: "→";
   position: absolute;
   left: 0;
-  color: #4a90e2;
+  color: var(--accent-color);
 }
 
 .task-hint {
-  background: #f8fafc;
+  background: var(--bg-primary);
   padding: 15px 20px;
-  border-left: 4px solid #4a90e2;
+  border-left: 4px solid var(--accent-color);
   border-radius: 0 8px 8px 0;
   margin-top: 20px;
   font-size: 0.95em;
-  color: #4a5568;
+  color: var(--text-secondary);
 }
 
 .difficulty {
@@ -521,25 +535,25 @@ code {
 }
 
 .easy {
-  background: #e6ffe6;
-  color: #006600;
+  background: var(--easy-bg);
+  color: var(--easy-text);
 }
 
 .medium {
-  background: #fff3e6;
-  color: #cc6600;
+  background: var(--medium-bg);
+  color: var(--medium-text);
 }
 
 .hard {
-  background: #ffe6e6;
-  color: #cc0000;
+  background: var(--hard-bg);
+  color: var(--hard-text);
 }
 
 .example-link {
   display: inline-flex;
   align-items: center;
   margin-top: 15px;
-  color: #4a90e2;
+  color: var(--accent-color);
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -547,7 +561,7 @@ code {
 }
 
 .example-link:hover {
-  color: #357abd;
+  color: var(--accent-hover);
   transform: translateX(5px);
 }
 
