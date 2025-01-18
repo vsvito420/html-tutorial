@@ -134,4 +134,4 @@ git push origin feature/neue-funktion
 
 ## Lizenz
 
-Dieses Projekt ist für Bildungszwecke gedacht. Alle Rechte vorbehalten.
+Dieses Projekt ist für Bildungszwecke gedacht. Viele dinge sind KI Generiert. 
